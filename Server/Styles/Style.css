@@ -1,0 +1,15 @@
+﻿html, body, canvas {
+    margin: 0;
+    padding: 0;
+    /*cursor: none;*/
+}
+
+html, body, #Background {
+    background-color: #000000;
+}
+
+canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
