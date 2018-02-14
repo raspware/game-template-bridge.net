@@ -8,7 +8,9 @@ namespace Raspware.ExampleGame
 	{
 		public static void Main()
 		{
+			Resolution.ConfigureInstance(Resolution.PixelSize._FHD);
 			var resolution = Resolution.Instance;
+			
 			TouchActions.ConfigureInstance(resolution);
 			Layers.ConfigureInstance(resolution);
 
