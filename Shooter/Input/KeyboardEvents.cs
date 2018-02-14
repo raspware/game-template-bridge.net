@@ -15,7 +15,6 @@ namespace Raspware.Shooter.Input
 			_keyCode = keyCode;
 			Document.AddEventListener(EventType.KeyDown, InputKeyDown);
 			Document.AddEventListener(EventType.KeyUp, InputKeyUp);
-			// TODO: actionRaiser - keyCode Setter
 		}
 
 		private void InputKeyDown(Event e)

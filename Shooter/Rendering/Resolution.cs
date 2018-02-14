@@ -2,7 +2,6 @@
 
 namespace Raspware.Shooter.Rendering
 {
-	// TODO: Move this into "rendering"
 	public sealed class Resolution
 	{
 		public static Resolution Instance { get;} = new Resolution();
