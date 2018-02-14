@@ -36,3 +36,4 @@ _ReSharper*/
 .vs/
 Deploy/
 *[Ss]cripts/
+[Oo]utput/
