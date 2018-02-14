@@ -35,5 +35,4 @@ _ReSharper*/
 [Pp]ackages/
 .vs/
 Deploy/
-Server/Scripts/index.html
-Server/Scripts/Raspware.Shooter.js
+*[Ss]cripts/
