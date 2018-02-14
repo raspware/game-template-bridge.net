@@ -44,6 +44,8 @@ namespace Raspware.Shooter.Stages
 
 			levelContext.FillStyle = "white";
 
+			levelContext.DrawImage(_data.Image, 0, 0);
+
 			levelContext.Font = _resolution.RenderAmount(10).ToString() + "px Consolas, monospace";
 			levelContext.FillText("Playing Game", _resolution.RenderAmount(4), _resolution.RenderAmount(12));
 
