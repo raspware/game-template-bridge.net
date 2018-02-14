@@ -30,7 +30,7 @@ namespace Raspware.Shooter
 			_actionRaiser = actionRaiser;
 			_resolution = resolution;
 			_layers = layers;
-			_stage = GetStage(Id.Opening);
+			_stage = GetStage(Id.Loading);
 
 			Tick();
 		}
@@ -53,6 +53,8 @@ namespace Raspware.Shooter
 		{
 			switch (id)
 			{
+				case Id.Loading:
+					return new Loading(_resolution, _layers, _data);
 				case Id.Opening:
 					return new Opening(_resolution, _layers);
 				case Id.Level:

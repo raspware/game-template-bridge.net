@@ -2,6 +2,7 @@
 {
 	public enum Id
     {
+		Loading,
         Opening,
         Level,
         PauseGame,

@@ -55,6 +55,7 @@
     <Compile Include="Stages\GameComplete.cs" />
     <Compile Include="Stages\GameOver.cs" />
     <Compile Include="Stages\IStage.cs" />
+    <Compile Include="Stages\Loading.cs" />
     <Compile Include="Stages\Level.cs" />
     <Compile Include="Stages\Opening.cs" />
     <Compile Include="Stages\PauseGame.cs" />
