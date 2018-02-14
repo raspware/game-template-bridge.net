@@ -1,7 +1,6 @@
 ﻿using System;
 using Raspware.GameEngine.Input;
 using Raspware.GameEngine.Rendering;
-using Raspware.GameEngine.Stages;
 namespace Raspware.ExampleGame.Stages
 {
 	public sealed class Level : IStage

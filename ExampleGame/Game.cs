@@ -3,7 +3,6 @@ using Bridge.Html5;
 using Raspware.ExampleGame.Stages;
 using Raspware.GameEngine.Input;
 using Raspware.GameEngine.Rendering;
-using Raspware.GameEngine.Stages;
 
 namespace Raspware.ExampleGame
 {

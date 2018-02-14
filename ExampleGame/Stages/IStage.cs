@@ -1,4 +1,4 @@
-﻿namespace Raspware.GameEngine.Stages
+﻿namespace Raspware.ExampleGame.Stages
 {
 	public enum Id
 	{

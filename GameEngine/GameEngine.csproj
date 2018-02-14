@@ -49,7 +49,6 @@
     <Compile Include="Rendering\Layer.cs" />
     <Compile Include="Rendering\Layers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IStage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bridge.json" />
