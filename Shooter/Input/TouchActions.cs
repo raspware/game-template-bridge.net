@@ -8,7 +8,10 @@ namespace Raspware.Shooter.Input
 	public sealed class TouchActions : IActions
     {
 		public static IActions Instance { get; private set; } = null;
-        private TouchActions(Resolution resolution)
+		private static bool _configured { get; set; } = false;
+		private static Resolution _resolution { get; set; }
+
+		private TouchActions(Resolution resolution)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
@@ -20,24 +23,21 @@ namespace Raspware.Shooter.Input
 			Escape = new TouchEvents(resolution);
 		}
 
-		private static Resolution _resolution { get; set; }
-
 		public static void ConfigureInstance(Resolution resolution)
 		{
+			if (_configured)
+				throw new Exception($"'{nameof(Instance)}' has already been configured!");
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
 
 			Instance = new TouchActions(resolution);
+			_configured = true;
 		}
 
 		public IEvents Up { get; private set; }
-
         public IEvents Down { get; private set; }
-
         public IEvents Left { get; private set; }
-
         public IEvents Right { get; private set; }
-
         public IEvents Escape { get; private set; }
     }
 }
