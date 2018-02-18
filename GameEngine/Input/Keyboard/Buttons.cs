@@ -1,8 +1,8 @@
-﻿namespace Raspware.GameEngine.Input
+﻿namespace Raspware.GameEngine.Input.Keyboard
 {
-	public sealed partial class KeyboardEvents : IEvents
+	public sealed partial class Events : IEvents
 	{
-		public enum Button
+		public enum Buttons
 		{
 			_backspace = 8,
 			_tab = 9,

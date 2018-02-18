@@ -37,16 +37,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Input\KeyboardEventsButton.cs" />
+    <Compile Include="Input\Keyboard\Buttons.cs" />
     <Compile Include="Rendering\Resolution.cs" />
-    <Compile Include="Input\CombinedActions.cs" />
-    <Compile Include="Input\CombinedEvents.cs" />
+    <Compile Include="Input\Combined\Actions.cs" />
+    <Compile Include="Input\Combined\Events.cs" />
     <Compile Include="Input\IActions.cs" />
     <Compile Include="Input\IEvents.cs" />
-    <Compile Include="Input\KeyboardActions.cs" />
-    <Compile Include="Input\KeyboardEvents.cs" />
-    <Compile Include="Input\TouchActions.cs" />
-    <Compile Include="Input\TouchEvents.cs" />
+    <Compile Include="Input\Keyboard\Actions.cs" />
+    <Compile Include="Input\Keyboard\Events.cs" />
+    <Compile Include="Input\Touch\Actions.cs" />
+    <Compile Include="Input\Touch\Events.cs" />
     <Compile Include="Rendering\Layer.cs" />
     <Compile Include="Rendering\Layers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

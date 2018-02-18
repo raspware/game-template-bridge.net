@@ -2,12 +2,12 @@
 using System.Linq;
 using ProductiveRage.Immutable;
 
-namespace Raspware.GameEngine.Input
+namespace Raspware.GameEngine.Input.Combined
 {
-	public sealed class CombinedEvents : IEvents
+	public sealed class Events : IEvents
     {
         private readonly NonNullList<IEvents> _eventsReaders;
-        public CombinedEvents(NonNullList<IEvents> eventsReaders)
+        public Events(NonNullList<IEvents> eventsReaders)
         {
             if (eventsReaders == null)
                 throw new ArgumentNullException(nameof(eventsReaders));

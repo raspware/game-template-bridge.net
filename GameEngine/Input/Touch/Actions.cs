@@ -1,26 +1,26 @@
 ﻿using System;
 using Raspware.GameEngine.Rendering;
 
-namespace Raspware.GameEngine.Input
+namespace Raspware.GameEngine.Input.Touch
 {
 
 	// TODO: Implement this!
-	public sealed class TouchActions : IActions
+	public sealed class Actions : IActions
     {
 		public static IActions Instance { get; private set; } = null;
 		private static bool _configured { get; set; } = false;
 		private static Resolution _resolution { get; set; }
 
-		private TouchActions(Resolution resolution)
+		private Actions(Resolution resolution)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
 
-			Up = new TouchEvents(resolution);
-			Down = new TouchEvents(resolution);
-			Left = new TouchEvents(resolution);
-			Right = new TouchEvents(resolution);
-			Escape = new TouchEvents(resolution);
+			Up = new Events(resolution);
+			Down = new Events(resolution);
+			Left = new Events(resolution);
+			Right = new Events(resolution);
+			Escape = new Events(resolution);
 		}
 
 		public static void ConfigureInstance(Resolution resolution)
@@ -30,7 +30,7 @@ namespace Raspware.GameEngine.Input
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
 
-			Instance = new TouchActions(resolution);
+			Instance = new Actions(resolution);
 			_configured = true;
 		}
 

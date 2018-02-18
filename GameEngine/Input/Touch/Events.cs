@@ -1,11 +1,11 @@
 ﻿using Raspware.GameEngine.Rendering;
 
-namespace Raspware.GameEngine.Input
+namespace Raspware.GameEngine.Input.Touch
 {
 	// TODO: Implement this!
-	public sealed class TouchEvents : IEvents
+	public sealed class Events : IEvents
 	{
-		public TouchEvents(Resolution resolution) { }
+		public Events(Resolution resolution) { }
 		public bool OnceOnPressDown()
 		{
 			return false;

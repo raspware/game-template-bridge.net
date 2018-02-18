@@ -1,16 +1,17 @@
 ﻿using System;
 using Bridge.Html5;
 
-namespace Raspware.GameEngine.Input
+namespace Raspware.GameEngine.Input.Keyboard
+
 {
-	public sealed partial class KeyboardEvents : IEvents
+	public sealed partial class Events : IEvents
 	{
 		private bool _keyDown = false;
 		private bool _keyUp = false;
 		private bool _onceOnKeyDownLock = false;
 		private int _keyCode;
 
-		public KeyboardEvents(Button keyCode)
+		public Events(Buttons keyCode)
 		{
 			_keyCode = (int)keyCode;
 			Document.AddEventListener(EventType.KeyDown, InputKeyDown);

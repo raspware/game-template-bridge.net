@@ -1,5 +1,4 @@
 ﻿using ProductiveRage.Immutable;
-using Raspware.GameEngine.Input;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.ExampleGame
@@ -10,15 +9,20 @@ namespace Raspware.ExampleGame
 		{
 			Resolution.ConfigureInstance(Resolution.PixelSize._FHD);
 			var resolution = Resolution.Instance;
-			
-			TouchActions.ConfigureInstance(resolution);
+
+			GameEngine.Input.Touch.Actions.ConfigureInstance(resolution);
 			Layers.ConfigureInstance(resolution);
 
 			new Game(
 				Data.Instance,
 				Layers.Instance,
 				resolution,
-				new CombinedActions(NonNullList.Of(KeyboardActions.Instance, TouchActions.Instance))
+				new GameEngine.Input.Combined.Actions(
+					NonNullList.Of(
+						GameEngine.Input.Keyboard.Actions.Instance,
+						GameEngine.Input.Touch.Actions.Instance
+					)
+				)
 			);
 		}
 	}
