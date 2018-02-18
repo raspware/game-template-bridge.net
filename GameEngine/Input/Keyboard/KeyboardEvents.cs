@@ -3,16 +3,16 @@ using Bridge.Html5;
 
 namespace Raspware.GameEngine.Input
 {
-	public sealed class KeyboardEvents : IEvents
+	public sealed partial class KeyboardEvents : IEvents
 	{
 		private bool _keyDown = false;
 		private bool _keyUp = false;
 		private bool _onceOnKeyDownLock = false;
 		private int _keyCode;
 
-		public KeyboardEvents(int keyCode)
+		public KeyboardEvents(Button keyCode)
 		{
-			_keyCode = keyCode;
+			_keyCode = (int)keyCode;
 			Document.AddEventListener(EventType.KeyDown, InputKeyDown);
 			Document.AddEventListener(EventType.KeyUp, InputKeyUp);
 		}
