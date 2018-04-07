@@ -12,5 +12,6 @@ namespace Raspware.GameEngine.Input.Keyboard
 		public  IEvents Left { get; } = new Events(Buttons._leftArrow);
 		public  IEvents Right { get; } = new Events(Buttons._rightArrow);
 		public IEvents Escape { get; } = new Events(Buttons._escape);
+		public IEvents Button1 { get; } = new Events(Buttons._space);
 	}
 }

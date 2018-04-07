@@ -7,5 +7,6 @@
         IEvents Left { get; }
         IEvents Right { get; }
         IEvents Escape { get; }
-    }
+		IEvents Button1 { get; }
+	}
 }
