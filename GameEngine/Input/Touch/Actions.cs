@@ -1,4 +1,5 @@
 ﻿using System;
+using Raspware.GameEngine.Input.Touch.Buttons;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Touch
@@ -11,27 +12,31 @@ namespace Raspware.GameEngine.Input.Touch
 		private static bool _configured { get; set; } = false;
 		private static Resolution _resolution { get; set; }
 
-		private Actions(Resolution resolution)
+		private Actions(Resolution resolution, IButtons buttons)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
+			if (buttons == null)
+				throw new ArgumentNullException(nameof(buttons));
 
-			Up = new Events(resolution);
-			Down = new Events(resolution);
-			Left = new Events(resolution);
-			Right = new Events(resolution);
-			Cancel = new Events(resolution);
-			Button1 = new Events(resolution);
+			Up = new Events(resolution, buttons.Up);
+			Down = new Events(resolution, buttons.Down);
+			Left = new Events(resolution, buttons.Left);
+			Right = new Events(resolution, buttons.Right);
+			Cancel = new Events(resolution, buttons.Cancel);
+			Button1 = new Events(resolution, buttons.Button1);
 		}
 
-		public static void ConfigureInstance(Resolution resolution)
+		public static void ConfigureInstance(Resolution _resolution, IButtons buttons)
 		{
 			if (_configured)
 				throw new Exception($"'{nameof(Instance)}' has already been configured!");
-			if (resolution == null)
-				throw new ArgumentNullException(nameof(resolution));
+			if (_resolution == null)
+				throw new ArgumentNullException(nameof(_resolution));
+			if (buttons == null)
+				throw new ArgumentNullException(nameof(buttons));
 
-			Instance = new Actions(resolution);
+			Instance = new Actions(_resolution, buttons);
 			_configured = true;
 		}
 

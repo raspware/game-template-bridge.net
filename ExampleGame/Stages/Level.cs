@@ -1,5 +1,7 @@
 ﻿using System;
+using ProductiveRage.Immutable;
 using Raspware.GameEngine.Input;
+using Raspware.GameEngine.Input.Touch.Buttons;
 using Raspware.GameEngine.Rendering;
 namespace Raspware.ExampleGame.Stages
 {
@@ -13,7 +15,7 @@ namespace Raspware.ExampleGame.Stages
 
 		public Id Id => Id.Level;
 
-		public Level(Resolution resolution, Layers layers, IActions actionRaiser, Data data)
+		public Level(Resolution resolution, Layers layers, IActions actionRaiser, Data data, NonNullList<Button> Buttons)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));

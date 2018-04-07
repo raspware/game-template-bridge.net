@@ -4,7 +4,8 @@ namespace Raspware.GameEngine.Rendering
 {
 	public sealed class Resolution
 	{
-		public enum PixelSize {
+		public enum PixelSize
+		{
 			/// <summary>(640x360 or 360x360)</summary>
 			_nHD = 1,
 			/// <summary>(1280x720 or 720x720)</summary>
@@ -19,25 +20,53 @@ namespace Raspware.GameEngine.Rendering
 			_4K_UHD
 		}
 
+		public enum OrientationTypes
+		{
+			Landscape,
+			Portrait,
+			Square
+		}
+
 		private static bool _configured { get; set; } = false;
 		public static Resolution Instance { get; private set; } = null;
-		private Resolution(PixelSize size, bool square) {
-			Height = 360 * (int)size;
-			Amount = Height * 0.01;
-			Width = square ? Height : 640 * (int)size;
+		private Resolution(PixelSize size, OrientationTypes orientation)
+		{
+			Orientation = orientation;
+
+			switch (orientation)
+			{
+				case OrientationTypes.Landscape:
+					Height = 360 * (int)size;
+					Amount = Height * 0.01;
+					Width = 640 * (int)size;
+					break;
+				case OrientationTypes.Portrait:
+					Height = 640 * (int)size;
+					Width = 360 * (int)size;
+					Amount = Width * 0.01;
+					break;
+				case OrientationTypes.Square:
+					Height = 360 * (int)size;
+					Amount = Height * 0.01;
+					Width = Height;
+					break;
+				default:
+					throw new ArgumentException(nameof(orientation));
+			}
 		}
-		public static void ConfigureInstance(PixelSize size, bool square = false)
+		public static void ConfigureInstance(PixelSize size, OrientationTypes orientation = OrientationTypes.Landscape)
 		{
 			if (_configured)
 				throw new Exception($"'{nameof(Instance)}' has already been configured!");
 
-			Instance = new Resolution(size, square);
+			Instance = new Resolution(size, orientation);
 			_configured = true;
 		}
 
 		public int Width { get; }
 		public int Height { get; }
 		public double Amount { get; }
+		public OrientationTypes Orientation { get; }
 
 		public int RenderAmount(int multiply)
 		{
