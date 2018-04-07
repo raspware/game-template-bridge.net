@@ -20,7 +20,7 @@ namespace Raspware.GameEngine.Input.Touch
 			Down = new Events(resolution);
 			Left = new Events(resolution);
 			Right = new Events(resolution);
-			Escape = new Events(resolution);
+			Cancel = new Events(resolution);
 			Button1 = new Events(resolution);
 		}
 
@@ -39,7 +39,7 @@ namespace Raspware.GameEngine.Input.Touch
 		public IEvents Down { get; private set; }
 		public IEvents Left { get; private set; }
 		public IEvents Right { get; private set; }
-		public IEvents Escape { get; private set; }
+		public IEvents Cancel { get; private set; }
 		public IEvents Button1 { get; private set; }
 	}
 }

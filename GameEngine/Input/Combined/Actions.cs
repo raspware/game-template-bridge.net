@@ -18,7 +18,7 @@ namespace Raspware.GameEngine.Input.Combined
         public IEvents Down => new Events(_actionsRaisers.Map(_ => _.Down));
         public IEvents Left => new Events(_actionsRaisers.Map(_ => _.Left));
         public IEvents Right => new Events(_actionsRaisers.Map(_ => _.Right));
-        public IEvents Escape => new Events(_actionsRaisers.Map(_ => _.Escape));
+        public IEvents Cancel => new Events(_actionsRaisers.Map(_ => _.Cancel));
 		public IEvents Button1 => new Events(_actionsRaisers.Map(_ => _.Button1));
     }
 }

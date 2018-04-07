@@ -6,7 +6,7 @@
         IEvents Down { get; }
         IEvents Left { get; }
         IEvents Right { get; }
-        IEvents Escape { get; }
+        IEvents Cancel { get; }
 		IEvents Button1 { get; }
 	}
 }

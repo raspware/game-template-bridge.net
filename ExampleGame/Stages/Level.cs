@@ -69,7 +69,7 @@ namespace Raspware.ExampleGame.Stages
 			_data.TimePassed += ms;
 			_message = _data.TimePassed.ToString();
 
-			if (_actionRaiser.Escape.OnceOnPressDown())
+			if (_actionRaiser.Cancel.OnceOnPressDown())
 				return Id.PauseGame;
 
 			if (_actionRaiser.Up.OnceOnPressDown())

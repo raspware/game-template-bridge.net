@@ -60,7 +60,7 @@ namespace Raspware.ExampleGame
 				case Id.Level:
 					return new Level(_resolution, _layers, _actionRaiser, _data);
 				case Id.PauseGame: 
-					return new PauseGame(_resolution, _layers, _actionRaiser.Escape);
+					return new PauseGame(_resolution, _layers, _actionRaiser.Cancel);
 				case Id.GameOver:
 					return new GameOver(_resolution, _layers, _data);
 				case Id.GameComplete:
