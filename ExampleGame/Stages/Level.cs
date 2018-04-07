@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ProductiveRage.Immutable;
 using Raspware.GameEngine.Input;
 using Raspware.GameEngine.Input.Touch.Buttons;
@@ -10,12 +11,13 @@ namespace Raspware.ExampleGame.Stages
 		private readonly IActions _actionRaiser;
 		private readonly Resolution _resolution;
 		private readonly Layers _layers;
+		private readonly NonNullList<Button> _buttons;
 		private string _message;
 		private Data _data;
 
 		public Id Id => Id.Level;
 
-		public Level(Resolution resolution, Layers layers, IActions actionRaiser, Data data, NonNullList<Button> Buttons)
+		public Level(Resolution resolution, Layers layers, IActions actionRaiser, Data data, NonNullList<Button> buttons)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
@@ -25,11 +27,14 @@ namespace Raspware.ExampleGame.Stages
 				throw new ArgumentNullException(nameof(actionRaiser));
 			if (data == null)
 				throw new ArgumentNullException(nameof(data));
-			
+			if (buttons == null)
+				throw new ArgumentNullException(nameof(buttons));
+
 			_resolution = resolution;
 			_layers = layers;
 			_actionRaiser = actionRaiser;
 			_data = data;
+			_buttons = buttons;
 		}
 		
 		public void Draw()
@@ -64,6 +69,9 @@ namespace Raspware.ExampleGame.Stages
 
 			levelContext.Font = _resolution.RenderAmount(6).ToString() + "px Consolas, monospace";
 			levelContext.FillText(_message, _resolution.RenderAmount(4), _resolution.RenderAmount(96));
+
+			// render buttons
+			_buttons.ToList().ForEach(_ => _.Render(levelContext));
 		}
 
 		public Id Update(int ms)

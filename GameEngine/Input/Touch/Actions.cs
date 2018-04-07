@@ -8,7 +8,7 @@ namespace Raspware.GameEngine.Input.Touch
 	// TODO: Implement this!
 	public sealed class Actions : IActions
 	{
-		public static IActions Instance { get; private set; } = null;
+		public static IActions Instance { get; private set; }
 		private static bool _configured { get; set; } = false;
 		private static Resolution _resolution { get; set; }
 

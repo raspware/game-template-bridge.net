@@ -35,8 +35,8 @@ namespace Raspware.ExampleGame
 			_actionRaiser = actionRaiser;
 			_resolution = resolution;
 			_layers = layers;
-			_stage = GetStage(Id.Loading);
 			_buttons = buttons;
+			_stage = GetStage(Id.Loading);
 
 			Tick();
 		}
@@ -70,7 +70,12 @@ namespace Raspware.ExampleGame
 						_actionRaiser,
 						_data,
 						NonNullList.Of(
-							_buttons.Up
+							_buttons.Up,
+							_buttons.Down,
+							_buttons.Left,
+							_buttons.Right,
+							_buttons.Cancel,
+							_buttons.Button1
 						)
 					);
 				case Id.PauseGame:
