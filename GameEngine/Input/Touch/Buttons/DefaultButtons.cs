@@ -7,40 +7,42 @@ namespace Raspware.GameEngine.Input.Touch.Buttons
 	{
 		private DefaultButtons()
 		{
-			// TODO: Sort out all OrientationTypes - Use height and width to figure it out
-			var defaultRadius = _resolution.RenderAmount(10);
-			var actionButtonsRadius = _resolution.RenderAmount(20);
-			var directionalButtonsX = _resolution.RenderAmount(2);
-			var directionalButtonsY = _resolution.RenderAmount(48);
+			var spacer = _resolution.RenderAmount(2);
+			var defaultRadius = _resolution.RenderAmount(8);
+			var actionButtonsRadius = _resolution.RenderAmount(16);
+
+
+			Down = new Button(
+				spacer + (defaultRadius * 3),
+				_resolution.Height - defaultRadius - spacer,
+				defaultRadius
+			);
 
 			Up = new Button(
-				(defaultRadius * 3) + directionalButtonsX,
-				 directionalButtonsY,
+				Down.X,
+				Down.Y - (defaultRadius * 4),
 				defaultRadius
 			);
-			Down = new Button(
-				(defaultRadius * 3) + directionalButtonsX,
-				(defaultRadius * 4) + directionalButtonsY,
-				defaultRadius
-			);
+
 			Left = new Button(
-				defaultRadius + directionalButtonsX,
-				((defaultRadius * 2)) + directionalButtonsY,
+				defaultRadius + spacer,
+				Down.Y - (defaultRadius * 2),
 				defaultRadius
 			);
+
 			Right = new Button(
-				(defaultRadius * 5) + directionalButtonsX,
-				((defaultRadius * 2)) + directionalButtonsY,
+				Left.X + (defaultRadius * 4),
+				Left.Y,
 				defaultRadius
 			);
 			Cancel = new Button(
-				_resolution.Width - (defaultRadius + _resolution.RenderAmount(2)),
-				defaultRadius + _resolution.RenderAmount(2),
+				_resolution.Width - defaultRadius - spacer,
+				defaultRadius + spacer,
 				defaultRadius
 			);
 			Button1 = new Button(
-				_resolution.Width - (actionButtonsRadius + _resolution.RenderAmount(2)),
-				_resolution.Height - (actionButtonsRadius + _resolution.RenderAmount(2)),
+				_resolution.Width - actionButtonsRadius - spacer,
+				_resolution.Height - actionButtonsRadius - spacer,
 				actionButtonsRadius
 			);
 		}
