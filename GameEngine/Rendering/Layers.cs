@@ -16,7 +16,8 @@ namespace Raspware.GameEngine.Rendering
 
 			_layers = NonNullList.Of(
 				new Layer(resolution, Id.Background, 1),
-				new Layer(resolution, Id.Level, 2)
+				new Layer(resolution, Id.Level, 2),
+				new Layer(resolution, Id.Test, 3)
 			).OrderBy(layer => layer.Order);
 		}
 
@@ -43,7 +44,8 @@ namespace Raspware.GameEngine.Rendering
 		public enum Id
 		{
 			Background,
-			Level
+			Level,
+			Test
 		}
 	}
 }
