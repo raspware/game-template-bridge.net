@@ -1,6 +1,5 @@
 ﻿using System;
 using Bridge.Html5;
-using Raspware.GameEngine.Rendering;
 using static Raspware.GameEngine.Rendering.Resolution;
 
 namespace Raspware.GameEngine.Rendering
@@ -45,7 +44,7 @@ namespace Raspware.GameEngine.Rendering
 				ResizeSquare();
 			else if (_orientation == OrientationTypes.Landscape)
 				ResizeLandscape();
-			else if (_orientation == OrientationTypes.Portrait) // TODO: Finsih this
+			else if (_orientation == OrientationTypes.Portrait)
 				ResizePortrait();
 			else
 				throw new ArgumentException(nameof(_orientation));
@@ -101,16 +100,16 @@ namespace Raspware.GameEngine.Rendering
 				_width = Window.InnerWidth;
 				_height = Window.InnerHeight;
 			}
-			else if (ratioPercent <= 0.55) // Too wide
+			else if (ratioPercent >= 0.66) // Too wide
 			{
-				_width = Math.Floor(Window.InnerHeight * 1.6);
 				_height = Window.InnerHeight;
+				_width = Math.Floor(Window.InnerHeight * 0.6);
 				_left = Math.Floor(((double)Window.InnerWidth - _width) * 0.5);
 			}
 			else // Too tall
 			{
+				_height = Math.Floor(Window.InnerWidth * 1.6);
 				_width = Window.InnerWidth;
-				_height = Math.Floor(Window.InnerWidth * 0.6);
 				_top = Math.Floor(((double)Window.InnerHeight - _height) * 0.5);
 			}
 		}
