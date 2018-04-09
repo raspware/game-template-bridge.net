@@ -43,16 +43,22 @@ namespace Raspware.ExampleGame
 			touchEvent.PreventDefault();
 			var touches = touchEvent.ChangedTouches;
 
-			var canvas = Document.GetElementById(Layers.Id.Test.ToString()).As<HTMLCanvasElement>();
+			var canvas = Document.GetElementById(Layers.Id.Controls.ToString()).As<HTMLCanvasElement>();
 			var context = canvas.GetContext(CanvasTypes.CanvasContext2DType.CanvasRenderingContext2D);
+
+			var xPercentage = (double)(touchEvent.PageX - canvas.OffsetLeft) / canvas.OffsetWidth;
+			var x = Math.Floor(Resolution.Instance.Width * xPercentage);
+
+			var yPercentage = (double)(touchEvent.PageY - canvas.OffsetTop) / canvas.OffsetHeight;
+			var y = Math.Floor(Resolution.Instance.Height * yPercentage);
 
 			for (var i = 0; i < touches.Length; i++)
 			{
 				var touch = touches[i];
 				context.BeginPath();
 				context.Arc(
-					(Resolution.Instance.Width / canvas.OffsetWidth) * touch.PageX,
-					(Resolution.Instance.Height / canvas.OffsetHeight) * touch.PageY,
+					x,
+					y,
 					Resolution.Instance.RenderAmount(8),
 					0,
 					Math.PI * 2
@@ -71,7 +77,7 @@ namespace Raspware.ExampleGame
 			var mouseEvent = e.As<MouseEvent>();
 			mouseEvent.PreventDefault();
 
-			var canvas = Document.GetElementById(Layers.Id.Test.ToString()).As<HTMLCanvasElement>();
+			var canvas = Document.GetElementById(Layers.Id.Controls.ToString()).As<HTMLCanvasElement>();
 			var context = canvas.GetContext(CanvasTypes.CanvasContext2DType.CanvasRenderingContext2D);
 
 			var xPercentage = (double)(mouseEvent.PageX - canvas.OffsetLeft) / canvas.OffsetWidth;
