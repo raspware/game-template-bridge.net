@@ -27,6 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>6</LangVersion>
+    <DocumentationFile>bin\Debug\Raspware.GameEngine.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,6 +37,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>6</LangVersion>
+    <DocumentationFile>bin\Release\Raspware.GameEngine.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Input\Keyboard\Buttons.cs" />
