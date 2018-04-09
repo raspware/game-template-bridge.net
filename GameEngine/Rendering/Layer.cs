@@ -6,7 +6,7 @@ namespace Raspware.GameEngine.Rendering
 {
 	public sealed class Layer
 	{
-		private HTMLCanvasElement CanvasElement { get; } = new HTMLCanvasElement();
+		
 
 		private OrientationTypes _orientation { get; }
 
@@ -14,6 +14,8 @@ namespace Raspware.GameEngine.Rendering
 		private double _height;
 		private double _top;
 		private double _left;
+
+		public HTMLCanvasElement CanvasElement { get; } = new HTMLCanvasElement();
 
 		public CanvasRenderingContext2D GetContext() => CanvasElement.GetContext(CanvasTypes.CanvasContext2DType.CanvasRenderingContext2D);
 		public Layers.Id Id { get; }
