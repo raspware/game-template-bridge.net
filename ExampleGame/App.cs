@@ -74,10 +74,16 @@ namespace Raspware.ExampleGame
 			var canvas = Document.GetElementById(Layers.Id.Test.ToString()).As<HTMLCanvasElement>();
 			var context = canvas.GetContext(CanvasTypes.CanvasContext2DType.CanvasRenderingContext2D);
 
+			var xPercentage = (double)(mouseEvent.PageX - canvas.OffsetLeft) / canvas.OffsetWidth;
+			var x = Math.Floor(Resolution.Instance.Width * xPercentage);
+
+			var yPercentage = (double)(mouseEvent.PageY - canvas.OffsetTop) / canvas.OffsetHeight;
+			var y = Math.Floor(Resolution.Instance.Height * yPercentage);
+
 			context.BeginPath();
 			context.Arc(
-				(Resolution.Instance.Width / canvas.OffsetWidth) * mouseEvent.PageX,
-				(Resolution.Instance.Height / canvas.OffsetHeight) * mouseEvent.PageY,
+				x,
+				y,
 				Resolution.Instance.RenderAmount(8),
 				0,
 				Math.PI * 2
