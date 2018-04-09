@@ -10,33 +10,33 @@ namespace Raspware.GameEngine.Input.Touch
 	{
 		public static IActions Instance { get; private set; }
 		private static bool _configured { get; set; } = false;
-		private static Resolution _resolution { get; set; }
-
-		private Actions(Resolution resolution, IButtons buttons)
+		private Actions(Resolution resolution, IButtons buttons, Layer layer)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
 			if (buttons == null)
 				throw new ArgumentNullException(nameof(buttons));
+			if (layer == null)
+				throw new ArgumentNullException(nameof(layer));
 
-			Up = new Events(resolution, buttons.Up);
-			Down = new Events(resolution, buttons.Down);
-			Left = new Events(resolution, buttons.Left);
-			Right = new Events(resolution, buttons.Right);
-			Cancel = new Events(resolution, buttons.Cancel);
-			Button1 = new Events(resolution, buttons.Button1);
+			Up = new Events(resolution, buttons.Up, layer);
+			Down = new Events(resolution, buttons.Down, layer);
+			Left = new Events(resolution, buttons.Left, layer);
+			Right = new Events(resolution, buttons.Right, layer);
+			Cancel = new Events(resolution, buttons.Cancel, layer);
+			Button1 = new Events(resolution, buttons.Button1, layer);
 		}
 
-		public static void ConfigureInstance(Resolution _resolution, IButtons buttons)
+		public static void ConfigureInstance(Resolution resolution, IButtons buttons, Layer layer)
 		{
 			if (_configured)
 				throw new Exception($"'{nameof(Instance)}' has already been configured!");
-			if (_resolution == null)
-				throw new ArgumentNullException(nameof(_resolution));
+			if (resolution == null)
+				throw new ArgumentNullException(nameof(resolution));
 			if (buttons == null)
 				throw new ArgumentNullException(nameof(buttons));
-
-			Instance = new Actions(_resolution, buttons);
+			
+			Instance = new Actions(resolution, buttons, layer);
 			_configured = true;
 		}
 
