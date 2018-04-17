@@ -39,7 +39,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Touch.cs" />
+    <Compile Include="Mouse_With_Fullscreen_And_Touch_Zoom_Cancel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bridge.json" />

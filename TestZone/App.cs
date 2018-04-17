@@ -4,7 +4,7 @@
 	{
 		public static void Main()
 		{
-			Touch.Run();
+			Mouse_With_Fullscreen_And_Touch_Zoom_Cancel.Run();
 		}
 	}
 }
