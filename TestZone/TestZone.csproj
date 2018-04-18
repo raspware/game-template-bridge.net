@@ -40,6 +40,7 @@
     <Compile Include="App.cs" />
     <Compile Include="Mouse_With_Fullscreen_And_Touch_Zoom_Cancel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReusableObjects\Position.cs" />
     <Compile Include="Touch_With_Collision.cs" />
     <Compile Include="ReusableObjects\Button.cs" />
     <Compile Include="ReusableObjects\Circle.cs" />

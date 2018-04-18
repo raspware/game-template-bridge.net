@@ -138,10 +138,8 @@ Purto complectitur est ne, ex possit persius persecuti sit. Percipit elaboraret 
 				OnTouchMove = CancelDefault,
 				OnMouseMove = (ev) =>
 				{
-					var xPercentage = (double)(ev.PageX - (ev.Target.OffsetLeft + wrapper.OffsetLeft)) / ev.Target.OffsetWidth;
-					var x = Convert.ToInt32(Math.Floor(Width * xPercentage));
-					var yPercentage = (double)(ev.PageY - (ev.Target.OffsetTop + wrapper.OffsetTop)) / ev.Target.OffsetHeight;
-					var y = Convert.ToInt32(Math.Floor(Height * yPercentage));
+					var x = ReusableObjects.Position.GetEventX(Width, ev, wrapper);
+					var y = ReusableObjects.Position.GetEventY(Height, ev, wrapper);
 					var context = ev.Target.GetContext("2d").As<CanvasRenderingContext2D>();
 					context.ClearRect(0, 0, Width, Height);
 					context.BeginPath();
