@@ -58,7 +58,6 @@ namespace Raspware.TestZone
 					Y = 800
 				}
 			}
-
 		};
 
 		public static void Run()
@@ -93,21 +92,17 @@ namespace Raspware.TestZone
 					var touches = touchEvent.ChangedTouches;
 					foreach (var touch in touches)
 					{
-						var xPercentage = (double)(touch.PageX - (touch.Target.OffsetLeft + wrapper.OffsetLeft)) / touch.Target.OffsetWidth;
-						var x = Convert.ToInt32(Math.Floor(Width * xPercentage));
-						var yPercentage = (double)(touch.PageY - (touch.Target.OffsetTop + wrapper.OffsetTop)) / touch.Target.OffsetHeight;
-						var y = Convert.ToInt32(Math.Floor(Height * yPercentage));
-						if (!_currentTouches.ContainsKey(touch.Identifier))
-							_currentTouches.Add(
-								touch.Identifier,
-								new Circle()
-								{
-									X = x,
-									Y = y
-								}
-							);
+						if (_currentTouches.ContainsKey(touch.Identifier))
+							continue;
 
-						SetButtons();
+						_currentTouches.Add(
+							touch.Identifier,
+							new Circle()
+							{
+								X = ReusableObjects.Position.GetEventX(Width, touch, wrapper),
+								Y = ReusableObjects.Position.GetEventY(Height, touch, wrapper)
+							}
+						);
 					}
 				},
 				OnTouchMove = (touchEvent) =>
@@ -115,23 +110,14 @@ namespace Raspware.TestZone
 					var touches = touchEvent.ChangedTouches;
 					foreach (var touch in touches)
 					{
-						// if a collision is found
-						// make the button active
-						// break from the 'foreach'
-
-						var xPercentage = (double)(touch.PageX - (touch.Target.OffsetLeft + wrapper.OffsetLeft)) / touch.Target.OffsetWidth;
-						var x = Convert.ToInt32(Math.Floor(Width * xPercentage));
-						var yPercentage = (double)(touch.PageY - (touch.Target.OffsetTop + wrapper.OffsetTop)) / touch.Target.OffsetHeight;
-						var y = Convert.ToInt32(Math.Floor(Height * yPercentage));
-
-						// TODO: Maybe we want to know if it does not find this
 						if (!_currentTouches.ContainsKey(touch.Identifier))
-							return;
+							continue;
+
+						var x = ReusableObjects.Position.GetEventX(Width, touch, wrapper);
+						var y = ReusableObjects.Position.GetEventY(Height, touch, wrapper);
 
 						_currentTouches.Get(touch.Identifier).X = x;
 						_currentTouches.Get(touch.Identifier).Y = y;
-
-						SetButtons();
 					}
 				},
 				OnTouchEnd = OnTouchEndLeaveAndCancel,
@@ -171,8 +157,6 @@ namespace Raspware.TestZone
 				if (_currentTouches.ContainsKey(touch.Identifier))
 					_currentTouches.Remove(touch.Identifier);
 			}
-
-			SetButtons();
 		}
 
 		public static void SetButtons()
@@ -191,6 +175,8 @@ namespace Raspware.TestZone
 
 		private static void Tick()
 		{
+			SetButtons();
+
 			var context = _controls.GetContext(CanvasTypes.CanvasContext2DType.CanvasRenderingContext2D);
 			context.ClearRect(0, 0, Width, Height);
 

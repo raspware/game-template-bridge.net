@@ -10,9 +10,9 @@ namespace Raspware.TestZone.ReusableObjects
 			return _GetEventXOrY(width, _GetXorYPercentage(mouseEvent.PageX, mouseEvent.Target.OffsetLeft, mouseEvent.Target.OffsetWidth, wrapper.OffsetLeft));
 		}
 
-		public static int GetEventX(int width, TouchEvent<HTMLCanvasElement> touchEvent, HTMLDivElement wrapper)
+		public static int GetEventX(int width, Touch touch, HTMLDivElement wrapper)
 		{
-			return _GetEventXOrY(width, _GetXorYPercentage(touchEvent.PageX, touchEvent.Target.OffsetLeft, touchEvent.Target.OffsetWidth, wrapper.OffsetLeft));
+			return _GetEventXOrY(width, _GetXorYPercentage(touch.PageX, touch.Target.OffsetLeft, touch.Target.OffsetWidth, wrapper.OffsetLeft));
 		}
 
 		public static int GetEventY(int height, MouseEvent<HTMLCanvasElement> mouseEvent, HTMLDivElement wrapper)
@@ -20,9 +20,9 @@ namespace Raspware.TestZone.ReusableObjects
 			return _GetEventXOrY(height, _GetXorYPercentage(mouseEvent.PageY, mouseEvent.Target.OffsetTop, mouseEvent.Target.OffsetHeight, wrapper.OffsetTop));
 		}
 
-		public static int GetEventY(int height, TouchEvent<HTMLCanvasElement> touchEvent, HTMLDivElement wrapper)
+		public static int GetEventY(int height, Touch touch, HTMLDivElement wrapper)
 		{
-			return _GetEventXOrY(height, _GetXorYPercentage(touchEvent.PageY, touchEvent.Target.OffsetTop, touchEvent.Target.OffsetHeight, wrapper.OffsetTop));
+			return _GetEventXOrY(height, _GetXorYPercentage(touch.PageY, touch.Target.OffsetTop, touch.Target.OffsetHeight, wrapper.OffsetTop));
 		}
 
 		private static int _GetEventXOrY(int widthOrHeight, double xOrYPercentage)
