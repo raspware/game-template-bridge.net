@@ -62,7 +62,9 @@ namespace Raspware.ExampleGame
 				case Id.Loading:
 					return new Loading(_resolution, _layers, _data);
 				case Id.Opening:
-					return new Opening(_resolution, _layers);
+					return new Opening(_resolution, _layers, _data);
+				case Id.Title:
+					return new Title(_resolution, _layers);
 				case Id.Level:
 					return new Level(
 						_resolution,

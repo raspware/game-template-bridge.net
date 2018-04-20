@@ -9,6 +9,7 @@ namespace Raspware.ExampleGame
 		public int Lives;
 		public int TimePassed;
 		public HTMLImageElement Image { get; set; }
+		public HTMLAudioElement OpeningMusic { get; set; }
 
 		public static Data Instance { get; } = new Data();
 
@@ -33,6 +34,22 @@ namespace Raspware.ExampleGame
 
 			Image = image; // will get raised, when the work is done
 
+			return promise.Task;
+		}
+
+		public Task<HTMLAudioElement> LoadAudio()
+		{
+			var promise = new TaskCompletionSource<HTMLAudioElement>();
+			var audio = new HTMLAudioElement()
+			{
+				Src = "audio/Theme.ogg",
+				OnLoadedData = (ev) =>
+				{
+					promise.SetResult(ev.CurrentTarget);
+				}
+			};
+
+			OpeningMusic = audio; // will get raised, when the work is done
 			return promise.Task;
 		}
 	}

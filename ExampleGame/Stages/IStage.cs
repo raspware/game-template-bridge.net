@@ -4,6 +4,7 @@
 	{
 		Loading,
 		Opening,
+		Title,
 		Level,
 		PauseGame,
 		GameOver,

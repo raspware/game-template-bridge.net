@@ -48,6 +48,7 @@ namespace Raspware.ExampleGame.Stages
 			if (_displayedScreen)
 			{
 				_data.LoadImage();
+				_data.LoadAudio();
 				return Id.Opening;
 			}
 

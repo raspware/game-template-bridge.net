@@ -57,7 +57,7 @@ namespace Raspware.ExampleGame.Stages
 			if (_timePassed >= 3000)
 			{
 				_data.Reset(); // Since as this data is no longer needed, reset it.
-				return Id.Opening;
+				return Id.Title;
 			}
 
 			return Id;

@@ -47,6 +47,7 @@
     <Compile Include="Stages\Level.cs" />
     <Compile Include="Stages\Loading.cs" />
     <Compile Include="Stages\Opening.cs" />
+    <Compile Include="Stages\Title.cs" />
     <Compile Include="Stages\PauseGame.cs" />
   </ItemGroup>
   <ItemGroup>
