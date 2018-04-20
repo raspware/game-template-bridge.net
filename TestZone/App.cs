@@ -4,7 +4,7 @@
 	{
 		public static void Main()
 		{
-			Touch_With_Collision.Run();
+			Audio.Run();
 		}
 	}
 }
