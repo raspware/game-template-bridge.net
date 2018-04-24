@@ -11,14 +11,18 @@ namespace Encoder
 		static void Main(string[] args)
 		{
 			// Ref: https://stackoverflow.com/questions/25919387/c-sharp-converting-file-into-base64string-and-back-again
+			var resourcePathBase = @"..\..\..\Resources\";
 
-			var audioDict = new Dictionary<string, string>();
 			var audioLocation = new DirectoryInfo(
-				Path.Combine(
-					Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-					"audio"
+				Path.GetFullPath(
+					Path.Combine(
+						Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+						resourcePathBase + "Audio"
+					)
 				)
 			);
+
+			var audioDict = new Dictionary<string, string>();
 			audioLocation.EnumerateFiles("*.*", SearchOption.AllDirectories).ToList()
 			   .ForEach(
 					file => audioDict.Add(
@@ -28,13 +32,17 @@ namespace Encoder
 				);
 
 
-			var imagesDict = new Dictionary<string, string>();
+			
 			var imagesLocation = new DirectoryInfo(
-				Path.Combine(
-					Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-					"images"
+				Path.GetFullPath(
+					Path.Combine(
+						Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+						resourcePathBase + "Images"
+					)
 				)
 			);
+
+			var imagesDict = new Dictionary<string, string>();
 			imagesLocation.EnumerateFiles("*.*", SearchOption.AllDirectories).ToList()
 			   .ForEach(
 					file => imagesDict.Add(
@@ -43,8 +51,6 @@ namespace Encoder
 					)
 				);
 
-			// TODO: Make it target a folder that does not need to copy files into the 'debug' folder as indicating that a file should be copied in the
-			// properties panel will tedious if there is loads of files.
 			// TODO: Make this generate a 'resources' static class that can be used by the Bridge game.
 			// TODO: Strengthen up checking if a file/direcrtory exsists or not 'Directory.Exists(path)'.
 		}
