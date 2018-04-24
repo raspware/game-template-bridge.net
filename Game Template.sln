@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleGame", "ExampleGame\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestZone", "TestZone\TestZone.csproj", "{1998C34B-C0CB-4628-A3D3-AC1530218533}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Encoder", "Encoder\Encoder.csproj", "{C7A677CF-7531-425E-A7EF-FF02B135BAB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{1998C34B-C0CB-4628-A3D3-AC1530218533}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1998C34B-C0CB-4628-A3D3-AC1530218533}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1998C34B-C0CB-4628-A3D3-AC1530218533}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7A677CF-7531-425E-A7EF-FF02B135BAB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7A677CF-7531-425E-A7EF-FF02B135BAB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7A677CF-7531-425E-A7EF-FF02B135BAB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7A677CF-7531-425E-A7EF-FF02B135BAB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
