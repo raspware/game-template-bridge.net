@@ -36,7 +36,7 @@ namespace Raspware.ExampleGame
 			_resolution = resolution;
 			_layers = layers;
 			_buttons = buttons;
-			_stage = GetStage(Id.Loading);
+			_stage = GetStage(Id.Opening);
 
 			Tick();
 		}
@@ -59,8 +59,6 @@ namespace Raspware.ExampleGame
 		{
 			switch (id)
 			{
-				case Id.Loading:
-					return new Loading(_resolution, _layers, _data);
 				case Id.Opening:
 					return new Opening(_resolution, _layers, _data);
 				case Id.Title:

@@ -2,7 +2,6 @@
 {
 	public enum Id
 	{
-		Loading,
 		Opening,
 		Title,
 		Level,
