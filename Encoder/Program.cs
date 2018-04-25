@@ -6,53 +6,46 @@ using System.Reflection;
 
 namespace Encoder
 {
-	class Program
+	public static class Program
 	{
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
-			// Ref: https://stackoverflow.com/questions/25919387/c-sharp-converting-file-into-base64string-and-back-again
-			var resourcePathBase = @"..\..\..\Resources\";
-
-			var audioLocation = new DirectoryInfo(
-				Path.GetFullPath(
-					Path.Combine(
-						Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-						resourcePathBase + "Audio"
-					)
-				)
+			var audio = GetDictionary(
+				GetResourceLocation("Audio"),
+				"audio"
 			);
 
-			var audioDict = new Dictionary<string, string>();
-			audioLocation.EnumerateFiles("*.*", SearchOption.AllDirectories).ToList()
-			   .ForEach(
-					file => audioDict.Add(
-						file.Name.Split('.').First().ToLower(),
-						$"data:audio/{file.Extension.Split('.').Last()};base64,{Convert.ToBase64String(File.ReadAllBytes(file.FullName))}"
-					)
-				);
-
-
-			
-			var imagesLocation = new DirectoryInfo(
-				Path.GetFullPath(
-					Path.Combine(
-						Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-						resourcePathBase + "Images"
-					)
-				)
+			var images = GetDictionary(
+				GetResourceLocation("Images"),
+				"image"
 			);
-
-			var imagesDict = new Dictionary<string, string>();
-			imagesLocation.EnumerateFiles("*.*", SearchOption.AllDirectories).ToList()
-			   .ForEach(
-					file => imagesDict.Add(
-						file.Name.Split('.').First().ToLower(),
-						$"data:image/{file.Extension.Split('.').Last()};base64,{Convert.ToBase64String(File.ReadAllBytes(file.FullName))}"
-					)
-				);
 
 			// TODO: Make this generate a 'resources' static class that can be used by the Bridge game.
+
+		}
+
+		private static DirectoryInfo GetResourceLocation(string folderName)
+		{
 			// TODO: Strengthen up checking if a file/direcrtory exsists or not 'Directory.Exists(path)'.
+			return new DirectoryInfo(
+				Path.GetFullPath(
+					Path.Combine(
+						Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+						@"..\..\..\Resources\" + folderName
+					)
+				)
+			);
+		}
+
+		private static Dictionary<string, string> GetDictionary(DirectoryInfo location, string type)
+		{
+			// TODO: Maybe this needs some validation
+			// Ref: https://stackoverflow.com/questions/25919387/c-sharp-converting-file-into-base64string-and-back-again
+			return location.EnumerateFiles("*.*", SearchOption.AllDirectories)
+				.ToDictionary(
+					file => file.Name.Split('.').First().ToLower(),
+					file => $"data:{type}/{file.Extension.Split('.').Last()};base64,{Convert.ToBase64String(File.ReadAllBytes(file.FullName))}"
+				);
 		}
 	}
 }
