@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace Encoder
 {
@@ -20,8 +21,37 @@ namespace Encoder
 				"image"
 			);
 
-			// TODO: Make this generate a 'resources' static class that can be used by the Bridge game.
+			var writer = new StringBuilder();
+			writer.AppendLine($"namespace Raspware.ExampleGame.Resources");
+			writer.AppendLine("{");
 
+			writer.AppendLine("\tpublic static class Audio");
+			writer.AppendLine("\t{");
+			audio.ToList().ForEach(_ => writer.AppendLine($"\t\tpublic static readonly string {_.Key.ToLower()} = \"{_.Value}\";"));
+			writer.AppendLine("\t}");
+
+			writer.AppendLine("\n\tpublic static class Images");
+			writer.AppendLine("\t{");
+			images.ToList().ForEach(_ => writer.AppendLine($"\t\tpublic static readonly string {_.Key.ToLower()} = \"{_.Value}\";"));
+			writer.AppendLine("\t}");
+
+			writer.AppendLine("}");
+
+			var output = writer.ToString();
+
+			// TODO: Maybe do some logging? As there is only one file, not sure if we need to do a lock.
+			var controlFile = new FileInfo(Path.GetFullPath(
+					Path.Combine(
+						Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+						@"..\..\..\ExampleGame\",
+						"Resources.cs"
+					)
+				));
+
+			File.WriteAllText(controlFile.FullName, output);
+
+			Console.WriteLine("Done!");
+			Console.ReadKey();
 		}
 
 		private static DirectoryInfo GetResourceLocation(string folderName)
