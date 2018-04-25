@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using Bridge.Html5;
 using ProductiveRage.Immutable;
 using Raspware.GameEngine.Input;
 using Raspware.GameEngine.Input.Touch.Buttons;
 using Raspware.GameEngine.Rendering;
+
 namespace Raspware.ExampleGame.Stages
 {
 	public sealed class Level : IStage
@@ -14,6 +16,7 @@ namespace Raspware.ExampleGame.Stages
 		private readonly NonNullList<Button> _buttons;
 		private string _message;
 		private Data _data;
+		private readonly HTMLImageElement _image;
 
 		public Id Id => Id.Level;
 
@@ -35,8 +38,9 @@ namespace Raspware.ExampleGame.Stages
 			_actionRaiser = actionRaiser;
 			_data = data;
 			_buttons = buttons;
+			_image = new HTMLImageElement() { Src = Resources.Images.test };
 		}
-		
+
 		public void Draw()
 		{
 			if (_message == "")
@@ -50,7 +54,7 @@ namespace Raspware.ExampleGame.Stages
 
 			levelContext.FillStyle = "white";
 
-			levelContext.DrawImage(_data.Image, 0, 0);
+			levelContext.DrawImage(_image, 0, 0);
 
 			levelContext.Font = _resolution.RenderAmount(10).ToString() + "px Consolas, monospace";
 			levelContext.FillText("Playing Game", _resolution.RenderAmount(4), _resolution.RenderAmount(12));

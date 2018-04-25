@@ -12,6 +12,7 @@ namespace Raspware.ExampleGame.Stages
 		private string _message;
 		private int _timePassed = 0;
 		private bool _musicPlayed = false;
+		private HTMLAudioElement _music;
 
 		private double _alpha = 1;
 
@@ -29,7 +30,9 @@ namespace Raspware.ExampleGame.Stages
 			_layers = layers;
 			_data = data;
 
-			_data.OpeningMusic.Play();
+			_music = new HTMLAudioElement() { Src = Resources.Audio.theme };
+			_music.Play();
+			_music.AddEventListener(EventType.Ended, ev => { _musicPlayed = true; });
 		}
 
 		public void Draw()
@@ -64,10 +67,6 @@ namespace Raspware.ExampleGame.Stages
 
 			if (_timePassed > 1000)
 				_alpha = 0;
-
-			_data.OpeningMusic.AddEventListener(EventType.Ended, ev => {
-				_musicPlayed = true;
-			});
 
 			if (_musicPlayed)
 				return Id.Title;
