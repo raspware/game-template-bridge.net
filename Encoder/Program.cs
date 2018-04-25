@@ -7,6 +7,7 @@ using System.Text;
 
 namespace Encoder
 {
+
 	public static class Program
 	{
 		private static void Main(string[] args)
@@ -21,15 +22,18 @@ namespace Encoder
 				"image"
 			);
 
+			var summary = "/// <summary>This is automatically generated, DO NOT EDIT!</summary>";
+
 			var writer = new StringBuilder();
 			writer.AppendLine($"namespace Raspware.ExampleGame.Resources");
 			writer.AppendLine("{");
-
+			writer.AppendLine($"\t{summary}");
 			writer.AppendLine("\tpublic static class Audio");
 			writer.AppendLine("\t{");
 			audio.ToList().ForEach(_ => writer.AppendLine($"\t\tpublic static readonly string {_.Key.ToLower()} = \"{_.Value}\";"));
 			writer.AppendLine("\t}");
 
+			writer.AppendLine($"\t{summary}");
 			writer.AppendLine("\n\tpublic static class Images");
 			writer.AppendLine("\t{");
 			images.ToList().ForEach(_ => writer.AppendLine($"\t\tpublic static readonly string {_.Key.ToLower()} = \"{_.Value}\";"));
