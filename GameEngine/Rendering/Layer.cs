@@ -57,6 +57,7 @@ namespace Raspware.GameEngine.Rendering
 			CanvasElement.Style.Width = _width + "px";
 		}
 
+		// TODO: Switch over to use a wrapping div tag rather than the window. Look at the 'Mouse_With_Fullscreen_And_Touch_Zoom_Cancel' example.
 		public void ResizeSquare()
 		{
 			if (Window.InnerHeight > Window.InnerWidth)
