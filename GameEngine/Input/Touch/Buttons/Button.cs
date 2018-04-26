@@ -4,7 +4,7 @@ using Bridge.Html5;
 namespace Raspware.GameEngine.Input.Touch.Buttons
 {
 	// TODO: Finish this
-	public sealed class Button
+	public class Button
 	{
 		public Button(int x, int y, double radius)
 		{
@@ -13,10 +13,9 @@ namespace Raspware.GameEngine.Input.Touch.Buttons
 			Radius = radius;
 		}
 
-		public int X { get; }
-		public int Y { get; }
-		public double Radius { get; }
-
+		public int X;
+		public int Y;
+		public double Radius;
 		// TODO: Turn this into an override memeber
 		public void Render(CanvasRenderingContext2D context)
 		{
