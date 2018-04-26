@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Encoder
+namespace Raspware.Base64ResourceEncoder
 {
 
 	public static class Program
