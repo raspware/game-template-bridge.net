@@ -13,8 +13,9 @@ namespace Raspware.ExampleGame
 			Resolution.ConfigureInstance(Resolution.PixelSize._FHD, Resolution.OrientationTypes.Landscape);
 			var resolution = Resolution.Instance;
 
-			DefaultButtons.ConfigureInstance(resolution);
 			Layers.ConfigureInstance(resolution);
+			DefaultButtons.ConfigureInstance(resolution);
+			
 			var touchButtons = DefaultButtons.Instance;
 			GameEngine.Input.Touch.Actions.ConfigureInstance(
 				resolution,
@@ -35,8 +36,8 @@ namespace Raspware.ExampleGame
 				touchButtons
 			);
 
-			Document.AddEventListener(EventType.TouchStart, TouchTest);
-			Document.AddEventListener(EventType.MouseDown, MouseTest);
+			//Document.AddEventListener(EventType.TouchStart, TouchTest);
+			//Document.AddEventListener(EventType.MouseDown, MouseTest);
 		}
 
 		public static void TouchTest(Event e)

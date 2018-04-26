@@ -31,7 +31,6 @@ namespace Raspware.GameEngine.Rendering
 			Order = order;
 			CanvasElement.Width = resolution.Width;
 			CanvasElement.Height = resolution.Height;
-			CanvasElement.Id = Id.ToString();
 			Document.Body.AppendChild(CanvasElement);
 			Window.AddEventListener(EventType.Resize, Resize);
 			Resize();
