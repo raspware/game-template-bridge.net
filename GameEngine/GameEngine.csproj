@@ -44,6 +44,7 @@
     <Compile Include="Input\Touch\Buttons\IButtons.cs" />
     <Compile Include="Input\Touch\Buttons\DefaultButtons.cs" />
     <Compile Include="Input\Touch\Buttons\Button.cs" />
+    <Compile Include="Input\Touch\Buttons\TemporaryTouch.cs" />
     <Compile Include="Rendering\Resolution.cs" />
     <Compile Include="Input\Combined\Actions.cs" />
     <Compile Include="Input\Combined\Events.cs" />
@@ -82,6 +83,7 @@
     <Reference Include="ProductiveRage.Immutable.Extensions, Version=2.5.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ProductiveRage.Immutable.Extensions.2.5.5\lib\net40\ProductiveRage.Immutable.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Bridge.React.3.1.7\analyzers\dotnet\cs\Bridge.React.Analyser.dll" />
