@@ -1,5 +1,4 @@
-﻿using System;
-using Bridge.Html5;
+﻿using Bridge.Html5;
 
 namespace Raspware.GameEngine.Input.Keyboard
 
@@ -14,27 +13,25 @@ namespace Raspware.GameEngine.Input.Keyboard
 		public Events(Buttons keyCode)
 		{
 			_keyCode = (int)keyCode;
-			Document.AddEventListener(EventType.KeyDown, InputKeyDown);
-			Document.AddEventListener(EventType.KeyUp, InputKeyUp);
 		}
 
-		private void InputKeyDown(Event e)
+		public void InputKeyDown(KeyboardEvent e)
 		{
-			if (e.IsKeyboardEvent() && e.As<KeyboardEvent>().KeyCode == _keyCode)
-			{
-				_keyDown = true;
-				_keyUp = false;
-			}
+			if (e.KeyCode != _keyCode)
+				return;
+
+			_keyDown = true;
+			_keyUp = false;
 		}
 
-		private void InputKeyUp(Event e)
+		public void InputKeyUp(KeyboardEvent e)
 		{
-			if (e.IsKeyboardEvent() && e.As<KeyboardEvent>().KeyCode == _keyCode)
-			{
-				_keyDown = false;
-				_keyUp = true;
-				_onceOnKeyDownLock = false;
-			}
+			if (e.KeyCode != _keyCode)
+				return;
+
+			_keyDown = false;
+			_keyUp = true;
+			_onceOnKeyDownLock = false;
 		}
 
 		public bool PressedDown()
