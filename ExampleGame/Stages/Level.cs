@@ -38,7 +38,7 @@ namespace Raspware.ExampleGame.Stages
 			_actionRaiser = actionRaiser;
 			_data = data;
 			_buttons = buttons;
-			_image = new HTMLImageElement() { Src = Resources.Images.test };
+			_image = new HTMLImageElement() { Src = Resources.Image.Test };
 		}
 
 		public void Draw()

@@ -30,7 +30,7 @@ namespace Raspware.ExampleGame.Stages
 			_layers = layers;
 			_data = data;
 
-			_music = new HTMLAudioElement() { Src = Resources.Audio.theme };
+			_music = new HTMLAudioElement() { Src = Resources.Audio.Theme };
 			_music.Play();
 			_music.AddEventListener(EventType.Ended, ev => { _musicPlayed = true; });
 		}

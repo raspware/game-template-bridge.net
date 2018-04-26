@@ -12,39 +12,20 @@ namespace Encoder
 	{
 		private static void Main(string[] args)
 		{
-			var audio = GetDictionary(
-				GetResourceLocation("Audio"),
-				"audio"
-			);
-
-			var images = GetDictionary(
-				GetResourceLocation("Images"),
-				"image"
-			);
-
-			var summary = "/// <summary>This is automatically generated, DO NOT EDIT!</summary>";
-
 			var writer = new StringBuilder();
 			writer.AppendLine($"namespace Raspware.ExampleGame.Resources");
 			writer.AppendLine("{");
-			writer.AppendLine($"\t{summary}");
-			writer.AppendLine("\tpublic static class Audio");
-			writer.AppendLine("\t{");
-			audio.ToList().ForEach(_ => writer.AppendLine($"\t\tpublic static readonly string {_.Key.ToLower()} = \"{_.Value}\";"));
-			writer.AppendLine("\t}");
 
-			writer.AppendLine($"\t{summary}");
-			writer.AppendLine("\n\tpublic static class Images");
-			writer.AppendLine("\t{");
-			images.ToList().ForEach(_ => writer.AppendLine($"\t\tpublic static readonly string {_.Key.ToLower()} = \"{_.Value}\";"));
-			writer.AppendLine("\t}");
+			WriteOutClass(writer, new Resource("Audio"));
+			writer.Append("\n");
+			WriteOutClass(writer, new Resource("Image"));
 
-			writer.AppendLine("}");
+			writer.Append("}");
 
 			var output = writer.ToString();
 
 			// TODO: Maybe do some logging? As there is only one file, not sure if we need to do a lock.
-			var controlFile = new FileInfo(Path.GetFullPath(
+			var resourceFile = new FileInfo(Path.GetFullPath(
 					Path.Combine(
 						Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
 						@"..\..\..\ExampleGame\",
@@ -52,10 +33,31 @@ namespace Encoder
 					)
 				));
 
-			File.WriteAllText(controlFile.FullName, output);
+			File.WriteAllText(resourceFile.FullName, output);
 
 			Console.WriteLine("Done!");
 			Console.ReadKey();
+		}
+
+		private static void WriteOutClass(StringBuilder writer, Resource resourse)
+		{
+			writer.AppendLine($"\t/// <summary>This is automatically generated, DO NOT EDIT!</summary>");
+			writer.AppendLine($"\tpublic static class {resourse.Type}");
+			writer.AppendLine("\t{");
+			resourse.Dictionary.ToList().ForEach(_ => writer.AppendLine($"\t\tpublic static readonly string {_.Key} = \"{_.Value}\";"));
+			writer.AppendLine("\t}");
+		}
+	}
+
+	public sealed class Resource
+	{
+		public Resource(string folderNameAndType)
+		{
+			if (string.IsNullOrWhiteSpace(folderNameAndType))
+				throw new ArgumentNullException(nameof(folderNameAndType));
+
+			Type = folderNameAndType;
+			Dictionary = GetDictionary(GetResourceLocation(folderNameAndType));
 		}
 
 		private static DirectoryInfo GetResourceLocation(string folderName)
@@ -71,15 +73,19 @@ namespace Encoder
 			);
 		}
 
-		private static Dictionary<string, string> GetDictionary(DirectoryInfo location, string type)
+		private static Dictionary<string, string> GetDictionary(DirectoryInfo location)
 		{
 			// TODO: Maybe this needs some validation
-			// Ref: https://stackoverflow.com/questions/25919387/c-sharp-converting-file-into-base64string-and-back-again
-			return location.EnumerateFiles("*.*", SearchOption.AllDirectories)
+			return location.EnumerateFiles("*.*", SearchOption.TopDirectoryOnly)
 				.ToDictionary(
-					file => file.Name.Split('.').First().ToLower(),
-					file => $"data:{type}/{file.Extension.Split('.').Last()};base64,{Convert.ToBase64String(File.ReadAllBytes(file.FullName))}"
+					file => file.Name.Split('.').First(),
+
+					// Ref: https://stackoverflow.com/questions/25919387/c-sharp-converting-file-into-base64string-and-back-again
+					file => $"data:{location.Name.ToLower()}/{file.Extension.Split('.').Last()};base64,{Convert.ToBase64String(File.ReadAllBytes(file.FullName))}"
 				);
 		}
+
+		public Dictionary<string, string> Dictionary { get; }
+		public string Type { get; }
 	}
 }
