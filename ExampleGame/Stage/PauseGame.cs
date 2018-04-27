@@ -3,7 +3,7 @@ using Raspware.GameEngine.Input;
 using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
 
-namespace Raspware.ExampleGame.Stages
+namespace Raspware.ExampleGame.Stage
 {
 	public sealed class PauseGame : IStage
 	{
@@ -11,7 +11,7 @@ namespace Raspware.ExampleGame.Stages
 		private readonly Button _escape;
 		private bool _displayedScreen = false;
 
-		public Id Id => Id.PauseGame;
+		public int Id => Stage.Id.PauseGame;
 
 		public PauseGame(IEvents onCancel, Button cancel)
 		{
@@ -47,10 +47,10 @@ namespace Raspware.ExampleGame.Stages
 			_displayedScreen = true;
 		}
 
-		public Id Update(int ms)
+		public int Update(int ms)
 		{
 			if (_onEscape.OnceOnPressDown())
-				return Id.Level;
+				return Stage.Id.Level;
 
 			return Id;
 		}

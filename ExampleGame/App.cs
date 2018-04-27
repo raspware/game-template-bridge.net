@@ -1,8 +1,7 @@
 ﻿using System;
-using Bridge.Html5;
 using ProductiveRage.Immutable;
-using Raspware.GameEngine.Input.Shared;
-using Raspware.GameEngine.Rendering;
+using Raspware.ExampleGame.Stage;
+using Raspware.GameEngine;
 
 namespace Raspware.ExampleGame
 {
@@ -10,101 +9,41 @@ namespace Raspware.ExampleGame
 	{
 		public static void Main()
 		{
-			Resolution.ConfigureInstance(Resolution.PixelSize._FHD, Resolution.OrientationTypes.Landscape);
-			Layers.ConfigureInstance();
-			DefaultButtons.ConfigureInstance();
-
-			GameEngine.Input.Mouse.Actions.ConfigureInstance(
-				DefaultButtons.Instance,
-				Layers.Instance.GetLayer(Layers.Id.Controls)
-			);
-			GameEngine.Input.Touch.Actions.ConfigureInstance(
-				DefaultButtons.Instance,
-				Layers.Instance.GetLayer(Layers.Id.Controls)
-			);
-
-			// TODO: Turn 'Layers' into an interface.
-			// TODO: Pass in NonNullList of 'Layer' rather than presume we are going to use 'Layers'.
-			new Game(
-				new GameEngine.Input.Combined.Actions(
-					NonNullList.Of(
-						GameEngine.Input.Keyboard.Actions.Instance,
-						GameEngine.Input.Mouse.Actions.Instance,
-						GameEngine.Input.Touch.Actions.Instance
-					)
-				),
-				DefaultButtons.Instance
-			);
-
-			//Document.AddEventListener(EventType.TouchStart, TouchTest);
-			//Document.AddEventListener(EventType.MouseDown, MouseTest);
+			Game.ConfigureInstance(GetStage);
+			Game.Instance.Run(Id.Opening);
 		}
 
-		public static void TouchTest(Event e)
+		public static IStage GetStage(int id)
 		{
-			var touchEvent = e.As<TouchEvent>();
-			touchEvent.PreventDefault();
+			var actionRaiser = Game.Instance.ActionRaiser;
+			var buttons = Game.Instance.Buttons;
 
-			var touches = touchEvent.ChangedTouches;
-
-			var canvas = Document.GetElementById(Layers.Id.Controls.ToString()).As<HTMLCanvasElement>();
-			var context = canvas.GetContext(CanvasTypes.CanvasContext2DType.CanvasRenderingContext2D);
-
-			var xPercentage = (double)(touchEvent.PageX - canvas.OffsetLeft) / canvas.OffsetWidth;
-			var x = Math.Floor(Resolution.Instance.Width * xPercentage);
-
-			var yPercentage = (double)(touchEvent.PageY - canvas.OffsetTop) / canvas.OffsetHeight;
-			var y = Math.Floor(Resolution.Instance.Height * yPercentage);
-
-			for (var i = 0; i < touches.Length; i++)
+			switch (id)
 			{
-				var touch = touches[i];
-				context.BeginPath();
-				context.Arc(
-					x,
-					y,
-					Resolution.Instance.RenderAmount(8),
-					0,
-					Math.PI * 2
-				);
-				context.FillStyle = "red";
-				context.Fill(CanvasTypes.CanvasFillRule.EvenOdd);
-				context.ClosePath();
-
-				Console.WriteLine(touch);
+				case Id.Opening: return new Opening();
+				case Id.Title: return new Title();
+				case Id.Level:
+					return new Level(
+						actionRaiser,
+						NonNullList.Of(
+							buttons.Up,
+							buttons.Down,
+							buttons.Left,
+							buttons.Right,
+							buttons.Cancel,
+							buttons.Button1
+						)
+					);
+				case Id.PauseGame:
+					return new PauseGame(
+						actionRaiser.Cancel,
+						buttons.Cancel
+					);
+				case Id.GameOver: return new GameOver();
+				case Id.GameComplete: return new GameComplete();
+				default:
+					throw new ArgumentException(nameof(id));
 			}
-
 		}
-
-		public static void MouseTest(Event e)
-		{
-			var mouseEvent = e.As<MouseEvent>();
-			mouseEvent.PreventDefault();
-
-			var canvas = Document.GetElementById(Layers.Id.Controls.ToString()).As<HTMLCanvasElement>();
-			var context = canvas.GetContext(CanvasTypes.CanvasContext2DType.CanvasRenderingContext2D);
-
-			var xPercentage = (double)(mouseEvent.PageX - canvas.OffsetLeft) / canvas.OffsetWidth;
-			var x = Math.Floor(Resolution.Instance.Width * xPercentage);
-
-			var yPercentage = (double)(mouseEvent.PageY - canvas.OffsetTop) / canvas.OffsetHeight;
-			var y = Math.Floor(Resolution.Instance.Height * yPercentage);
-
-			context.BeginPath();
-			context.Arc(
-				x,
-				y,
-				Resolution.Instance.RenderAmount(8),
-				0,
-				Math.PI * 2
-			);
-
-			context.FillStyle = "red";
-			context.Fill(CanvasTypes.CanvasFillRule.EvenOdd);
-			context.ClosePath();
-
-			Console.WriteLine(mouseEvent);
-		}
-
 	}
 }

@@ -1,12 +1,12 @@
 ﻿using Raspware.GameEngine.Rendering;
 
-namespace Raspware.ExampleGame.Stages
+namespace Raspware.ExampleGame.Stage
 {
 	public sealed class GameOver : IStage
 	{
 		private string _message;
 		private int _timePassed = 0;
-		public Id Id => Id.GameOver;
+		public int Id => Stage.Id.GameOver;
 
 		public GameOver() { }
 
@@ -33,7 +33,7 @@ namespace Raspware.ExampleGame.Stages
 			levelContext.FillText(_message, resolution.RenderAmount(4), resolution.RenderAmount(96));
 		}
 
-		public Id Update(int ms)
+		public int Update(int ms)
 		{
 			_timePassed += ms;
 			_message = _timePassed.ToString();
@@ -41,7 +41,7 @@ namespace Raspware.ExampleGame.Stages
 			if (_timePassed >= 3000)
 			{
 				Data.Instance.Reset(); // Since as this data is no longer needed, reset it.
-				return Id.Title;
+				return Stage.Id.Title;
 			}
 
 			return Id;

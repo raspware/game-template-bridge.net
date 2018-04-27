@@ -39,16 +39,15 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Data.cs" />
-    <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.cs" />
-    <Compile Include="Stages\GameComplete.cs" />
-    <Compile Include="Stages\GameOver.cs" />
-    <Compile Include="Stages\IStage.cs" />
-    <Compile Include="Stages\Level.cs" />
-    <Compile Include="Stages\Opening.cs" />
-    <Compile Include="Stages\Title.cs" />
-    <Compile Include="Stages\PauseGame.cs" />
+    <Compile Include="Stage\GameComplete.cs" />
+    <Compile Include="Stage\GameOver.cs" />
+    <Compile Include="Stage\Level.cs" />
+    <Compile Include="Stage\Opening.cs" />
+    <Compile Include="Stage\Ids.cs" />
+    <Compile Include="Stage\Title.cs" />
+    <Compile Include="Stage\PauseGame.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bridge.json" />

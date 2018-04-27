@@ -5,6 +5,8 @@ using ProductiveRage.Immutable;
 
 namespace Raspware.GameEngine.Rendering
 {
+	// TODO: Turn 'Layers' into an interface.
+	// TODO: Pass in NonNullList of 'Layer' rather than presume we are going to use 'Layers'.
 	public sealed class Layers
 	{
 		private NonNullList<Layer> _layers { get; }

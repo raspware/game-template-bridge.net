@@ -6,7 +6,7 @@ using Raspware.GameEngine.Input;
 using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
 
-namespace Raspware.ExampleGame.Stages
+namespace Raspware.ExampleGame.Stage
 {
 	public sealed class Level : IStage
 	{
@@ -15,7 +15,7 @@ namespace Raspware.ExampleGame.Stages
 		private readonly HTMLImageElement _image;
 
 		private string _message;
-		public Id Id => Id.Level;
+		public int Id => Stage.Id.Level;
 
 		public Level(IActions actionRaiser, NonNullList<Button> buttons)
 		{
@@ -69,7 +69,7 @@ namespace Raspware.ExampleGame.Stages
 			_buttons.ToList().ForEach(_ => _.Render(controlsContext));
 		}
 
-		public Id Update(int ms)
+		public int Update(int ms)
 		{
 			var data = Data.Instance;
 
@@ -77,19 +77,19 @@ namespace Raspware.ExampleGame.Stages
 			_message = data.TimePassed.ToString();
 
 			if (_actionRaiser.Cancel.OnceOnPressDown())
-				return Id.PauseGame;
+				return Stage.Id.PauseGame;
 
 			if (_actionRaiser.Up.OnceOnPressDown())
 				data.Score++;
 
 			if (data.Score == 5)
-				return Id.GameComplete;
+				return Stage.Id.GameComplete;
 
 			if (_actionRaiser.Down.OnceOnPressDown())
 				data.Lives--;
 
 			if (data.Lives == 0)
-				return Id.GameOver;
+				return Stage.Id.GameOver;
 
 			return Id;
 		}

@@ -1,17 +1,18 @@
-﻿using Bridge.Html5;
+﻿using System;
+using Bridge.Html5;
 using Raspware.GameEngine.Rendering;
 
-namespace Raspware.ExampleGame.Stages
+namespace Raspware.ExampleGame.Stage
 {
 	public sealed class Opening : IStage
 	{
 		private bool _musicPlayed = false;
 		private int _timePassed = 0;
-		private double _alpha = 1;
+		private string _alpha = "1";
 		private string _message;
 		private HTMLAudioElement _music;
 
-		public Id Id => Id.Opening;
+		public int Id => Stage.Id.Opening;
 
 		public Opening()
 		{
@@ -28,6 +29,7 @@ namespace Raspware.ExampleGame.Stages
 			var levelContext = Layers.Instance.GetLayer(Layers.Id.Level).GetContext();
 			var resolution = Resolution.Instance;
 
+			levelContext.ClearRect(0, 0, resolution.Width, resolution.Height); // Clear
 			levelContext.FillStyle = "rgb(0,0,0)";
 			levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
 
@@ -39,22 +41,29 @@ namespace Raspware.ExampleGame.Stages
 			levelContext.Font = resolution.RenderAmount(6).ToString() + "px Consolas, monospace";
 			levelContext.FillText(_message, resolution.RenderAmount(4), resolution.RenderAmount(96));
 
+
+			levelContext.BeginPath();
 			levelContext.FillStyle = $"rgba(0,0,0,{_alpha})";
+
+			Console.WriteLine(_alpha);
+
 			levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
+			levelContext.ClosePath();
 		}
 
-		public Id Update(int ms)
+		public int Update(int ms)
 		{
 			_timePassed += ms;
 			_message = _timePassed.ToString();
 
-			_alpha = 1 - (_timePassed / 1000);
+			if (_timePassed > 2000)
+				_alpha = (1 - (double)((double)_timePassed - 2000 / (double)4000)).ToString();
 
-			if (_timePassed > 1000)
-				_alpha = 0;
+			if (_timePassed  > 6000)
+				_alpha = "0";
 
 			if (_musicPlayed)
-				return Id.Title;
+				return Stage.Id.Title;
 
 			return Id;
 		}
