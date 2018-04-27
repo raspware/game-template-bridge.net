@@ -10,13 +10,10 @@ namespace Raspware.ExampleGame
 {
 	public sealed class Game
 	{
-		private readonly Resolution _resolution;
 		private readonly IActions _actionRaiser;
-		private readonly Layers _layers;
 		private readonly IButtons _buttons;
-		private int _lastFrame;
 		private IStage _stage;
-		private Data _data;
+		private int _lastFrame;
 
 		public Game(IActions actionRaiser, IButtons buttons)
 		{
@@ -25,11 +22,18 @@ namespace Raspware.ExampleGame
 			if (buttons == null)
 				throw new ArgumentNullException(nameof(buttons));
 
-			_data = Data.Instance;
+			// TODO: Change these to tell the user they need to be initalised first
+			if (Data.Instance == null)
+				throw new ArgumentNullException(nameof(Data.Instance));
+			if (Resolution.Instance == null)
+				throw new ArgumentNullException(nameof(Resolution.Instance));
+			if (Layers.Instance == null)
+				throw new ArgumentNullException(nameof(Layers.Instance));
+
 			_actionRaiser = actionRaiser;
-			_resolution = Resolution.Instance;
-			_layers = Layers.Instance;
 			_buttons = buttons;
+
+			// TODO: Move this into its own class
 			_stage = GetStage(Id.Opening);
 
 			Tick();
@@ -39,7 +43,7 @@ namespace Raspware.ExampleGame
 			var now = (int)Window.Performance.Now();
 			var ms = now - _lastFrame;
 
-			_layers.Resize();
+			Layers.Instance.Resize();
 			var returnedId = _stage.Update(ms);
 			if (_stage.Id == returnedId)
 				_stage.Draw();
@@ -54,16 +58,11 @@ namespace Raspware.ExampleGame
 		{
 			switch (id)
 			{
-				case Id.Opening:
-					return new Opening(_resolution, _layers, _data);
-				case Id.Title:
-					return new Title(_resolution, _layers);
+				case Id.Opening: return new Opening();
+				case Id.Title: return new Title();
 				case Id.Level:
 					return new Level(
-						_resolution,
-						_layers,
 						_actionRaiser,
-						_data,
 						NonNullList.Of(
 							_buttons.Up,
 							_buttons.Down,
@@ -74,11 +73,12 @@ namespace Raspware.ExampleGame
 						)
 					);
 				case Id.PauseGame:
-					return new PauseGame(_resolution, _layers, _actionRaiser.Cancel, _buttons.Cancel);
-				case Id.GameOver:
-					return new GameOver(_resolution, _layers, _data);
-				case Id.GameComplete:
-					return new GameComplete(_resolution, _layers);
+					return new PauseGame(
+						_actionRaiser.Cancel,
+						_buttons.Cancel
+					);
+				case Id.GameOver: return new GameOver();
+				case Id.GameComplete: return new GameComplete();
 				default:
 					throw new ArgumentException(nameof(id));
 			}

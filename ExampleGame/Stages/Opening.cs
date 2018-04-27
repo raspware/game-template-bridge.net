@@ -1,35 +1,20 @@
-﻿using System;
-using Bridge.Html5;
+﻿using Bridge.Html5;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.ExampleGame.Stages
 {
 	public sealed class Opening : IStage
 	{
-		private readonly Resolution _resolution;
-		private readonly Layers _layers;
-		private readonly Data _data;
-		private string _message;
-		private int _timePassed = 0;
 		private bool _musicPlayed = false;
-		private HTMLAudioElement _music;
-
+		private int _timePassed = 0;
 		private double _alpha = 1;
+		private string _message;
+		private HTMLAudioElement _music;
 
 		public Id Id => Id.Opening;
 
-		public Opening(Resolution resolution, Layers layers, Data data)
+		public Opening()
 		{
-			if (resolution == null)
-				throw new ArgumentNullException(nameof(resolution));
-			if (layers == null)
-				throw new ArgumentNullException(nameof(layers));
-			if (data == null)
-				throw new ArgumentNullException(nameof(data));
-			_resolution = resolution;
-			_layers = layers;
-			_data = data;
-
 			_music = new HTMLAudioElement() { Src = Resources.Audio.Theme };
 			_music.Play();
 			_music.AddEventListener(EventType.Ended, ev => { _musicPlayed = true; });
@@ -40,22 +25,22 @@ namespace Raspware.ExampleGame.Stages
 			if (_message == "")
 				return;
 
-			int brightness = 127;
-			var levelContext = _layers.GetLayer(Layers.Id.Level).GetContext();
+			var levelContext = Layers.Instance.GetLayer(Layers.Id.Level).GetContext();
+			var resolution = Resolution.Instance;
 
 			levelContext.FillStyle = "rgb(0,0,0)";
-			levelContext.FillRect(0, 0, _resolution.Width, _resolution.Height); // Clear
+			levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
 
 			levelContext.FillStyle = "white";
 
-			levelContext.Font = _resolution.RenderAmount(24).ToString() + "px Consolas, monospace";
-			levelContext.FillText("[RASPWARE]", _resolution.RenderAmount(23), _resolution.RenderAmount(50));
+			levelContext.Font = resolution.RenderAmount(24).ToString() + "px Consolas, monospace";
+			levelContext.FillText("[RASPWARE]", resolution.RenderAmount(23), resolution.RenderAmount(50));
 
-			levelContext.Font = _resolution.RenderAmount(6).ToString() + "px Consolas, monospace";
-			levelContext.FillText(_message, _resolution.RenderAmount(4), _resolution.RenderAmount(96));
+			levelContext.Font = resolution.RenderAmount(6).ToString() + "px Consolas, monospace";
+			levelContext.FillText(_message, resolution.RenderAmount(4), resolution.RenderAmount(96));
 
 			levelContext.FillStyle = $"rgba(0,0,0,{_alpha})";
-			levelContext.FillRect(0, 0, _resolution.Width, _resolution.Height); // Clear
+			levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
 		}
 
 		public Id Update(int ms)

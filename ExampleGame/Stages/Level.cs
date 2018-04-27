@@ -11,32 +11,20 @@ namespace Raspware.ExampleGame.Stages
 	public sealed class Level : IStage
 	{
 		private readonly IActions _actionRaiser;
-		private readonly Resolution _resolution;
-		private readonly Layers _layers;
 		private readonly NonNullList<Button> _buttons;
-		private string _message;
-		private Data _data;
 		private readonly HTMLImageElement _image;
 
+		private string _message;
 		public Id Id => Id.Level;
 
-		public Level(Resolution resolution, Layers layers, IActions actionRaiser, Data data, NonNullList<Button> buttons)
+		public Level(IActions actionRaiser, NonNullList<Button> buttons)
 		{
-			if (resolution == null)
-				throw new ArgumentNullException(nameof(resolution));
-			if (layers == null)
-				throw new ArgumentNullException(nameof(layers));
 			if (actionRaiser == null)
 				throw new ArgumentNullException(nameof(actionRaiser));
-			if (data == null)
-				throw new ArgumentNullException(nameof(data));
 			if (buttons == null)
 				throw new ArgumentNullException(nameof(buttons));
 
-			_resolution = resolution;
-			_layers = layers;
 			_actionRaiser = actionRaiser;
-			_data = data;
 			_buttons = buttons;
 			_image = new HTMLImageElement() { Src = Resources.Image.Test };
 		}
@@ -46,33 +34,35 @@ namespace Raspware.ExampleGame.Stages
 			if (_message == "")
 				return;
 
+			var data = Data.Instance;
 			int brightness = 70;
-			var levelContext = _layers.GetLayer(Layers.Id.Level).GetContext();
+			var levelContext = Layers.Instance.GetLayer(Layers.Id.Level).GetContext();
+			var resolution = Resolution.Instance;
 
 			levelContext.FillStyle = "rgb(" + (brightness) + "," + (brightness * 2) + "," + (brightness) + ")";
-			levelContext.FillRect(0, 0, _resolution.Width, _resolution.Height); // Clear
+			levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
 
 			levelContext.FillStyle = "white";
 
 			levelContext.DrawImage(_image, 0, 0);
 
-			levelContext.Font = _resolution.RenderAmount(10).ToString() + "px Consolas, monospace";
-			levelContext.FillText("Playing Game", _resolution.RenderAmount(4), _resolution.RenderAmount(12));
+			levelContext.Font = resolution.RenderAmount(10).ToString() + "px Consolas, monospace";
+			levelContext.FillText("Playing Game", resolution.RenderAmount(4), resolution.RenderAmount(12));
 
-			levelContext.Font = _resolution.RenderAmount(20).ToString() + "px Consolas, monospace";
-			levelContext.FillText("Score: " + _data.Score, _resolution.RenderAmount(4), _resolution.RenderAmount(42));
+			levelContext.Font = resolution.RenderAmount(20).ToString() + "px Consolas, monospace";
+			levelContext.FillText("Score: " + data.Score, resolution.RenderAmount(4), resolution.RenderAmount(42));
 
-			levelContext.Font = _resolution.RenderAmount(4).ToString() + "px Consolas, monospace";
-			levelContext.FillText("Press [UP] to win :)", _resolution.RenderAmount(115), _resolution.RenderAmount(36.5));
+			levelContext.Font = resolution.RenderAmount(4).ToString() + "px Consolas, monospace";
+			levelContext.FillText("Press [UP] to win :)", resolution.RenderAmount(115), resolution.RenderAmount(36.5));
 
-			levelContext.Font = _resolution.RenderAmount(20).ToString() + "px Consolas, monospace";
-			levelContext.FillText("Lives: " + _data.Lives, _resolution.RenderAmount(4), _resolution.RenderAmount(72));
+			levelContext.Font = resolution.RenderAmount(20).ToString() + "px Consolas, monospace";
+			levelContext.FillText("Lives: " + data.Lives, resolution.RenderAmount(4), resolution.RenderAmount(72));
 
-			levelContext.Font = _resolution.RenderAmount(4).ToString() + "px Consolas, monospace";
-			levelContext.FillText("Press [DOWN] to lose :(", _resolution.RenderAmount(107), _resolution.RenderAmount(67));
+			levelContext.Font = resolution.RenderAmount(4).ToString() + "px Consolas, monospace";
+			levelContext.FillText("Press [DOWN] to lose :(", resolution.RenderAmount(107), resolution.RenderAmount(67));
 
-			levelContext.Font = _resolution.RenderAmount(6).ToString() + "px Consolas, monospace";
-			levelContext.FillText(_message, _resolution.RenderAmount(4), _resolution.RenderAmount(96));
+			levelContext.Font = resolution.RenderAmount(6).ToString() + "px Consolas, monospace";
+			levelContext.FillText(_message, resolution.RenderAmount(4), resolution.RenderAmount(96));
 
 			// render buttons
 			_buttons.ToList().ForEach(_ => _.Render(levelContext));
@@ -80,22 +70,24 @@ namespace Raspware.ExampleGame.Stages
 
 		public Id Update(int ms)
 		{
-			_data.TimePassed += ms;
-			_message = _data.TimePassed.ToString();
+			var data = Data.Instance;
+
+			data.TimePassed += ms;
+			_message = data.TimePassed.ToString();
 
 			if (_actionRaiser.Cancel.OnceOnPressDown())
 				return Id.PauseGame;
 
 			if (_actionRaiser.Up.OnceOnPressDown())
-				_data.Score++;
+				data.Score++;
 
-			if (_data.Score == 5)
+			if (data.Score == 5)
 				return Id.GameComplete;
 
 			if (_actionRaiser.Down.OnceOnPressDown())
-				_data.Lives--;
+				data.Lives--;
 
-			if (_data.Lives == 0)
+			if (data.Lives == 0)
 				return Id.GameOver;
 
 			return Id;
