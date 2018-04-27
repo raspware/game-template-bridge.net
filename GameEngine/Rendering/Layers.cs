@@ -32,14 +32,12 @@ namespace Raspware.GameEngine.Rendering
 			Document.Body.AppendChild(Wrapper);
 		}
 
-		public static void ConfigureInstance(Resolution resolution)
+		public static void ConfigureInstance()
 		{
 			if (_configured)
 				throw new Exception($"'{nameof(Instance)}' has already been configured!");
-			if (resolution == null)
-				throw new ArgumentNullException(nameof(resolution));
 
-			Instance = new Layers(resolution);
+			Instance = new Layers(Resolution.Instance);
 			_configured = true;
 		}
 

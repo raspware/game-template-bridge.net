@@ -11,27 +11,19 @@ namespace Raspware.ExampleGame
 		public static void Main()
 		{
 			Resolution.ConfigureInstance(Resolution.PixelSize._FHD, Resolution.OrientationTypes.Landscape);
-			var resolution = Resolution.Instance;
+			Layers.ConfigureInstance();
+			DefaultButtons.ConfigureInstance();
 
-			Layers.ConfigureInstance(resolution);
-			DefaultButtons.ConfigureInstance(resolution);
-
-			var defaultButtons = DefaultButtons.Instance;
 			GameEngine.Input.Mouse.Actions.ConfigureInstance(
-				resolution,
-				defaultButtons,
+				DefaultButtons.Instance,
 				Layers.Instance.GetLayer(Layers.Id.Controls)
 			);
 			GameEngine.Input.Touch.Actions.ConfigureInstance(
-				resolution,
-				defaultButtons,
+				DefaultButtons.Instance,
 				Layers.Instance.GetLayer(Layers.Id.Controls)
 			);
 
 			new Game(
-				Data.Instance,
-				Layers.Instance,
-				resolution,
 				new GameEngine.Input.Combined.Actions(
 					NonNullList.Of(
 						GameEngine.Input.Keyboard.Actions.Instance,
@@ -39,7 +31,7 @@ namespace Raspware.ExampleGame
 						GameEngine.Input.Touch.Actions.Instance
 					)
 				),
-				defaultButtons
+				DefaultButtons.Instance
 			);
 
 			//Document.AddEventListener(EventType.TouchStart, TouchTest);

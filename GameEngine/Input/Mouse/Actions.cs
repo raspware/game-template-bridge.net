@@ -27,16 +27,14 @@ namespace Raspware.GameEngine.Input.Mouse
 			Button1 = new Events(resolution, buttons.Button1, layer);
 		}
 
-		public static void ConfigureInstance(Resolution resolution, IButtons buttons, Layer layer)
+		public static void ConfigureInstance(IButtons buttons, Layer layer)
 		{
 			if (_configured)
 				throw new Exception($"'{nameof(Instance)}' has already been configured!");
-			if (resolution == null)
-				throw new ArgumentNullException(nameof(resolution));
 			if (buttons == null)
 				throw new ArgumentNullException(nameof(buttons));
 
-			Instance = new Actions(resolution, buttons, layer);
+			Instance = new Actions(Resolution.Instance, buttons, layer);
 			_configured = true;
 		}
 

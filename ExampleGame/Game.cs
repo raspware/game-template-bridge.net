@@ -18,23 +18,17 @@ namespace Raspware.ExampleGame
 		private IStage _stage;
 		private Data _data;
 
-		public Game(Data data, Layers layers, Resolution resolution, IActions actionRaiser, IButtons buttons)
+		public Game(IActions actionRaiser, IButtons buttons)
 		{
-			if (data == null)
-				throw new ArgumentNullException(nameof(data));
 			if (actionRaiser == null)
 				throw new ArgumentNullException(nameof(actionRaiser));
-			if (resolution == null)
-				throw new ArgumentNullException(nameof(resolution));
-			if (layers == null)
-				throw new ArgumentNullException(nameof(layers));
 			if (buttons == null)
 				throw new ArgumentNullException(nameof(buttons));
 
-			_data = data;
+			_data = Data.Instance;
 			_actionRaiser = actionRaiser;
-			_resolution = resolution;
-			_layers = layers;
+			_resolution = Resolution.Instance;
+			_layers = Layers.Instance;
 			_buttons = buttons;
 			_stage = GetStage(Id.Opening);
 

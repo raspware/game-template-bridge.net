@@ -50,15 +50,13 @@ namespace Raspware.GameEngine.Input.SharedButtons
 		private static Resolution _resolution { get; set; } = null;
 		public static DefaultButtons Instance { get; private set; } = null;
 
-		public static void ConfigureInstance(Resolution resolution)
+		public static void ConfigureInstance()
 		{
 			if (_configured)
 				throw new Exception($"'{nameof(Instance)}' has already been configured!");
-			if (resolution == null)
-				throw new ArgumentNullException(nameof(resolution));
 
 			_configured = true;
-			_resolution = resolution;
+			_resolution = Resolution.Instance;
 			Instance = new DefaultButtons();
 		}
 
