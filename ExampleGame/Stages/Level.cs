@@ -3,7 +3,7 @@ using System.Linq;
 using Bridge.Html5;
 using ProductiveRage.Immutable;
 using Raspware.GameEngine.Input;
-using Raspware.GameEngine.Input.SharedButtons;
+using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.ExampleGame.Stages
@@ -65,7 +65,8 @@ namespace Raspware.ExampleGame.Stages
 			levelContext.FillText(_message, resolution.RenderAmount(4), resolution.RenderAmount(96));
 
 			// render buttons
-			_buttons.ToList().ForEach(_ => _.Render(levelContext));
+			var controlsContext = Layers.Instance.GetLayer(Layers.Id.Controls).GetContext();
+			_buttons.ToList().ForEach(_ => _.Render(controlsContext));
 		}
 
 		public Id Update(int ms)

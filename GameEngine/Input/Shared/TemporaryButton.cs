@@ -1,4 +1,4 @@
-﻿namespace Raspware.GameEngine.Input.SharedButtons
+﻿namespace Raspware.GameEngine.Input.Shared
 {
 	public sealed class TemporaryButton : Button
 	{

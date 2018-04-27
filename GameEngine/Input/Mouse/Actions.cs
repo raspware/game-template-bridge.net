@@ -1,5 +1,6 @@
 ﻿using System;
-using Raspware.GameEngine.Input.SharedButtons;
+using Bridge.Html5;
+using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Mouse
@@ -25,6 +26,19 @@ namespace Raspware.GameEngine.Input.Mouse
 			Right = new Events(resolution, buttons.Right, layer);
 			Cancel = new Events(resolution, buttons.Cancel, layer);
 			Button1 = new Events(resolution, buttons.Button1, layer);
+
+			layer.CanvasElement.OnMouseMove = (ev) =>
+			{
+				var x = Shared.Position.Instance.GetEventX(ev);
+				var y = Shared.Position.Instance.GetEventY(ev);
+				var context = ev.Target.GetContext("2d").As<CanvasRenderingContext2D>();
+				context.ClearRect(0, 0, Resolution.Instance.Width, Resolution.Instance.Height);
+				context.BeginPath();
+				context.Arc(x, y, 10, Math.PI * 2, 0);
+				context.FillStyle = "red";
+				context.ClosePath();
+				context.Fill();
+			};
 		}
 
 		public static void ConfigureInstance(IButtons buttons, Layer layer)

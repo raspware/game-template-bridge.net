@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Raspware.GameEngine.Input.SharedButtons;
+using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Touch

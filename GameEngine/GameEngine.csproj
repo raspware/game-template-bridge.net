@@ -41,10 +41,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Input\Keyboard\Keys.cs" />
-    <Compile Include="Input\SharedButtons\IButtons.cs" />
-    <Compile Include="Input\SharedButtons\DefaultButtons.cs" />
-    <Compile Include="Input\SharedButtons\Button.cs" />
-    <Compile Include="Input\SharedButtons\TemporaryButton.cs" />
+    <Compile Include="Input\Shared\IButtons.cs" />
+    <Compile Include="Input\Shared\DefaultButtons.cs" />
+    <Compile Include="Input\Shared\Button.cs" />
+    <Compile Include="Input\Shared\Position.cs" />
+    <Compile Include="Input\Shared\TemporaryButton.cs" />
     <Compile Include="Input\Touch\Actions.cs" />
     <Compile Include="Input\Touch\Events.cs" />
     <Compile Include="Rendering\Resolution.cs" />

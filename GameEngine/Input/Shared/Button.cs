@@ -1,7 +1,7 @@
 ﻿using System;
 using Bridge.Html5;
 
-namespace Raspware.GameEngine.Input.SharedButtons
+namespace Raspware.GameEngine.Input.Shared
 {
 	// TODO: Finish this
 	public class Button
