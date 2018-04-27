@@ -23,6 +23,8 @@ namespace Raspware.ExampleGame
 				Layers.Instance.GetLayer(Layers.Id.Controls)
 			);
 
+			// TODO: Turn 'Layers' into an interface.
+			// TODO: Pass in NonNullList of 'Layer' rather than presume we are going to use 'Layers'.
 			new Game(
 				new GameEngine.Input.Combined.Actions(
 					NonNullList.Of(
