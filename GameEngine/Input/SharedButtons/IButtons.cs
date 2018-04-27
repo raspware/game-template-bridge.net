@@ -1,4 +1,4 @@
-﻿namespace Raspware.GameEngine.Input.Touch.Buttons
+﻿namespace Raspware.GameEngine.Input.SharedButtons
 {
 	public interface IButtons
 	{

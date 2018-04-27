@@ -3,7 +3,7 @@ using System.Linq;
 using Bridge.Html5;
 using ProductiveRage.Immutable;
 using Raspware.GameEngine.Input;
-using Raspware.GameEngine.Input.Touch.Buttons;
+using Raspware.GameEngine.Input.SharedButtons;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.ExampleGame.Stages

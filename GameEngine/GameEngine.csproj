@@ -40,11 +40,13 @@
     <DocumentationFile>bin\Release\Raspware.GameEngine.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Input\Keyboard\Buttons.cs" />
-    <Compile Include="Input\Touch\Buttons\IButtons.cs" />
-    <Compile Include="Input\Touch\Buttons\DefaultButtons.cs" />
-    <Compile Include="Input\Touch\Buttons\Button.cs" />
-    <Compile Include="Input\Touch\Buttons\TemporaryTouch.cs" />
+    <Compile Include="Input\Keyboard\Keys.cs" />
+    <Compile Include="Input\SharedButtons\IButtons.cs" />
+    <Compile Include="Input\SharedButtons\DefaultButtons.cs" />
+    <Compile Include="Input\SharedButtons\Button.cs" />
+    <Compile Include="Input\SharedButtons\TemporaryButton.cs" />
+    <Compile Include="Input\Touch\Actions.cs" />
+    <Compile Include="Input\Touch\Events.cs" />
     <Compile Include="Rendering\Resolution.cs" />
     <Compile Include="Input\Combined\Actions.cs" />
     <Compile Include="Input\Combined\Events.cs" />
@@ -52,8 +54,8 @@
     <Compile Include="Input\IEvents.cs" />
     <Compile Include="Input\Keyboard\Actions.cs" />
     <Compile Include="Input\Keyboard\Events.cs" />
-    <Compile Include="Input\Touch\Actions.cs" />
-    <Compile Include="Input\Touch\Events.cs" />
+    <Compile Include="Input\Mouse\Actions.cs" />
+    <Compile Include="Input\Mouse\Events.cs" />
     <Compile Include="Rendering\Layer.cs" />
     <Compile Include="Rendering\Layers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Raspware.GameEngine.Input.SharedButtons;
 using Raspware.GameEngine.Rendering;
 
-namespace Raspware.GameEngine.Input.Touch
+namespace Raspware.GameEngine.Input.Mouse
 {
 	// TODO: Implement this!
 	public sealed class Events : IEvents

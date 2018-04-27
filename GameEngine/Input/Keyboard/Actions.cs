@@ -1,6 +1,5 @@
 ﻿using System;
 using Bridge.Html5;
-using static Raspware.GameEngine.Input.Keyboard.Events;
 
 namespace Raspware.GameEngine.Input.Keyboard
 {
@@ -33,11 +32,11 @@ namespace Raspware.GameEngine.Input.Keyboard
 			Button1.As<Events>().InputKeyUp(e);
 		}
 
-		public IEvents Up { get; } = new Events(Buttons._upArrow);
-		public IEvents Down { get; } = new Events(Buttons._downArrow);
-		public IEvents Left { get; } = new Events(Buttons._leftArrow);
-		public IEvents Right { get; } = new Events(Buttons._rightArrow);
-		public IEvents Cancel { get; } = new Events(Buttons._escape);
-		public IEvents Button1 { get; } = new Events(Buttons._space);
+		public IEvents Up { get; } = new Events(Events.Keys._upArrow);
+		public IEvents Down { get; } = new Events(Events.Keys._downArrow);
+		public IEvents Left { get; } = new Events(Events.Keys._leftArrow);
+		public IEvents Right { get; } = new Events(Events.Keys._rightArrow);
+		public IEvents Cancel { get; } = new Events(Events.Keys._escape);
+		public IEvents Button1 { get; } = new Events(Events.Keys._space);
 	}
 }

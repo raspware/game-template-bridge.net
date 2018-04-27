@@ -1,6 +1,6 @@
 ﻿using System;
 using Raspware.GameEngine.Input;
-using Raspware.GameEngine.Input.Touch.Buttons;
+using Raspware.GameEngine.Input.SharedButtons;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.ExampleGame.Stages
@@ -17,7 +17,7 @@ namespace Raspware.ExampleGame.Stages
 
 		public PauseGame(Resolution resolution, Layers layers, IEvents onCancel, Button cancel)
 		{
-			
+
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
 			if (layers == null)
@@ -48,7 +48,7 @@ namespace Raspware.ExampleGame.Stages
 			levelContext.FillStyle = "white";
 			levelContext.Font = _resolution.RenderAmount(12).ToString() + "px Consolas, monospace";
 			levelContext.FillText("Paused!", _resolution.RenderAmount(110), _resolution.RenderAmount(90));
-			
+
 			_displayedScreen = true;
 		}
 

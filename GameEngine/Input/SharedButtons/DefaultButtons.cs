@@ -1,7 +1,7 @@
 ﻿using System;
 using Raspware.GameEngine.Rendering;
 
-namespace Raspware.GameEngine.Input.Touch.Buttons
+namespace Raspware.GameEngine.Input.SharedButtons
 {
 	public sealed class DefaultButtons : IButtons
 	{

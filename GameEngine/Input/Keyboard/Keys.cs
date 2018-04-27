@@ -2,7 +2,7 @@
 {
 	public sealed partial class Events : IEvents
 	{
-		public enum Buttons
+		public enum Keys
 		{
 			_backspace = 8,
 			_tab = 9,

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using Bridge.Html5;
 using Raspware.GameEngine.Input.SharedButtons;
 using Raspware.GameEngine.Rendering;
 
-namespace Raspware.GameEngine.Input.Touch
+namespace Raspware.GameEngine.Input.Mouse
 {
 
 	// TODO: Implement this!
@@ -12,7 +10,6 @@ namespace Raspware.GameEngine.Input.Touch
 	{
 		public static IActions Instance { get; private set; }
 		private static bool _configured { get; set; } = false;
-		private static Dictionary<int, TemporaryButton> _currentTouches = new Dictionary<int, TemporaryButton>();
 		private Actions(Resolution resolution, IButtons buttons, Layer layer)
 		{
 			if (resolution == null)
@@ -28,39 +25,6 @@ namespace Raspware.GameEngine.Input.Touch
 			Right = new Events(resolution, buttons.Right, layer);
 			Cancel = new Events(resolution, buttons.Cancel, layer);
 			Button1 = new Events(resolution, buttons.Button1, layer);
-
-			layer.CanvasElement.OnTouchEnd = OnTouchEndLeaveAndCancel;
-			layer.CanvasElement.OnTouchLeave = OnTouchEndLeaveAndCancel;
-			layer.CanvasElement.OnTouchCancel = OnTouchEndLeaveAndCancel;
-
-			layer.CanvasElement.OnTouchStart = (e) =>
-			{
-				var touches = e.ChangedTouches;
-				foreach (var touch in touches)
-				{
-					if (_currentTouches.ContainsKey(touch.Identifier))
-						continue;
-
-					// TODO: Get the correct X and Y
-					_currentTouches.Add(
-						touch.Identifier,
-						new TemporaryButton(touch.ClientX, touch.ClientY, resolution.RenderAmount(5))
-					);
-				}
-			};
-
-			layer.CanvasElement.OnTouchMove = (e) =>
-			{
-				var touches = e.ChangedTouches;
-				foreach (var touch in touches)
-				{
-					if (!_currentTouches.ContainsKey(touch.Identifier))
-						continue;
-
-					// TODO: Get the correct X and Y
-					_currentTouches.Get(touch.Identifier).Reset(touch.ClientX, touch.ClientY);
-				}
-			};
 		}
 
 		public static void ConfigureInstance(Resolution resolution, IButtons buttons, Layer layer)
@@ -74,19 +38,6 @@ namespace Raspware.GameEngine.Input.Touch
 
 			Instance = new Actions(resolution, buttons, layer);
 			_configured = true;
-		}
-
-		private static void OnTouchEndLeaveAndCancel(TouchEvent<HTMLCanvasElement> touchEvent)
-		{
-			if (touchEvent == null)
-				throw new ArgumentNullException(nameof(touchEvent));
-
-			var touches = touchEvent.ChangedTouches;
-			foreach (var touch in touches)
-			{
-				if (_currentTouches.ContainsKey(touch.Identifier))
-					_currentTouches.Remove(touch.Identifier);
-			}
 		}
 
 		public IEvents Up { get; private set; }

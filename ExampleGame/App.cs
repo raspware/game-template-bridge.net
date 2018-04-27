@@ -1,7 +1,7 @@
 ﻿using System;
 using Bridge.Html5;
 using ProductiveRage.Immutable;
-using Raspware.GameEngine.Input.Touch.Buttons;
+using Raspware.GameEngine.Input.SharedButtons;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.ExampleGame
@@ -15,14 +15,19 @@ namespace Raspware.ExampleGame
 
 			Layers.ConfigureInstance(resolution);
 			DefaultButtons.ConfigureInstance(resolution);
-			
-			var touchButtons = DefaultButtons.Instance;
-			GameEngine.Input.Touch.Actions.ConfigureInstance(
+
+			var defaultButtons = DefaultButtons.Instance;
+			GameEngine.Input.Mouse.Actions.ConfigureInstance(
 				resolution,
-				touchButtons,
+				defaultButtons,
 				Layers.Instance.GetLayer(Layers.Id.Controls)
 			);
-			
+			GameEngine.Input.Touch.Actions.ConfigureInstance(
+				resolution,
+				defaultButtons,
+				Layers.Instance.GetLayer(Layers.Id.Controls)
+			);
+
 			new Game(
 				Data.Instance,
 				Layers.Instance,
@@ -30,10 +35,11 @@ namespace Raspware.ExampleGame
 				new GameEngine.Input.Combined.Actions(
 					NonNullList.Of(
 						GameEngine.Input.Keyboard.Actions.Instance,
+						GameEngine.Input.Mouse.Actions.Instance,
 						GameEngine.Input.Touch.Actions.Instance
 					)
 				),
-				touchButtons
+				defaultButtons
 			);
 
 			//Document.AddEventListener(EventType.TouchStart, TouchTest);
