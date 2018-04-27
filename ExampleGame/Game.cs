@@ -45,6 +45,7 @@ namespace Raspware.ExampleGame
 			var now = (int)Window.Performance.Now();
 			var ms = now - _lastFrame;
 
+			_layers.Resize();
 			var returnedId = _stage.Update(ms);
 			if (_stage.Id == returnedId)
 				_stage.Draw();

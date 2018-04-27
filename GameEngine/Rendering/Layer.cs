@@ -6,7 +6,7 @@ namespace Raspware.GameEngine.Rendering
 {
 	public sealed class Layer
 	{
-		
+
 
 		private OrientationTypes _orientation { get; }
 
@@ -17,23 +17,26 @@ namespace Raspware.GameEngine.Rendering
 
 		public HTMLCanvasElement CanvasElement { get; } = new HTMLCanvasElement();
 
+		private HTMLDivElement _wrapper { get; }
+
 		public CanvasRenderingContext2D GetContext() => CanvasElement.GetContext(CanvasTypes.CanvasContext2DType.CanvasRenderingContext2D);
 		public Layers.Id Id { get; }
 		public int Order { get; }
 
-		public Layer(Resolution resolution, Layers.Id id, int order)
+		public Layer(Resolution resolution, Layers.Id id, HTMLDivElement wrapper, int order)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
+			if (wrapper == null)
+				throw new ArgumentNullException(nameof(wrapper));
 
 			_orientation = resolution.Orientation;
+			_wrapper = wrapper;
+
 			Id = id;
 			Order = order;
 			CanvasElement.Width = resolution.Width;
 			CanvasElement.Height = resolution.Height;
-			Document.Body.AppendChild(CanvasElement);
-			Window.AddEventListener(EventType.Resize, Resize);
-			Resize();
 		}
 
 		public void Resize()
@@ -56,63 +59,62 @@ namespace Raspware.GameEngine.Rendering
 			CanvasElement.Style.Width = _width + "px";
 		}
 
-		// TODO: Switch over to use a wrapping div tag rather than the window. Look at the 'Mouse_With_Fullscreen_And_Touch_Zoom_Cancel' example.
-		public void ResizeSquare()
+		private void ResizeSquare()
 		{
-			if (Window.InnerHeight > Window.InnerWidth)
+			if (_wrapper.ClientHeight > _wrapper.ClientWidth)
 			{
-				_width = Window.InnerWidth;
-				_height = Window.InnerWidth;
-				_top = Math.Floor(((double)Window.InnerHeight - _height) * 0.5);
+				_width = _wrapper.ClientWidth;
+				_height = _wrapper.ClientWidth;
+				_top = Math.Floor(((double)_wrapper.ClientHeight - _height) * 0.5);
 				return;
 			}
 
-			_width = Window.InnerHeight;
-			_height = Window.InnerHeight;
-			_left = Math.Floor(((double)Window.InnerWidth - _width) * 0.5);
+			_width = _wrapper.ClientHeight;
+			_height = _wrapper.ClientHeight;
+			_left = Math.Floor(((double)_wrapper.ClientWidth - _width) * 0.5);
 		}
 
-		public void ResizeLandscape()
+		private void ResizeLandscape()
 		{
-			var ratioPercent = ((double)Window.InnerHeight / (double)Window.InnerWidth); // target = 0.6
+			var ratioPercent = ((double)_wrapper.ClientHeight / (double)_wrapper.ClientWidth); // target = 0.6
 			if (ratioPercent > 0.55 && ratioPercent < 0.65) // This give a little bit of room
 			{
-				_width = Window.InnerWidth;
-				_height = Window.InnerHeight;
+				_width = _wrapper.ClientWidth;
+				_height = _wrapper.ClientHeight;
 			}
 			else if (ratioPercent <= 0.55) // Too wide
 			{
-				_width = Math.Floor(Window.InnerHeight * 1.6);
-				_height = Window.InnerHeight;
-				_left = Math.Floor(((double)Window.InnerWidth - _width) * 0.5);
+				_width = Math.Floor(_wrapper.ClientHeight * 1.6);
+				_height = _wrapper.ClientHeight;
+				_left = Math.Floor(((double)_wrapper.ClientWidth - _width) * 0.5);
 			}
 			else // Too tall
 			{
-				_width = Window.InnerWidth;
-				_height = Math.Floor(Window.InnerWidth * 0.6);
-				_top = Math.Floor(((double)Window.InnerHeight - _height) * 0.5);
+				_width = _wrapper.ClientWidth;
+				_height = Math.Floor(_wrapper.ClientWidth * 0.6);
+				_top = Math.Floor(((double)_wrapper.ClientHeight - _height) * 0.5);
 			}
 		}
 
-		public void ResizePortrait()
+		private void ResizePortrait()
 		{
-			var ratioPercent = ((double)Window.InnerWidth / (double)Window.InnerHeight); // target = 0.6
+			var ratioPercent = ((double)_wrapper.ClientWidth / (double)_wrapper.ClientHeight); // target = 0.6
 			if (ratioPercent > 0.55 && ratioPercent < 0.65) // This give a little bit of room
 			{
-				_width = Window.InnerWidth;
-				_height = Window.InnerHeight;
+				_width = _wrapper.ClientWidth;
+				_height = _wrapper.ClientHeight;
 			}
 			else if (ratioPercent >= 0.66) // Too wide
 			{
-				_height = Window.InnerHeight;
-				_width = Math.Floor(Window.InnerHeight * 0.6);
-				_left = Math.Floor(((double)Window.InnerWidth - _width) * 0.5);
+				_height = _wrapper.ClientHeight;
+				_width = Math.Floor(_wrapper.ClientHeight * 0.6);
+				_left = Math.Floor(((double)_wrapper.ClientWidth - _width) * 0.5);
 			}
 			else // Too tall
 			{
-				_height = Math.Floor(Window.InnerWidth * 1.6);
-				_width = Window.InnerWidth;
-				_top = Math.Floor(((double)Window.InnerHeight - _height) * 0.5);
+				_height = Math.Floor(_wrapper.ClientWidth * 1.6);
+				_width = _wrapper.ClientWidth;
+				_top = Math.Floor(((double)_wrapper.ClientHeight - _height) * 0.5);
 			}
 		}
 	}
