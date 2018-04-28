@@ -32,6 +32,22 @@ namespace Raspware.GameEngine.Rendering
 
 			_layers.ToList().ForEach(layer => Wrapper.AppendChild(layer.CanvasElement));
 			Document.Body.AppendChild(Wrapper);
+
+			Wrapper.OnTouchStart = CancelDefault;
+			Wrapper.OnTouchEnd = CancelDefault;
+			Wrapper.OnTouchCancel = CancelDefault;
+			Wrapper.OnTouchEnter = CancelDefault;
+			Wrapper.OnTouchLeave = CancelDefault;
+			Wrapper.OnTouchMove = CancelDefault;
+			Wrapper.OnMouseMove = CancelDefault;
+			Wrapper.OnMouseLeave = CancelDefault;
+			Wrapper.OnMouseDown = CancelDefault;
+			Wrapper.OnMouseEnter = CancelDefault;
+			Wrapper.OnMouseOut = CancelDefault;
+			Wrapper.OnMouseOver = CancelDefault;
+			Wrapper.OnMouseUp = CancelDefault;
+			Wrapper.OnMouseWheel = CancelDefault;
+			Wrapper.OnContextMenu = CancelDefault;
 		}
 
 		public static void ConfigureInstance()
@@ -68,6 +84,13 @@ namespace Raspware.GameEngine.Rendering
 
 			_lastHeight = Wrapper.ClientHeight;
 			_lastWidth = Wrapper.ClientWidth;
+		}
+
+		private static void CancelDefault(Event e)
+		{
+			if (e == null)
+				throw new ArgumentNullException(nameof(e));
+			e.PreventDefault();
 		}
 	}
 }
