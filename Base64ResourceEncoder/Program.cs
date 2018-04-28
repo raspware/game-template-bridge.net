@@ -12,7 +12,7 @@ namespace Raspware.Base64ResourceEncoder
 		private static void Main(string[] args)
 		{
 			var writer = new StringBuilder();
-			writer.AppendLine($"namespace Raspware.ExampleGame.Resources");
+			writer.AppendLine($"namespace Raspware.ExampleGame.Resource");
 			writer.AppendLine("{");
 
 			WriteOutClass(writer, new Resource("Audio"));
@@ -28,7 +28,7 @@ namespace Raspware.Base64ResourceEncoder
 					Path.Combine(
 						Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
 						@"..\..\..\ExampleGame\",
-						"Resources.cs"
+						"Resource.cs"
 					)
 				));
 

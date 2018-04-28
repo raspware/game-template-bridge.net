@@ -1,4 +1,4 @@
-namespace Raspware.ExampleGame.Resources
+namespace Raspware.ExampleGame.Resource
 {
 	/// <summary>This is automatically generated, DO NOT EDIT!</summary>
 	public static class Audio
