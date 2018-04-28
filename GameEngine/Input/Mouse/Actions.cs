@@ -1,4 +1,5 @@
 ﻿using System;
+using Bridge.Html5;
 using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
 
@@ -26,11 +27,34 @@ namespace Raspware.GameEngine.Input.Mouse
 			Cancel = new Events(resolution, buttons.Cancel, layer);
 			Button1 = new Events(resolution, buttons.Button1, layer);
 
-			layer.CanvasElement.OnMouseMove = (ev) =>
+			layer.CanvasElement.OnMouseDown = (e) =>
 			{
-				var x = Position.Instance.GetEventX(ev);
-				var y = Position.Instance.GetEventY(ev);
+				InputMouseDown(e);
 			};
+			layer.CanvasElement.OnMouseUp = (e) =>
+			{
+				InputMouseUp(e);
+			};
+		}
+
+		private void InputMouseDown(MouseEvent<HTMLCanvasElement> e)
+		{
+			Up.As<Events>().InputMouseDown(e);
+			Down.As<Events>().InputMouseDown(e);
+			Left.As<Events>().InputMouseDown(e);
+			Right.As<Events>().InputMouseDown(e);
+			Cancel.As<Events>().InputMouseDown(e);
+			Button1.As<Events>().InputMouseDown(e);
+		}
+
+		private void InputMouseUp(MouseEvent<HTMLCanvasElement> e)
+		{
+			Up.As<Events>().InputMouseUp(e);
+			Down.As<Events>().InputMouseUp(e);
+			Left.As<Events>().InputMouseUp(e);
+			Right.As<Events>().InputMouseUp(e);
+			Cancel.As<Events>().InputMouseUp(e);
+			Button1.As<Events>().InputMouseUp(e);
 		}
 
 		public static void ConfigureInstance(IButtons buttons, Layer layer)

@@ -28,5 +28,13 @@ namespace Raspware.GameEngine.Input.Shared
 			context.Fill();
 			context.ClosePath();
 		}
+
+		public bool Collision(Button button)
+		{
+			var dx = X - button.X;
+			var dy = Y - button.Y;
+			var distance = Math.Sqrt(dx * dx + dy * dy);
+			return distance < Radius + button.Radius;
+		}
 	}
 }
