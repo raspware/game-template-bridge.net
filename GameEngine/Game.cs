@@ -1,7 +1,6 @@
 ﻿using System;
 using Bridge.Html5;
 using ProductiveRage.Immutable;
-using Raspware.ExampleGame;
 using Raspware.GameEngine.Input;
 using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;

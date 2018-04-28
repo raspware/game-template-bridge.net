@@ -1,5 +1,6 @@
 ﻿using System;
 using Bridge.Html5;
+using Raspware.GameEngine;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.ExampleGame.Stage
@@ -16,7 +17,7 @@ namespace Raspware.ExampleGame.Stage
 
 		public Opening()
 		{
-			_music = new HTMLAudioElement() { Src = Resources.Audio.Theme };
+			_music = new HTMLAudioElement() { Src = Resource.Audio.Theme };
 			_music.Play();
 			_music.AddEventListener(EventType.Ended, ev => { _musicPlayed = true; });
 		}

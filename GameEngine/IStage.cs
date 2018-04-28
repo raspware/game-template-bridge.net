@@ -1,4 +1,4 @@
-﻿namespace Raspware.ExampleGame
+﻿namespace Raspware.GameEngine
 {
 	public interface IStage
 	{

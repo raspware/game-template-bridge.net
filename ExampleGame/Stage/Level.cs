@@ -2,6 +2,7 @@
 using System.Linq;
 using Bridge.Html5;
 using ProductiveRage.Immutable;
+using Raspware.GameEngine;
 using Raspware.GameEngine.Input;
 using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
@@ -26,7 +27,7 @@ namespace Raspware.ExampleGame.Stage
 
 			_actionRaiser = actionRaiser;
 			_buttons = buttons;
-			_image = new HTMLImageElement() { Src = Resources.Image.Test };
+			_image = new HTMLImageElement() { Src = Resource.Image.Test };
 		}
 
 		public void Draw()

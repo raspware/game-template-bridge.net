@@ -1,4 +1,5 @@
-﻿using Raspware.GameEngine.Rendering;
+﻿using Raspware.GameEngine;
+using Raspware.GameEngine.Rendering;
 
 namespace Raspware.ExampleGame.Stage
 {
