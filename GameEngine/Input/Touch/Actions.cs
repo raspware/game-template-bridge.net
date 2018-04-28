@@ -41,10 +41,13 @@ namespace Raspware.GameEngine.Input.Touch
 					if (_currentTouches.ContainsKey(touch.Identifier))
 						continue;
 
-					// TODO: Get the correct X and Y
 					_currentTouches.Add(
 						touch.Identifier,
-						new TemporaryButton(touch.ClientX, touch.ClientY, resolution.RenderAmount(5))
+						new TemporaryButton(
+							Shared.Position.Instance.GetEventX(touch),
+							Shared.Position.Instance.GetEventY(touch),
+							resolution.RenderAmount(1)
+						)
 					);
 				}
 			};
@@ -57,8 +60,11 @@ namespace Raspware.GameEngine.Input.Touch
 					if (!_currentTouches.ContainsKey(touch.Identifier))
 						continue;
 
-					// TODO: Get the correct X and Y
-					_currentTouches.Get(touch.Identifier).Reset(touch.ClientX, touch.ClientY);
+					_currentTouches.Get(touch.Identifier)
+					.Reset(
+						Shared.Position.Instance.GetEventX(touch),
+						Shared.Position.Instance.GetEventY(touch)
+					);
 				}
 			};
 		}
