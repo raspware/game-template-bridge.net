@@ -6,8 +6,6 @@ namespace Raspware.GameEngine.Rendering
 {
 	public sealed class Layer
 	{
-
-
 		private OrientationTypes _orientation { get; }
 
 		private double _width;
@@ -57,6 +55,11 @@ namespace Raspware.GameEngine.Rendering
 			CanvasElement.Style.Top = _top + "px";
 			CanvasElement.Style.Height = _height + "px";
 			CanvasElement.Style.Width = _width + "px";
+		}
+
+		public void Clear()
+		{
+			GetContext().ClearRect(0, 0, Instance.Width, Instance.Height);
 		}
 
 		private void ResizeSquare()
