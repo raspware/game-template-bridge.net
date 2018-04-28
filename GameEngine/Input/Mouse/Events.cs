@@ -15,7 +15,6 @@ namespace Raspware.GameEngine.Input.Mouse
 		private bool _keyDown = false;
 		private bool _keyUp = false;
 		private bool _onceOnKeyDownLock = false;
-		private int _keyCode;
 
 		public Events(Resolution resolution, Button button, Layer layer)
 		{
