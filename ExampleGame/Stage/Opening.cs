@@ -48,6 +48,7 @@ namespace Raspware.ExampleGame.Stage
 
 			Console.WriteLine(_alpha);
 
+			
 			levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
 			levelContext.ClosePath();
 		}
@@ -60,7 +61,7 @@ namespace Raspware.ExampleGame.Stage
 			if (_timePassed > 2000)
 				_alpha = (1 - (double)((double)_timePassed - 2000 / (double)4000)).ToString();
 
-			if (_timePassed  > 6000)
+			if (_timePassed > 6000)
 				_alpha = "0";
 
 			if (_musicPlayed)

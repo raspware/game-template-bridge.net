@@ -33,8 +33,6 @@ namespace Raspware.ExampleGame.Stage
 			var levelContext = Layers.Instance.GetLayer(Layers.Id.Level).GetContext();
 			var resolution = Resolution.Instance;
 
-			// TODO: Draw escape
-
 			levelContext.FillStyle = "rgba(0,0,0,0.75)";
 			levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
 
@@ -42,9 +40,10 @@ namespace Raspware.ExampleGame.Stage
 			levelContext.Font = resolution.RenderAmount(12).ToString() + "px Consolas, monospace";
 			levelContext.FillText("Paused!", resolution.RenderAmount(110), resolution.RenderAmount(90));
 
-			// render buttons
-			var controlsContext = Layers.Instance.GetLayer(Layers.Id.Controls).GetContext();
-			_escape.Render(controlsContext);
+			var controlLayer = Layers.Instance.GetLayer(Layers.Id.Controls);
+			controlLayer.Clear();
+			_escape.Render(controlLayer.GetContext());
+			
 			_displayedScreen = true;
 		}
 

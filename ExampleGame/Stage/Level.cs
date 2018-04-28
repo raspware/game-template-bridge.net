@@ -11,6 +11,7 @@ namespace Raspware.ExampleGame.Stage
 {
 	public sealed class Level : IStage
 	{
+		private bool _renderedControls = false;
 		private readonly IActions _actionRaiser;
 		private readonly NonNullList<Button> _buttons;
 		private readonly HTMLImageElement _image;
@@ -66,8 +67,13 @@ namespace Raspware.ExampleGame.Stage
 			levelContext.FillText(_message, resolution.RenderAmount(4), resolution.RenderAmount(96));
 
 			// render buttons
-			var controlsContext = Layers.Instance.GetLayer(Layers.Id.Controls).GetContext();
-			_buttons.ToList().ForEach(_ => _.Render(controlsContext));
+			if (_renderedControls)
+				return;
+
+			var controlLayer = Layers.Instance.GetLayer(Layers.Id.Controls);
+			controlLayer.Clear();
+			_buttons.ToList().ForEach(_ => _.Render(controlLayer.GetContext()));
+			_renderedControls = true;
 		}
 
 		public int Update(int ms)

@@ -1,5 +1,4 @@
 ﻿using System;
-using Bridge.Html5;
 using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
 
@@ -29,15 +28,8 @@ namespace Raspware.GameEngine.Input.Mouse
 
 			layer.CanvasElement.OnMouseMove = (ev) =>
 			{
-				var x = Shared.Position.Instance.GetEventX(ev);
-				var y = Shared.Position.Instance.GetEventY(ev);
-				var context = ev.Target.GetContext("2d").As<CanvasRenderingContext2D>();
-				context.ClearRect(0, 0, Resolution.Instance.Width, Resolution.Instance.Height);
-				context.BeginPath();
-				context.Arc(x, y, 10, Math.PI * 2, 0);
-				context.FillStyle = "red";
-				context.ClosePath();
-				context.Fill();
+				var x = Position.Instance.GetEventX(ev);
+				var y = Position.Instance.GetEventY(ev);
 			};
 		}
 
