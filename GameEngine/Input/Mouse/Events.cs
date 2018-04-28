@@ -5,7 +5,7 @@ using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Mouse
 {
-	// TODO: Implement this!
+	// TODO: Implement mouse move.
 	public sealed class Events : IEvents
 	{
 		private Button _button { get; }
