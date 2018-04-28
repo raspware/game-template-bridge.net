@@ -90,13 +90,19 @@ namespace Raspware.ExampleGame.Stage
 				data.Score++;
 
 			if (data.Score == 5)
+			{
+				Layers.Instance.GetLayer(Layers.Id.Controls).Clear();
 				return Stage.Id.GameComplete;
+			}
 
 			if (_actionRaiser.Down.OnceOnPressDown())
 				data.Lives--;
 
 			if (data.Lives == 0)
+			{
+				Layers.Instance.GetLayer(Layers.Id.Controls).Clear();
 				return Stage.Id.GameOver;
+			}
 
 			return Id;
 		}
