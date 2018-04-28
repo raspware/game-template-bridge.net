@@ -7,7 +7,7 @@ using Raspware.GameEngine.Rendering;
 namespace Raspware.GameEngine.Input.Touch
 {
 
-	// TODO: Implement this!
+	// TODO: Implement touch move.
 	public sealed class Actions : IActions
 	{
 		public static IActions Instance { get; private set; }
@@ -35,6 +35,8 @@ namespace Raspware.GameEngine.Input.Touch
 
 			layer.CanvasElement.OnTouchStart = (e) =>
 			{
+				e.PreventDefault();
+
 				var touches = e.ChangedTouches;
 				foreach (var touch in touches)
 				{
@@ -49,6 +51,8 @@ namespace Raspware.GameEngine.Input.Touch
 							resolution.RenderAmount(1)
 						)
 					);
+
+					InputTouchDown(touch);
 				}
 			};
 
@@ -69,6 +73,26 @@ namespace Raspware.GameEngine.Input.Touch
 			};
 		}
 
+		private void InputTouchDown(Bridge.Html5.Touch touch)
+		{
+			Up.As<Events>().InputTouchDown(touch);
+			Down.As<Events>().InputTouchDown(touch);
+			Left.As<Events>().InputTouchDown(touch);
+			Right.As<Events>().InputTouchDown(touch);
+			Cancel.As<Events>().InputTouchDown(touch);
+			Button1.As<Events>().InputTouchDown(touch);
+		}
+
+		private void InputTouchUp(Bridge.Html5.Touch touch)
+		{
+			Up.As<Events>().InputTouchUp(touch);
+			Down.As<Events>().InputTouchUp(touch);
+			Left.As<Events>().InputTouchUp(touch);
+			Right.As<Events>().InputTouchUp(touch);
+			Cancel.As<Events>().InputTouchUp(touch);
+			Button1.As<Events>().InputTouchUp(touch);
+		}
+
 		public static void ConfigureInstance(IButtons buttons, Layer layer)
 		{
 			if (_configured)
@@ -80,7 +104,7 @@ namespace Raspware.GameEngine.Input.Touch
 			_configured = true;
 		}
 
-		private static void OnTouchEndLeaveAndCancel(TouchEvent<HTMLCanvasElement> touchEvent)
+		private void OnTouchEndLeaveAndCancel(TouchEvent<HTMLCanvasElement> touchEvent)
 		{
 			if (touchEvent == null)
 				throw new ArgumentNullException(nameof(touchEvent));
@@ -90,6 +114,8 @@ namespace Raspware.GameEngine.Input.Touch
 			{
 				if (_currentTouches.ContainsKey(touch.Identifier))
 					_currentTouches.Remove(touch.Identifier);
+
+				InputTouchUp(touch);
 			}
 		}
 

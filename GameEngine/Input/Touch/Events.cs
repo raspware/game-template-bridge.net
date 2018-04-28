@@ -12,6 +12,10 @@ namespace Raspware.GameEngine.Input.Touch
 		private Resolution _resolution { get; }
 		private Layer _layer { get; }
 
+		private bool _keyDown = false;
+		private bool _keyUp = false;
+		private bool _onceOnKeyDownLock = false;
+
 		private Dictionary<int, Button> _currentTouchers = new Dictionary<int, Button>();
 
 		public Events(Resolution resolution, Button button, Layer layer)
@@ -28,19 +32,58 @@ namespace Raspware.GameEngine.Input.Touch
 			_layer = layer;
 		}
 
-		public bool OnceOnPressDown()
+		public void InputTouchDown(Bridge.Html5.Touch touch)
 		{
-			return false;
+			if (!_button.Collision(GetCurrentMousePosition(touch)))
+				return;
+
+			_keyDown = true;
+			_keyUp = false;
 		}
 
-		public bool PostPressedDown()
+		public void InputTouchUp(Bridge.Html5.Touch touch)
 		{
-			return false;
+			if (!_button.Collision(GetCurrentMousePosition(touch)))
+				return;
+
+			_keyDown = false;
+			_keyUp = true;
+			_onceOnKeyDownLock = false;
 		}
 
 		public bool PressedDown()
 		{
+			return _keyDown;
+		}
+
+		public bool PostPressedDown()
+		{
+			if (_keyUp)
+			{
+				_keyUp = false;
+				return true;
+			}
 			return false;
+		}
+
+		public bool OnceOnPressDown()
+		{
+			if (_keyDown && !_onceOnKeyDownLock)
+			{
+				_keyDown = false;
+				_onceOnKeyDownLock = true;
+				return true;
+			}
+			return false;
+		}
+
+		private TemporaryButton GetCurrentMousePosition(Bridge.Html5.Touch touch)
+		{
+			return new TemporaryButton(
+				Position.Instance.GetEventX(touch),
+				Position.Instance.GetEventY(touch),
+				_resolution.RenderAmount(1)
+			);
 		}
 	}
 }
