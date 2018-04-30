@@ -5,8 +5,6 @@ using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Mouse
 {
-
-	// TODO: Implement this!
 	public sealed class Actions : IActions
 	{
 		public static IActions Instance { get; private set; }
