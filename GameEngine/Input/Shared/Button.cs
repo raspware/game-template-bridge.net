@@ -3,7 +3,6 @@ using Bridge.Html5;
 
 namespace Raspware.GameEngine.Input.Shared
 {
-	// TODO: Finish this
 	public class Button
 	{
 		public Button(int x, int y, double radius)

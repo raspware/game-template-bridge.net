@@ -60,8 +60,6 @@ namespace Raspware.GameEngine.Input.Shared
 			Instance = new DefaultButtons();
 		}
 
-
-		// TODO: Do these
 		public Button Up { get; }
 		public Button Down { get; }
 		public Button Left { get; }

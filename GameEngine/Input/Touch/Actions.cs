@@ -6,8 +6,6 @@ using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Touch
 {
-
-	// TODO: Implement touch move.
 	public sealed class Actions : IActions
 	{
 		public static IActions Instance { get; private set; }

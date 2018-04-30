@@ -4,7 +4,6 @@ using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Touch
 {
-	// TODO: Implement this!
 	public sealed class Events : IEvents
 	{
 		private Button _button { get; }
