@@ -5,16 +5,16 @@ using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Mouse
 {
-	// TODO: Implement mouse move.
 	public sealed class Events : IEvents
 	{
 		private Button _button { get; }
 		private Resolution _resolution { get; }
 		private Layer _layer { get; }
 
-		private bool _keyDown = false;
-		private bool _keyUp = false;
-		private bool _onceOnKeyDownLock = false;
+		private bool _isButtonDown = false;
+		private bool _isButtonUp = false;
+		private bool _isInputDown = false;
+		private bool _onceOnButtonDownLock = false;
 
 		public Events(Resolution resolution, Button button, Layer layer)
 		{
@@ -30,35 +30,55 @@ namespace Raspware.GameEngine.Input.Mouse
 			_layer = layer;
 		}
 
-		public void InputMouseDown(MouseEvent<HTMLCanvasElement> e)
+		public void InputDown(MouseEvent<HTMLCanvasElement> e)
 		{
+			_isInputDown = true;
+
 			if (!_button.Collision(GetCurrentMousePosition(e)))
 				return;
 
-			_keyDown = true;
-			_keyUp = false;
+			_isButtonDown = true;
+			_isButtonUp = false;
 		}
 
-		public void InputMouseUp(MouseEvent<HTMLCanvasElement> e)
+		public void InputUp(MouseEvent<HTMLCanvasElement> e)
 		{
+			_isInputDown = false;
+
 			if (!_button.Collision(GetCurrentMousePosition(e)))
 				return;
 
-			_keyDown = false;
-			_keyUp = true;
-			_onceOnKeyDownLock = false;
+			_isButtonDown = false;
+			_isButtonUp = true;
+			_onceOnButtonDownLock = false;
 		}
 
+		public void InputMove(MouseEvent<HTMLCanvasElement> e)
+		{
+			if (_onceOnButtonDownLock && (!_isInputDown || !_button.Collision(GetCurrentMousePosition(e))))
+				_onceOnButtonDownLock = false;
+
+			if (_isInputDown && _button.Collision(GetCurrentMousePosition(e)))
+			{
+				_isButtonDown = true;
+				_isButtonUp = false;
+			}
+			else
+			{
+				_isButtonDown = false;
+				_isButtonUp = true;
+			}
+		}
 		public bool PressedDown()
 		{
-			return _keyDown;
+			return _isButtonDown;
 		}
 
 		public bool PostPressedDown()
 		{
-			if (_keyUp)
+			if (_isButtonUp)
 			{
-				_keyUp = false;
+				_isButtonUp = false;
 				return true;
 			}
 			return false;
@@ -66,10 +86,9 @@ namespace Raspware.GameEngine.Input.Mouse
 
 		public bool OnceOnPressDown()
 		{
-			if (_keyDown && !_onceOnKeyDownLock)
+			if (_isInputDown && _isButtonDown && !_onceOnButtonDownLock)
 			{
-				_keyDown = false;
-				_onceOnKeyDownLock = true;
+				_onceOnButtonDownLock = true;
 				return true;
 			}
 			return false;

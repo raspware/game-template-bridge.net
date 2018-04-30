@@ -35,27 +35,41 @@ namespace Raspware.GameEngine.Input.Mouse
 			{
 				InputMouseUp(e);
 			};
+			layer.CanvasElement.OnMouseMove = (e) =>
+			{
+				InputMouseMove(e);
+			};
 		}
 
 		private void InputMouseDown(MouseEvent<HTMLCanvasElement> e)
 		{
-			Up.As<Events>().InputMouseDown(e);
-			Down.As<Events>().InputMouseDown(e);
-			Left.As<Events>().InputMouseDown(e);
-			Right.As<Events>().InputMouseDown(e);
-			Cancel.As<Events>().InputMouseDown(e);
-			Button1.As<Events>().InputMouseDown(e);
+			Up.As<Events>().InputDown(e);
+			Down.As<Events>().InputDown(e);
+			Left.As<Events>().InputDown(e);
+			Right.As<Events>().InputDown(e);
+			Cancel.As<Events>().InputDown(e);
+			Button1.As<Events>().InputDown(e);
 		}
 
 		private void InputMouseUp(MouseEvent<HTMLCanvasElement> e)
 		{
-			Up.As<Events>().InputMouseUp(e);
-			Down.As<Events>().InputMouseUp(e);
-			Left.As<Events>().InputMouseUp(e);
-			Right.As<Events>().InputMouseUp(e);
-			Cancel.As<Events>().InputMouseUp(e);
-			Button1.As<Events>().InputMouseUp(e);
+			Up.As<Events>().InputUp(e);
+			Down.As<Events>().InputUp(e);
+			Left.As<Events>().InputUp(e);
+			Right.As<Events>().InputUp(e);
+			Cancel.As<Events>().InputUp(e);
+			Button1.As<Events>().InputUp(e);
 		}
+		private void InputMouseMove(MouseEvent<HTMLCanvasElement> e)
+		{
+			Up.As<Events>().InputMove(e);
+			Down.As<Events>().InputMove(e);
+			Left.As<Events>().InputMove(e);
+			Right.As<Events>().InputMove(e);
+			Cancel.As<Events>().InputMove(e);
+			Button1.As<Events>().InputMove(e);
+		}
+
 
 		public static void ConfigureInstance(IButtons buttons, Layer layer)
 		{
