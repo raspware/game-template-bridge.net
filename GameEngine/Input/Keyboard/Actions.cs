@@ -14,22 +14,22 @@ namespace Raspware.GameEngine.Input.Keyboard
 
 		private void InputKeyDown(KeyboardEvent e)
 		{
-			Up.As<Events>().InputKeyDown(e);
-			Down.As<Events>().InputKeyDown(e);
-			Left.As<Events>().InputKeyDown(e);
-			Right.As<Events>().InputKeyDown(e);
-			Cancel.As<Events>().InputKeyDown(e);
-			Button1.As<Events>().InputKeyDown(e);
+			Up.As<Events>().InputDown(e);
+			Down.As<Events>().InputDown(e);
+			Left.As<Events>().InputDown(e);
+			Right.As<Events>().InputDown(e);
+			Cancel.As<Events>().InputDown(e);
+			Button1.As<Events>().InputDown(e);
 		}
 
 		private void InputKeyUp(KeyboardEvent e)
 		{
-			Up.As<Events>().InputKeyUp(e);
-			Down.As<Events>().InputKeyUp(e);
-			Left.As<Events>().InputKeyUp(e);
-			Right.As<Events>().InputKeyUp(e);
-			Cancel.As<Events>().InputKeyUp(e);
-			Button1.As<Events>().InputKeyUp(e);
+			Up.As<Events>().InputUp(e);
+			Down.As<Events>().InputUp(e);
+			Left.As<Events>().InputUp(e);
+			Right.As<Events>().InputUp(e);
+			Cancel.As<Events>().InputUp(e);
+			Button1.As<Events>().InputUp(e);
 		}
 
 		public IEvents Up { get; } = new Events(Events.Keys._upArrow);

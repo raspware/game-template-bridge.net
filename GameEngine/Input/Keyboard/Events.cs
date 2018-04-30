@@ -5,9 +5,9 @@ namespace Raspware.GameEngine.Input.Keyboard
 {
 	public sealed partial class Events : IEvents
 	{
-		private bool _keyDown = false;
-		private bool _keyUp = false;
-		private bool _onceOnKeyDownLock = false;
+		private bool _buttonDown = false;
+		private bool _buttonUp = false;
+		private bool _onceOnButtonDownLock = false;
 		private int _keyCode;
 
 		public Events(Keys keyCode)
@@ -15,35 +15,35 @@ namespace Raspware.GameEngine.Input.Keyboard
 			_keyCode = (int)keyCode;
 		}
 
-		public void InputKeyDown(KeyboardEvent e)
+		public void InputDown(KeyboardEvent e)
 		{
 			if (e.KeyCode != _keyCode)
 				return;
 
-			_keyDown = true;
-			_keyUp = false;
+			_buttonDown = true;
+			_buttonUp = false;
 		}
 
-		public void InputKeyUp(KeyboardEvent e)
+		public void InputUp(KeyboardEvent e)
 		{
 			if (e.KeyCode != _keyCode)
 				return;
 
-			_keyDown = false;
-			_keyUp = true;
-			_onceOnKeyDownLock = false;
+			_buttonDown = false;
+			_buttonUp = true;
+			_onceOnButtonDownLock = false;
 		}
 
 		public bool PressedDown()
 		{
-			return _keyDown;
+			return _buttonDown;
 		}
 
 		public bool PostPressedDown()
 		{
-			if (_keyUp)
+			if (_buttonUp)
 			{
-				_keyUp = false;
+				_buttonUp = false;
 				return true;
 			}
 			return false;
@@ -51,10 +51,10 @@ namespace Raspware.GameEngine.Input.Keyboard
 
 		public bool OnceOnPressDown()
 		{
-			if (_keyDown && !_onceOnKeyDownLock)
+			if (_buttonDown && !_onceOnButtonDownLock)
 			{
-				_keyDown = false;
-				_onceOnKeyDownLock = true;
+				_buttonDown = false;
+				_onceOnButtonDownLock = true;
 				return true;
 			}
 			return false;
