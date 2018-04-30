@@ -75,22 +75,32 @@ namespace Raspware.GameEngine.Input.Touch
 
 		private void InputTouchDown(Bridge.Html5.Touch touch)
 		{
-			Up.As<Events>().InputTouchDown(touch);
-			Down.As<Events>().InputTouchDown(touch);
-			Left.As<Events>().InputTouchDown(touch);
-			Right.As<Events>().InputTouchDown(touch);
-			Cancel.As<Events>().InputTouchDown(touch);
-			Button1.As<Events>().InputTouchDown(touch);
+			Up.As<Events>().InputDown(touch);
+			Down.As<Events>().InputDown(touch);
+			Left.As<Events>().InputDown(touch);
+			Right.As<Events>().InputDown(touch);
+			Cancel.As<Events>().InputDown(touch);
+			Button1.As<Events>().InputDown(touch);
 		}
 
 		private void InputTouchUp(Bridge.Html5.Touch touch)
 		{
-			Up.As<Events>().InputTouchUp(touch);
-			Down.As<Events>().InputTouchUp(touch);
-			Left.As<Events>().InputTouchUp(touch);
-			Right.As<Events>().InputTouchUp(touch);
-			Cancel.As<Events>().InputTouchUp(touch);
-			Button1.As<Events>().InputTouchUp(touch);
+			Up.As<Events>().InputUp(touch);
+			Down.As<Events>().InputUp(touch);
+			Left.As<Events>().InputUp(touch);
+			Right.As<Events>().InputUp(touch);
+			Cancel.As<Events>().InputUp(touch);
+			Button1.As<Events>().InputUp(touch);
+		}
+
+		private void InputTouchMove(Bridge.Html5.Touch touch)
+		{
+			Up.As<Events>().InputMove(touch);
+			Down.As<Events>().InputMove(touch);
+			Left.As<Events>().InputMove(touch);
+			Right.As<Events>().InputMove(touch);
+			Cancel.As<Events>().InputMove(touch);
+			Button1.As<Events>().InputMove(touch);
 		}
 
 		public static void ConfigureInstance(IButtons buttons, Layer layer)

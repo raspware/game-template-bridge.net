@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
 
@@ -11,12 +10,10 @@ namespace Raspware.GameEngine.Input.Touch
 		private Button _button { get; }
 		private Resolution _resolution { get; }
 		private Layer _layer { get; }
-
-		private bool _keyDown = false;
-		private bool _keyUp = false;
-		private bool _onceOnKeyDownLock = false;
-
-		private Dictionary<int, Button> _currentTouchers = new Dictionary<int, Button>();
+		private bool _isButtonDown = false;
+		private bool _isButtonUp = false;
+		private bool _isInputDown = false;
+		private bool _onceOnButtonDownLock = false;
 
 		public Events(Resolution resolution, Button button, Layer layer)
 		{
@@ -32,35 +29,55 @@ namespace Raspware.GameEngine.Input.Touch
 			_layer = layer;
 		}
 
-		public void InputTouchDown(Bridge.Html5.Touch touch)
+		public void InputDown(Bridge.Html5.Touch touch)
 		{
+			_isInputDown = true;
+
 			if (!_button.Collision(GetCurrentMousePosition(touch)))
 				return;
 
-			_keyDown = true;
-			_keyUp = false;
+			_isButtonDown = true;
+			_isButtonUp = false;
 		}
 
-		public void InputTouchUp(Bridge.Html5.Touch touch)
+		public void InputUp(Bridge.Html5.Touch touch)
 		{
+			_isInputDown = false;
+
 			if (!_button.Collision(GetCurrentMousePosition(touch)))
 				return;
 
-			_keyDown = false;
-			_keyUp = true;
-			_onceOnKeyDownLock = false;
+			_isButtonDown = false;
+			_isButtonUp = true;
+			_onceOnButtonDownLock = false;
 		}
 
+		public void InputMove(Bridge.Html5.Touch touch)
+		{
+			if (_onceOnButtonDownLock && (!_isInputDown || !_button.Collision(GetCurrentMousePosition(touch))))
+				_onceOnButtonDownLock = false;
+
+			if (_isInputDown && _button.Collision(GetCurrentMousePosition(touch)))
+			{
+				_isButtonDown = true;
+				_isButtonUp = false;
+			}
+			else
+			{
+				_isButtonDown = false;
+				_isButtonUp = true;
+			}
+		}
 		public bool PressedDown()
 		{
-			return _keyDown;
+			return _isButtonDown;
 		}
 
 		public bool PostPressedDown()
 		{
-			if (_keyUp)
+			if (_isButtonUp)
 			{
-				_keyUp = false;
+				_isButtonUp = false;
 				return true;
 			}
 			return false;
@@ -68,10 +85,9 @@ namespace Raspware.GameEngine.Input.Touch
 
 		public bool OnceOnPressDown()
 		{
-			if (_keyDown && !_onceOnKeyDownLock)
+			if (_isInputDown && _isButtonDown && !_onceOnButtonDownLock)
 			{
-				_keyDown = false;
-				_onceOnKeyDownLock = true;
+				_onceOnButtonDownLock = true;
 				return true;
 			}
 			return false;
