@@ -67,6 +67,8 @@ namespace Raspware.GameEngine.Input.Touch
 						Shared.Position.Instance.GetEventX(touch),
 						Shared.Position.Instance.GetEventY(touch)
 					);
+
+					InputTouchMove(touch);
 				}
 			};
 		}
