@@ -2,6 +2,8 @@
 using ProductiveRage.Immutable;
 using Raspware.ExampleGame.Stage;
 using Raspware.GameEngine;
+using Raspware.GameEngine.Input.Shared;
+using Raspware.GameEngine.Rendering;
 
 namespace Raspware.ExampleGame
 {
@@ -9,7 +11,33 @@ namespace Raspware.ExampleGame
 	{
 		public static void Main()
 		{
-			Game.ConfigureInstance(GetStage);
+			/** Generic Game Configuration **/
+			//Game.ConfigureInstance(GetStage);
+
+			/** Custom Game Configuration **/
+			Resolution.ConfigureInstance(Resolution.PixelSize._FHD, Resolution.OrientationTypes.Landscape);
+			Layers.ConfigureInstance();
+			DefaultButtons.ConfigureInstance();
+
+			GameEngine.Input.Mouse.Actions.ConfigureInstance(
+				DefaultButtons.Instance,
+				Layers.Instance.GetLayer(Layers.GenericLayerIds.Controls)
+			);
+			GameEngine.Input.Touch.Actions.ConfigureInstance(
+				DefaultButtons.Instance,
+				Layers.Instance.GetLayer(Layers.GenericLayerIds.Controls)
+			);
+
+			var actionRaiser = new GameEngine.Input.Combined.Actions(
+					NonNullList.Of(
+						GameEngine.Input.Keyboard.Actions.Instance,
+						GameEngine.Input.Mouse.Actions.Instance,
+						GameEngine.Input.Touch.Actions.Instance
+					)
+				);
+
+			Game.ConfigureInstance(GetStage, actionRaiser, DefaultButtons.Instance);
+
 			Game.Instance.Run(Id.Opening);
 		}
 

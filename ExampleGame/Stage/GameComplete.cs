@@ -17,7 +17,7 @@ namespace Raspware.ExampleGame.Stage
 				return;
 
 			int brightness = 70;
-			var levelContext = Layers.Instance.GetLayer(Layers.Id.Level).GetContext();
+			var levelContext = Layers.Instance.GetLayer(Layers.GenericLayerIds.Level).GetContext();
 			var resolution = Resolution.Instance;
 
 			levelContext.FillStyle = "rgb(" + (brightness * 2) + "," + (brightness * 2) + "," + (brightness) + ")";

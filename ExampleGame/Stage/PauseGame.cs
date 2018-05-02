@@ -30,7 +30,7 @@ namespace Raspware.ExampleGame.Stage
 			if (_displayedScreen)
 				return;
 
-			var levelContext = Layers.Instance.GetLayer(Layers.Id.Level).GetContext();
+			var levelContext = Layers.Instance.GetLayer(Layers.GenericLayerIds.Level).GetContext();
 			var resolution = Resolution.Instance;
 
 			levelContext.FillStyle = "rgba(0,0,0,0.75)";
@@ -40,10 +40,10 @@ namespace Raspware.ExampleGame.Stage
 			levelContext.Font = resolution.RenderAmount(12).ToString() + "px Consolas, monospace";
 			levelContext.FillText("Paused!", resolution.RenderAmount(110), resolution.RenderAmount(90));
 
-			var controlLayer = Layers.Instance.GetLayer(Layers.Id.Controls);
+			var controlLayer = Layers.Instance.GetLayer(Layers.GenericLayerIds.Controls);
 			controlLayer.Clear();
 			_escape.Render(controlLayer.GetContext());
-			
+
 			_displayedScreen = true;
 		}
 

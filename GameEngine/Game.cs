@@ -43,11 +43,11 @@ namespace Raspware.GameEngine
 
 			Input.Mouse.Actions.ConfigureInstance(
 				DefaultButtons.Instance,
-				Layers.Instance.GetLayer(Layers.Id.Controls)
+				Layers.Instance.GetLayer(Layers.GenericLayerIds.Controls)
 			);
 			Input.Touch.Actions.ConfigureInstance(
 				DefaultButtons.Instance,
-				Layers.Instance.GetLayer(Layers.Id.Controls)
+				Layers.Instance.GetLayer(Layers.GenericLayerIds.Controls)
 			);
 
 			var actionRaiser = new Input.Combined.Actions(

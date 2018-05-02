@@ -38,7 +38,7 @@ namespace Raspware.ExampleGame.Stage
 
 			var data = Data.Instance;
 			int brightness = 70;
-			var levelContext = Layers.Instance.GetLayer(Layers.Id.Level).GetContext();
+			var levelContext = Layers.Instance.GetLayer(Layers.GenericLayerIds.Level).GetContext();
 			var resolution = Resolution.Instance;
 
 			levelContext.FillStyle = "rgb(" + (brightness) + "," + (brightness * 2) + "," + (brightness) + ")";
@@ -70,7 +70,7 @@ namespace Raspware.ExampleGame.Stage
 			if (_renderedControls)
 				return;
 
-			var controlLayer = Layers.Instance.GetLayer(Layers.Id.Controls);
+			var controlLayer = Layers.Instance.GetLayer(Layers.GenericLayerIds.Controls);
 			controlLayer.Clear();
 			_buttons.ToList().ForEach(_ => _.Render(controlLayer.GetContext()));
 			_renderedControls = true;
@@ -91,7 +91,7 @@ namespace Raspware.ExampleGame.Stage
 
 			if (data.Score == 5)
 			{
-				Layers.Instance.GetLayer(Layers.Id.Controls).Clear();
+				Layers.Instance.GetLayer(Layers.GenericLayerIds.Controls).Clear();
 				return Stage.Id.GameComplete;
 			}
 
@@ -100,7 +100,7 @@ namespace Raspware.ExampleGame.Stage
 
 			if (data.Lives == 0)
 			{
-				Layers.Instance.GetLayer(Layers.Id.Controls).Clear();
+				Layers.Instance.GetLayer(Layers.GenericLayerIds.Controls).Clear();
 				return Stage.Id.GameOver;
 			}
 

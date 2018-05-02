@@ -30,7 +30,7 @@ namespace Raspware.ExampleGame.Stage
 			if (_message == "")
 				return;
 
-			var levelContext = Layers.Instance.GetLayer(Layers.Id.Level).GetContext();
+			var levelContext = Layers.Instance.GetLayer(Layers.GenericLayerIds.Level).GetContext();
 			var resolution = Resolution.Instance;
 
 			levelContext.FillStyle = "rgb(0,0,0)";

@@ -19,16 +19,21 @@ namespace Raspware.GameEngine.Rendering
 		private int _lastHeight = 0;
 		private int _lastWidth = 0;
 
-		private Layers(Resolution resolution)
+		private Layers(Resolution resolution, NonNullList<Layer> layers = null)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
 
-			_layers = NonNullList.Of(
-				new Layer(resolution, Id.Background, Wrapper, 1),
-				new Layer(resolution, Id.Level, Wrapper, 2),
-				new Layer(resolution, Id.Controls, Wrapper, 3)
-			).OrderBy(layer => layer.Order);
+			if (layers != null)
+				_layers = layers;
+			else
+				_layers = NonNullList.Of(
+					new Layer(resolution, GenericLayerIds.Background, Wrapper, 1),
+					new Layer(resolution, GenericLayerIds.Level, Wrapper, 2),
+					new Layer(resolution, GenericLayerIds.Controls, Wrapper, 3)
+				);
+
+			_layers = _layers.OrderBy(layer => layer.Order);
 
 			_layers.ToList().ForEach(layer => Wrapper.AppendChild(layer.CanvasElement));
 			Document.Body.AppendChild(Wrapper);
@@ -50,7 +55,7 @@ namespace Raspware.GameEngine.Rendering
 			Wrapper.OnContextMenu = CancelDefault;
 		}
 
-		public static void ConfigureInstance()
+		public static void ConfigureInstance(NonNullList<Layer> layers = null)
 		{
 			if (_configured)
 				throw new Exception($"'{nameof(Instance)}' has already been configured!");
@@ -59,7 +64,7 @@ namespace Raspware.GameEngine.Rendering
 			_configured = true;
 		}
 
-		public Layer GetLayer(Id id)
+		public Layer GetLayer(int id)
 		{
 			var layer = _layers.Where(l => l.Id == id).FirstOrDefault();
 			if (layer == null)
@@ -68,11 +73,11 @@ namespace Raspware.GameEngine.Rendering
 			return layer;
 		}
 
-		public enum Id
+		public static class GenericLayerIds
 		{
-			Background,
-			Level,
-			Controls
+			public const int Background = 1;
+			public const int Level = 2;
+			public const int Controls = 3;
 		}
 
 		public void Resize()

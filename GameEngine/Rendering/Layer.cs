@@ -18,10 +18,10 @@ namespace Raspware.GameEngine.Rendering
 		private HTMLDivElement _wrapper { get; }
 
 		public CanvasRenderingContext2D GetContext() => CanvasElement.GetContext(CanvasTypes.CanvasContext2DType.CanvasRenderingContext2D);
-		public Layers.Id Id { get; }
+		public int Id { get; }
 		public int Order { get; }
 
-		public Layer(Resolution resolution, Layers.Id id, HTMLDivElement wrapper, int order)
+		public Layer(Resolution resolution, int id, HTMLDivElement wrapper, int order)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
