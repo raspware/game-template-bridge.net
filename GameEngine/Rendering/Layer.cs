@@ -35,6 +35,7 @@ namespace Raspware.GameEngine.Rendering
 			Order = order;
 			CanvasElement.Width = resolution.Width;
 			CanvasElement.Height = resolution.Height;
+			CanvasElement.Style.Position = "absolute";
 		}
 
 		public void Resize()

@@ -21,9 +21,3 @@ div {
 	margin: 0;
 	background-color: #000;
 }
-
-canvas {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-}
