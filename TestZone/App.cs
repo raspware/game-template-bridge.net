@@ -4,7 +4,7 @@
 	{
 		public static void Main()
 		{
-			Audio.Run();
+			Fluent_Test.Go();
 		}
 	}
 }

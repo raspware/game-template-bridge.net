@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Audio.cs" />
+    <Compile Include="Fluent_Test.cs" />
     <Compile Include="Mouse_With_Fullscreen_And_Touch_Zoom_Cancel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReusableObjects\Position.cs" />
