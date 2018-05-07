@@ -40,7 +40,9 @@
     <DocumentationFile>bin\Release\Raspware.GameEngine.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Core.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="ICoreInterfaces.cs" />
     <Compile Include="Input\Keyboard\Keys.cs" />
     <Compile Include="Input\Shared\IButtons.cs" />
     <Compile Include="Input\Shared\DefaultButtons.cs" />
