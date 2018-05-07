@@ -28,8 +28,8 @@ namespace Raspware.GameEngine.Rendering
 		}
 
 		private static bool _configured { get; set; } = false;
-		public static Resolution Instance { get; private set; } = null;
-		private Resolution(PixelSize size, OrientationTypes orientation)
+		
+		public Resolution(PixelSize size, OrientationTypes orientation)
 		{
 			Orientation = orientation;
 
@@ -54,15 +54,7 @@ namespace Raspware.GameEngine.Rendering
 					throw new ArgumentException(nameof(orientation));
 			}
 		}
-		public static void ConfigureInstance(PixelSize size, OrientationTypes orientation = OrientationTypes.Landscape)
-		{
-			if (_configured)
-				throw new Exception($"'{nameof(Instance)}' has already been configured!");
-
-			Instance = new Resolution(size, orientation);
-			_configured = true;
-		}
-
+		
 		public int Width { get; }
 		public int Height { get; }
 		public double Amount { get; }
