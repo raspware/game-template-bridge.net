@@ -1,5 +1,6 @@
 ﻿using System;
 using Bridge.Html5;
+using ProductiveRage.Immutable;
 using Raspware.GameEngine.Input;
 using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
@@ -13,19 +14,20 @@ namespace Raspware.GameEngine
 			private IStage _stage { get; set; }
 			private int _lastFrame { get; set; }
 			private Layers _layers { get; set; }
+			private IButtons _buttons { get; set; }
 			private Func<int, IStage> _getStage { get; }
-			public IActions ActionRaiser { get; }
-			public IButtons Buttons { get; }
+			public IActions ActionRaiser { get; private set; }
 			public Layer Controls { get; private set; }
 			private Resolution _resolution { get; set; }
-			public ICoreStageFactory Resolution(Resolution resolution)
+			public ICoreButtons Resolution(Resolution resolution)
 			{
 				if (resolution == null)
 					throw new ArgumentNullException(nameof(resolution));
 
 				_resolution = resolution;
 
-				// TODO: A
+				InitaliseLayers();
+
 				return this;
 			}
 
@@ -73,6 +75,38 @@ namespace Raspware.GameEngine
 
 				_lastFrame = now;
 				Window.RequestAnimationFrame(Tick);
+			}
+
+			public ICoreStageFactory Buttons(IButtons buttons)
+			{
+				if (buttons == null)
+					throw new ArgumentNullException(nameof(buttons));
+
+				_buttons = buttons;
+
+				InitaliseActions();
+
+				return this;
+			}
+
+			private void InitaliseActions()
+			{
+				Input.Mouse.Actions.ConfigureInstance(
+				   _buttons,
+				   _layers.Controls
+			   );
+				Input.Touch.Actions.ConfigureInstance(
+				 _buttons,
+				   _layers.Controls
+				);
+
+				ActionRaiser = new Input.Combined.Actions(
+						NonNullList.Of(
+							Input.Keyboard.Actions.Instance,
+							Input.Mouse.Actions.Instance,
+							Input.Touch.Actions.Instance
+						)
+					);
 			}
 		}
 	}

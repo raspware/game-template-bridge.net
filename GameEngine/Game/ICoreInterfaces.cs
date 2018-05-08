@@ -1,5 +1,4 @@
 ﻿using System;
-using ProductiveRage.Immutable;
 using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
 
@@ -12,7 +11,7 @@ namespace Raspware.GameEngine
 
 	public interface ICoreButtons
 	{
-		ICoreStageFactory Buttons(NonNullList<Button> Buttons);
+		ICoreStageFactory Buttons(IButtons buttons);
 	}
 
 	public interface ICoreStageFactory
