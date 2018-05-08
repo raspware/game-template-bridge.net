@@ -5,7 +5,7 @@ namespace Raspware.GameEngine.Input.Shared
 {
 	public class Button
 	{
-		public Button(int id, int x, int y, double radius)
+		public Button(int x, int y, double radius, int id = 0)
 		{
 			Id = id;
 			X = x;

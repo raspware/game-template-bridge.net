@@ -26,45 +26,45 @@ namespace Raspware.GameEngine.Input.Shared
 			var actionButtonsRadius = resolution.RenderAmount(16);
 
 			var down = new Button(
-				Down,
 				spacer + (defaultRadius * 3),
 				resolution.Height - defaultRadius - spacer,
-				defaultRadius
+				defaultRadius,
+				Down
 			);
 
 			var up = new Button(
-				Up,
 				down.X,
 				down.Y - (defaultRadius * 4),
-				defaultRadius
+				defaultRadius,
+				Up
 			);
 
 			var left = new Button(
-				Left,
 				defaultRadius + spacer,
 				down.Y - (defaultRadius * 2),
-				defaultRadius
+				defaultRadius,
+				Left
 			);
 
 			var right = new Button(
-				Right,
 				left.X + (defaultRadius * 4),
 				left.Y,
-				defaultRadius
+				defaultRadius,
+				Right
 			);
 
 			var button1 = new Button(
-				Button1,
 				resolution.Width - actionButtonsRadius - spacer,
 				resolution.Height - actionButtonsRadius - spacer,
-				actionButtonsRadius
+				actionButtonsRadius,
+				Button1
 			);
 
 			var cancel = new Button(
-				Cancel,
 				resolution.Width - defaultRadius - spacer,
 				defaultRadius + spacer,
-				defaultRadius
+				defaultRadius,
+				Cancel
 			);
 
 			Buttons = NonNullList.Of(
@@ -77,4 +77,7 @@ namespace Raspware.GameEngine.Input.Shared
 			);
 		}
 	}
+
+	// TODO: Put this somewhere else
+
 }
