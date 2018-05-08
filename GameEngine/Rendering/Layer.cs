@@ -13,28 +13,29 @@ namespace Raspware.GameEngine.Rendering
 		private double _top;
 		private double _left;
 
+		private Resolution _resolution { get; }
+
 		public HTMLCanvasElement CanvasElement { get; } = new HTMLCanvasElement();
 
 		private HTMLDivElement _wrapper { get; }
 
 		public CanvasRenderingContext2D GetContext() => CanvasElement.GetContext(CanvasTypes.CanvasContext2DType.CanvasRenderingContext2D);
 		public int Id { get; }
-		public int Order { get; }
-
-		public Layer(Resolution resolution, int id, HTMLDivElement wrapper, int order)
+		public Layer(Resolution resolution, int id, HTMLDivElement wrapper)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
 			if (wrapper == null)
 				throw new ArgumentNullException(nameof(wrapper));
 
-			_orientation = resolution.Orientation;
+
+			_resolution = resolution;
+			_orientation = _resolution.Orientation;
 			_wrapper = wrapper;
 
 			Id = id;
-			Order = order;
-			CanvasElement.Width = resolution.Width;
-			CanvasElement.Height = resolution.Height;
+			CanvasElement.Width = _resolution.Width;
+			CanvasElement.Height = _resolution.Height;
 			CanvasElement.Style.Position = "absolute";
 		}
 
@@ -60,7 +61,7 @@ namespace Raspware.GameEngine.Rendering
 
 		public void Clear()
 		{
-			GetContext().ClearRect(0, 0, Instance.Width, Instance.Height);
+			GetContext().ClearRect(0, 0, _resolution.Width, _resolution.Height);
 		}
 
 		private void ResizeSquare()
