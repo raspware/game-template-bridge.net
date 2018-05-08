@@ -5,14 +5,10 @@ using ProductiveRage.Immutable;
 
 namespace Raspware.GameEngine.Rendering
 {
-	// TODO: Turn 'Layers' into an interface.
-	// TODO: Pass in NonNullList of 'Layer' rather than presume we are going to use 'Layers'.
 	public sealed class Layers
 	{
 		private NonNullList<Layer> _layers { get; set; }
 		private Resolution _resolution { get; set; }
-
-		//TODO: Move these into a single class
 		public static HTMLDivElement Wrapper { get; } = new HTMLDivElement();
 		private int _lastHeight = 0;
 		private int _lastWidth = 0;
