@@ -18,8 +18,8 @@ namespace Raspware.GameEngine
 			);
 
 			return CustomSettings()
-				.Resolution(resolution)
-				.Buttons(new DefaultButtons(resolution));
+				.SetResolution(resolution)
+				.SetButtons(new DefaultButtons(resolution));
 		}
 
 

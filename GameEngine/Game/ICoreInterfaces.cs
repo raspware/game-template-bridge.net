@@ -1,4 +1,5 @@
 ﻿using System;
+using Raspware.GameEngine.Input;
 using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
 
@@ -6,17 +7,17 @@ namespace Raspware.GameEngine
 {
 	public interface ICoreResolution
 	{
-		ICoreButtons Resolution(Resolution resolution);
+		ICoreButtons SetResolution(Resolution resolution);
 	}
 
 	public interface ICoreButtons
 	{
-		ICoreStageFactory Buttons(IButtons buttons);
+		ICoreStageFactory SetButtons(IButtons buttons);
 	}
 
 	public interface ICoreStageFactory
 	{
-		ICoreRun StageFactory(Func<ICore, int, IStage> stageFactory);
+		ICoreRun SetStageFactory(Func<ICore, int, IStage> stageFactory);
 	}
 
 	public interface ICoreRun
@@ -26,6 +27,9 @@ namespace Raspware.GameEngine
 
 	public interface ICore
 	{
-		Resolution GetResolution();
+		Resolution Resolution { get; }
+		IActions Actions { get; }
+		Layers Layers { get; }
+		IButtons Buttons { get; }
 	}
 }

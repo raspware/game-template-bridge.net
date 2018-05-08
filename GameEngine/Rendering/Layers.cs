@@ -7,7 +7,7 @@ namespace Raspware.GameEngine.Rendering
 {
 	public sealed class Layers
 	{
-		private NonNullList<Layer> _layers { get; set; }
+		private NonNullList<Layer> _stageLayers { get; set; }
 		private Resolution _resolution { get; set; }
 		public static HTMLDivElement Wrapper { get; } = new HTMLDivElement();
 		private int _lastHeight = 0;
@@ -48,7 +48,7 @@ namespace Raspware.GameEngine.Rendering
 			if (Wrapper.ClientHeight == _lastHeight && Wrapper.ClientWidth == _lastWidth)
 				return;
 
-			foreach (var layer in _layers)
+			foreach (var layer in _stageLayers)
 				layer.Resize();
 
 			Controls.Resize();
@@ -57,9 +57,9 @@ namespace Raspware.GameEngine.Rendering
 			_lastWidth = Wrapper.ClientWidth;
 		}
 
-		public Layer GetLayer(int id)
+		public Layer GetStageLayer(int id)
 		{
-			var layer = _layers.Where(_ => _.Id == id).FirstOrDefault();
+			var layer = _stageLayers.Where(_ => _.Id == id).FirstOrDefault();
 			if (layer == null)
 				throw new ArgumentNullException(nameof(layer));
 
@@ -71,11 +71,11 @@ namespace Raspware.GameEngine.Rendering
 			if (ids == null)
 				throw new ArgumentNullException(nameof(ids));
 
-			_layers = NonNullList.Of(ids.Select(id => new Layer(_resolution, id, Wrapper)).ToArray()); // Build up new layers.
+			_stageLayers = NonNullList.Of(ids.Select(id => new Layer(_resolution, id, Wrapper)).ToArray()); // Build up new layers.
 
 			Wrapper.InnerHTML = ""; // reset HTML (there is no event listeners on the children, so this should be fine.
 
-			foreach (var layer in _layers)
+			foreach (var layer in _stageLayers)
 				Wrapper.AppendChild(layer.CanvasElement);
 
 			Wrapper.AppendChild(Controls.CanvasElement); // remember to add the 'Controls' back and do it last as we always want this to be on top

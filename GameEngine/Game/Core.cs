@@ -13,18 +13,15 @@ namespace Raspware.GameEngine
 		{
 			private IStage _stage { get; set; }
 			private int _lastFrame { get; set; }
-			private Layers _layers { get; set; }
-			private IButtons _buttons { get; set; }
+
 			private Func<ICore, int, IStage> _stageFactory { get; set; }
-			public IActions ActionRaiser { get; private set; }
-			public Layer Controls { get; private set; }
-			private Resolution _resolution { get; set; }
-			public ICoreButtons Resolution(Resolution resolution)
+
+			public ICoreButtons SetResolution(Resolution resolution)
 			{
 				if (resolution == null)
 					throw new ArgumentNullException(nameof(resolution));
 
-				_resolution = resolution;
+				Resolution = resolution;
 
 				InitaliseLayers();
 
@@ -33,16 +30,16 @@ namespace Raspware.GameEngine
 
 			private void InitaliseLayers()
 			{
-				if (_resolution == null)
-					throw new ArgumentNullException(nameof(_resolution));
+				if (Resolution == null)
+					throw new ArgumentNullException(nameof(SetResolution));
 
-				if (_layers != null)
+				if (Layers != null)
 				{
 					Console.WriteLine("Layers already initalised!");
 					return;
 				}
 
-				_layers = new Layers(_resolution);
+				Layers = new Layers(Resolution);
 			}
 
 			public void Run(int startStageId)
@@ -51,7 +48,7 @@ namespace Raspware.GameEngine
 				Tick();
 			}
 
-			public ICoreRun StageFactory(Func<ICore, int, IStage> stageFactory)
+			public ICoreRun SetStageFactory(Func<ICore, int, IStage> stageFactory)
 			{
 				if (stageFactory == null)
 					throw new ArgumentNullException(nameof(stageFactory));
@@ -59,18 +56,12 @@ namespace Raspware.GameEngine
 				_stageFactory = stageFactory;
 				return this;
 			}
-
-			public Resolution GetResolution()
-			{
-				return _resolution;
-			}
-
 			private void Tick()
 			{
 				var now = (int)Window.Performance.Now();
 				var ms = now - _lastFrame;
 
-				_layers.Resize();
+				Layers.Resize();
 				var returnedId = _stage.Update(ms);
 				if (_stage.Id == returnedId)
 					_stage.Draw();
@@ -81,12 +72,12 @@ namespace Raspware.GameEngine
 				Window.RequestAnimationFrame(Tick);
 			}
 
-			public ICoreStageFactory Buttons(IButtons buttons)
+			public ICoreStageFactory SetButtons(IButtons buttons)
 			{
 				if (buttons == null)
 					throw new ArgumentNullException(nameof(buttons));
 
-				_buttons = buttons;
+				Buttons = buttons;
 
 				InitaliseActions();
 
@@ -96,22 +87,27 @@ namespace Raspware.GameEngine
 			private void InitaliseActions()
 			{
 				Input.Mouse.Actions.ConfigureInstance(
-				   _buttons,
-				   _layers.Controls
+				   Buttons,
+				   Layers.Controls
 			   );
 				Input.Touch.Actions.ConfigureInstance(
-				 _buttons,
-				   _layers.Controls
+				 Buttons,
+				   Layers.Controls
 				);
 
-				ActionRaiser = new Input.Combined.Actions(
-						NonNullList.Of(
-							Input.Keyboard.Actions.Instance,
-							Input.Mouse.Actions.Instance,
-							Input.Touch.Actions.Instance
-						)
-					);
+				Actions = new Input.Combined.Actions(
+					NonNullList.Of(
+						Input.Keyboard.Actions.Instance,
+						Input.Mouse.Actions.Instance,
+						Input.Touch.Actions.Instance
+					)
+				);
 			}
+
+			public IActions Actions { get; private set; }
+			public IButtons Buttons { get; private set; }
+			public Resolution Resolution { get; private set; }
+			public Layers Layers { get; private set; }
 		}
 	}
 }
