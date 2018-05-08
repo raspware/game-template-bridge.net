@@ -5,8 +5,9 @@ namespace Raspware.GameEngine.Input.Shared
 {
 	public class Button
 	{
-		public Button(int x, int y, double radius)
+		public Button(int id, int x, int y, double radius)
 		{
+			Id = id;
 			X = x;
 			Y = y;
 			Radius = radius;
@@ -15,6 +16,8 @@ namespace Raspware.GameEngine.Input.Shared
 		public int X;
 		public int Y;
 		public double Radius;
+		public int Id;
+
 		// TODO: Turn this into an override memeber
 		public void Render(CanvasRenderingContext2D context)
 		{

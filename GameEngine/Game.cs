@@ -1,6 +1,4 @@
-﻿using System;
-using Raspware.GameEngine.Input;
-using Raspware.GameEngine.Input.Shared;
+﻿using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
 using static Raspware.GameEngine.Rendering.Resolution;
 
@@ -15,8 +13,11 @@ namespace Raspware.GameEngine
 
 		public static ICoreStageFactory DefaultSettings()
 		{
+			var resolution = new Resolution(PixelSize._FHD, OrientationTypes.Landscape);
 			return CustomSettings()
-				.Resolution(new Resolution(PixelSize._FHD, OrientationTypes.Landscape));
+				.Resolution(resolution)
+				.Buttons(new DefaultButtons(resolution));
+
 		}
 
 
@@ -44,23 +45,6 @@ namespace Raspware.GameEngine
 				);
 			ConfigureInstance(getStage, actionRaiser, DefaultButtons.Instance);
 		}*/
-
-
-		private Game(Func<int, IStage> getStage, IActions actionRaiser, IButtons buttons)
-		{
-			// TODO: Change these to tell the user they need to be initalised first
-			if (Resolution.Instance == null)
-				throw new ArgumentNullException(nameof(Resolution.Instance));
-			if (Layers.Instance == null)
-				throw new ArgumentNullException(nameof(Layers.Instance));
-			if (getStage == null)
-				throw new ArgumentNullException(nameof(getStage));
-
-			ActionRaiser = actionRaiser;
-			Buttons = buttons;
-			_getStage = getStage;
-		}
-
 	}
 
 }

@@ -1,70 +1,80 @@
 ﻿using System;
+using ProductiveRage.Immutable;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Shared
 {
 	public sealed class DefaultButtons : IButtons
 	{
-		private DefaultButtons()
+		public const int Up = 0;
+		public const int Down = 1;
+		public const int Left = 2;
+		public const int Right = 3;
+		public const int Button1 = 4;
+		public const int Cancel = 5;
+
+		private Resolution _resolution { get; }
+		public NonNullList<Button> Buttons { get; }
+
+		public DefaultButtons(Resolution resolution)
 		{
-			var spacer = _resolution.RenderAmount(2);
-			var defaultRadius = _resolution.RenderAmount(8);
-			var actionButtonsRadius = _resolution.RenderAmount(16);
+			if (resolution == null)
+				throw new ArgumentNullException(nameof(resolution));
 
+			var spacer = resolution.RenderAmount(2);
+			var defaultRadius = resolution.RenderAmount(8);
+			var actionButtonsRadius = resolution.RenderAmount(16);
 
-			Down = new Button(
+			var down = new Button(
+				Down,
 				spacer + (defaultRadius * 3),
-				_resolution.Height - defaultRadius - spacer,
+				resolution.Height - defaultRadius - spacer,
 				defaultRadius
 			);
 
-			Up = new Button(
-				Down.X,
-				Down.Y - (defaultRadius * 4),
+			var up = new Button(
+				Up,
+				down.X,
+				down.Y - (defaultRadius * 4),
 				defaultRadius
 			);
 
-			Left = new Button(
+			var left = new Button(
+				Left,
 				defaultRadius + spacer,
-				Down.Y - (defaultRadius * 2),
+				down.Y - (defaultRadius * 2),
 				defaultRadius
 			);
 
-			Right = new Button(
-				Left.X + (defaultRadius * 4),
-				Left.Y,
+			var right = new Button(
+				Right,
+				left.X + (defaultRadius * 4),
+				left.Y,
 				defaultRadius
 			);
-			Cancel = new Button(
-				_resolution.Width - defaultRadius - spacer,
-				defaultRadius + spacer,
-				defaultRadius
-			);
-			Button1 = new Button(
-				_resolution.Width - actionButtonsRadius - spacer,
-				_resolution.Height - actionButtonsRadius - spacer,
+
+			var button1 = new Button(
+				Button1,
+				resolution.Width - actionButtonsRadius - spacer,
+				resolution.Height - actionButtonsRadius - spacer,
 				actionButtonsRadius
 			);
+
+			var cancel = new Button(
+				Cancel,
+				resolution.Width - defaultRadius - spacer,
+				defaultRadius + spacer,
+				defaultRadius
+			);
+
+			Buttons = NonNullList.Of(
+				up,
+				down,
+				left,
+				right,
+				button1,
+				cancel
+			);
 		}
-		private static bool _configured { get; set; } = false;
-		private static Resolution _resolution { get; set; } = null;
-		public static DefaultButtons Instance { get; private set; } = null;
-
-		public static void ConfigureInstance()
-		{
-			if (_configured)
-				throw new Exception($"'{nameof(Instance)}' has already been configured!");
-
-			_configured = true;
-			_resolution = Resolution.Instance;
-			Instance = new DefaultButtons();
-		}
-
-		public Button Up { get; }
-		public Button Down { get; }
-		public Button Left { get; }
-		public Button Right { get; }
-		public Button Cancel { get; }
-		public Button Button1 { get; }
 	}
 }
