@@ -1,4 +1,6 @@
-﻿namespace Raspware.TestZone
+﻿using Raspware.TestZone.GameEngine;
+
+namespace Raspware.TestZone
 {
 	public class App
 	{
