@@ -77,7 +77,4 @@ namespace Raspware.GameEngine.Input.Shared
 			);
 		}
 	}
-
-	// TODO: Put this somewhere else
-
 }
