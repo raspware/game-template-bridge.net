@@ -15,7 +15,7 @@ namespace Raspware.GameEngine
 			private int _lastFrame { get; set; }
 			private Layers _layers { get; set; }
 			private IButtons _buttons { get; set; }
-			private Func<int, IStage> _getStage { get; }
+			private Func<ICore, int, IStage> _stageFactory { get; set; }
 			public IActions ActionRaiser { get; private set; }
 			public Layer Controls { get; private set; }
 			private Resolution _resolution { get; set; }
@@ -47,12 +47,16 @@ namespace Raspware.GameEngine
 
 			public void Run(int startStageId)
 			{
-				_stage = _getStage(startStageId);
+				_stage = _stageFactory(this, startStageId);
 				Tick();
 			}
 
 			public ICoreRun StageFactory(Func<ICore, int, IStage> stageFactory)
 			{
+				if (stageFactory == null)
+					throw new ArgumentNullException(nameof(stageFactory));
+
+				_stageFactory = stageFactory;
 				return this;
 			}
 
@@ -71,7 +75,7 @@ namespace Raspware.GameEngine
 				if (_stage.Id == returnedId)
 					_stage.Draw();
 				else
-					_stage = _getStage(returnedId);
+					_stage = _stageFactory(this, returnedId);
 
 				_lastFrame = now;
 				Window.RequestAnimationFrame(Tick);

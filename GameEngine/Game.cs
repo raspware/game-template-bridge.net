@@ -1,6 +1,5 @@
 ﻿using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
-using static Raspware.GameEngine.Rendering.Resolution;
 
 namespace Raspware.GameEngine
 {
@@ -13,11 +12,14 @@ namespace Raspware.GameEngine
 
 		public static ICoreStageFactory DefaultSettings()
 		{
-			var resolution = new Resolution(PixelSize._FHD, OrientationTypes.Landscape);
+			var resolution = new Resolution(
+				Resolution.PixelSize._FHD,
+				Resolution.OrientationTypes.Landscape
+			);
+
 			return CustomSettings()
 				.Resolution(resolution)
 				.Buttons(new DefaultButtons(resolution));
-
 		}
 
 
