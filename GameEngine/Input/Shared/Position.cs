@@ -4,6 +4,8 @@ using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Shared
 {
+
+	// TODO: Turn this into a helper class of 'Resolution'
 	public sealed class Position
 	{
 		public static Position Instance => new Position();
