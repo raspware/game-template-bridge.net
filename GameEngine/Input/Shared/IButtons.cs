@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ProductiveRage.Immutable;
 
 namespace Raspware.GameEngine.Input.Shared
@@ -12,7 +13,10 @@ namespace Raspware.GameEngine.Input.Shared
 	{
 		public static Button GetButton(this NonNullList<Button> buttons, int buttonId)
 		{
-			return buttons.Where(button => button.Id == buttonId).FirstOrDefault();
+			var button = buttons.Where(_ => _.Id == buttonId).FirstOrDefault();
+			if (button == null)
+				throw new ArgumentNullException(nameof(button));
+			return button;
 		}
 	}
 }
