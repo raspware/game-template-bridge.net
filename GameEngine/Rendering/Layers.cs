@@ -21,7 +21,7 @@ namespace Raspware.GameEngine.Rendering
 
 			_resolution = resolution;
 
-			Controls = new Layer(_resolution, 0, Wrapper);
+			Controls = new Layer(_resolution, Wrapper);
 
 			Wrapper.AppendChild(Controls.CanvasElement);
 			Document.Body.AppendChild(Wrapper);
@@ -71,7 +71,7 @@ namespace Raspware.GameEngine.Rendering
 			if (ids == null)
 				throw new ArgumentNullException(nameof(ids));
 
-			_stageLayers = NonNullList.Of(ids.Select(id => new Layer(_resolution, id, Wrapper)).ToArray()); // Build up new layers.
+			_stageLayers = NonNullList.Of(ids.Select(id => new Layer(_resolution, Wrapper, id)).ToArray()); // Build up new layers.
 
 			Wrapper.InnerHTML = ""; // reset HTML (there is no event listeners on the children, so this should be fine.
 

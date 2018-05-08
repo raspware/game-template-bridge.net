@@ -1,5 +1,4 @@
-﻿using Raspware.GameEngine.Input.Shared;
-using Raspware.GameEngine.Rendering;
+﻿using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine
 {
@@ -19,7 +18,7 @@ namespace Raspware.GameEngine
 
 			return CustomSettings()
 				.SetResolution(resolution)
-				.SetButtons(new DefaultButtons(resolution));
+				.SetActions(new DefaultActions(resolution).Actions);
 		}
 
 

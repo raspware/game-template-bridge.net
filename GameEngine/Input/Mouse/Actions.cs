@@ -5,11 +5,11 @@ using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Mouse
 {
-	public sealed class Actions : IActions
+	public sealed class Actions
 	{
 		public static IActions Instance { get; private set; }
 		private static bool _configured { get; set; } = false;
-		private Actions(Resolution resolution, IButtons buttons, Layer layer)
+		private Actions(Resolution resolution, Shared.IActions buttons, Layer layer)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
@@ -17,6 +17,10 @@ namespace Raspware.GameEngine.Input.Mouse
 				throw new ArgumentNullException(nameof(buttons));
 			if (layer == null)
 				throw new ArgumentNullException(nameof(layer));
+
+
+			var a = buttons.Actions
+
 
 			Up = new Events(resolution, buttons.Up, layer);
 			Down = new Events(resolution, buttons.Down, layer);
@@ -69,7 +73,7 @@ namespace Raspware.GameEngine.Input.Mouse
 		}
 
 
-		public static void ConfigureInstance(IButtons buttons, Layer layer)
+		public static void ConfigureInstance(Shared.IActions buttons, Layer layer)
 		{
 			if (_configured)
 				throw new Exception($"'{nameof(Instance)}' has already been configured!");

@@ -1,15 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Bridge.Html5;
+using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Keyboard
 {
-	public sealed class Actions : IActions
+	public sealed class Actions
 	{
-		public static IActions Instance { get; } = new Actions();
-		private Actions()
+		public Dictionary<int,IEvents> ActionsEvents { get; private set; }
+
+		public Actions(Layer controls, Dictionary<int, Events.Keys> buttons)
 		{
-			Document.AddEventListener(EventType.KeyDown, (e) => InputKeyDown((KeyboardEvent)e));
-			Document.AddEventListener(EventType.KeyUp, (e) => InputKeyUp((KeyboardEvent)e));
+			if (controls == null) 
+				throw new ArgumentNullException(nameof(controls));
+			if (buttons == null)
+				throw new ArgumentNullException(nameof(buttons));
+
+			var a = buttons.Select(_ => new KeyValuePair<int, IEvents>(_.Key, new Events(_.Value)));
+
+			controls.CanvasElement.AddEventListener(EventType.KeyDown, (e) => InputKeyDown((KeyboardEvent)e));
+			controls.CanvasElement.AddEventListener(EventType.KeyUp, (e) => InputKeyUp((KeyboardEvent)e));
 		}
 
 		private void InputKeyDown(KeyboardEvent e)

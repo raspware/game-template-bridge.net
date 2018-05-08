@@ -7,7 +7,7 @@ namespace Raspware.GameEngine.Input.Mouse
 {
 	public sealed class Events : IEvents
 	{
-		private Button _button { get; }
+		private Actions _button { get; }
 		private Resolution _resolution { get; }
 		private Layer _layer { get; }
 
@@ -16,7 +16,7 @@ namespace Raspware.GameEngine.Input.Mouse
 		private bool _isInputDown = false;
 		private bool _onceOnButtonDownLock = false;
 
-		public Events(Resolution resolution, Button button, Layer layer)
+		public Events(Resolution resolution, Shared.Action button, Layer layer)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
@@ -94,9 +94,9 @@ namespace Raspware.GameEngine.Input.Mouse
 			return false;
 		}
 
-		private TemporaryButton GetCurrentMousePosition(MouseEvent<HTMLCanvasElement> e)
+		private Point GetCurrentMousePosition(MouseEvent<HTMLCanvasElement> e)
 		{
-			return new TemporaryButton(
+			return new Point(
 				Shared.Position.Instance.GetEventX(e),
 				Shared.Position.Instance.GetEventY(e),
 				_resolution.RenderAmount(1)

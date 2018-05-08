@@ -6,26 +6,26 @@ using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Touch
 {
-	public sealed class Actions : IActions
+	public sealed class Actions
 	{
 		public static IActions Instance { get; private set; }
 		private static bool _configured { get; set; } = false;
-		private static Dictionary<int, TemporaryButton> _currentTouches = new Dictionary<int, TemporaryButton>();
-		private Actions(Resolution resolution, IButtons buttons, Layer layer)
+		private static Dictionary<int, DynamicPoint> _currentTouches = new Dictionary<int, DynamicPoint>();
+		private Actions(Resolution resolution, IActions actions, Layer layer)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
-			if (buttons == null)
-				throw new ArgumentNullException(nameof(buttons));
+			if (actions == null)
+				throw new ArgumentNullException(nameof(actions));
 			if (layer == null)
 				throw new ArgumentNullException(nameof(layer));
 
-			Up = new Events(resolution, buttons.Up, layer);
-			Down = new Events(resolution, buttons.Down, layer);
-			Left = new Events(resolution, buttons.Left, layer);
-			Right = new Events(resolution, buttons.Right, layer);
-			Cancel = new Events(resolution, buttons.Cancel, layer);
-			Button1 = new Events(resolution, buttons.Button1, layer);
+			Up = new Events(resolution, actions.Up, layer);
+			Down = new Events(resolution, actions.Down, layer);
+			Left = new Events(resolution, actions.Left, layer);
+			Right = new Events(resolution, actions.Right, layer);
+			Cancel = new Events(resolution, actions.Cancel, layer);
+			Button1 = new Events(resolution, actions.Button1, layer);
 
 			layer.CanvasElement.OnTouchEnd = OnTouchEndLeaveAndCancel;
 			layer.CanvasElement.OnTouchLeave = OnTouchEndLeaveAndCancel;
@@ -43,7 +43,7 @@ namespace Raspware.GameEngine.Input.Touch
 
 					_currentTouches.Add(
 						touch.Identifier,
-						new TemporaryButton(
+						new DynamicPoint(
 							Shared.Position.Instance.GetEventX(touch),
 							Shared.Position.Instance.GetEventY(touch),
 							resolution.RenderAmount(1)
@@ -103,7 +103,7 @@ namespace Raspware.GameEngine.Input.Touch
 			Button1.As<Events>().InputMove(touch);
 		}
 
-		public static void ConfigureInstance(IButtons buttons, Layer layer)
+		public static void ConfigureInstance(Shared.IActions buttons, Layer layer)
 		{
 			if (_configured)
 				throw new Exception($"'{nameof(Instance)}' has already been configured!");

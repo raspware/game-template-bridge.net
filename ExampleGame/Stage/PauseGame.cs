@@ -9,12 +9,12 @@ namespace Raspware.ExampleGame.Stage
 	public sealed class PauseGame : IStage
 	{
 		private readonly IEvents _onEscape;
-		private readonly Button _escape;
+		private readonly GameEngine.Input.Shared.Action _escape;
 		private bool _displayedScreen = false;
 
 		public int Id => Stage.Id.PauseGame;
 
-		public PauseGame(IEvents onCancel, Button cancel)
+		public PauseGame(IEvents onCancel, GameEngine.Input.Shared.Action cancel)
 		{
 			if (onCancel == null)
 				throw new ArgumentNullException(nameof(onCancel));

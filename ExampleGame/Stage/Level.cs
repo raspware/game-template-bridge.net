@@ -12,14 +12,14 @@ namespace Raspware.ExampleGame.Stage
 	public sealed class Level : IStage
 	{
 		private bool _renderedControls = false;
-		private readonly IActions _actionRaiser;
-		private readonly NonNullList<Button> _buttons;
+		private readonly GameEngine.Input.IActions _actionRaiser;
+		private readonly NonNullList<GameEngine.Input.Shared.Action> _buttons;
 		private readonly HTMLImageElement _image;
 
 		private string _message;
 		public int Id => Stage.Id.Level;
 
-		public Level(IActions actionRaiser, NonNullList<Button> buttons)
+		public Level(GameEngine.Input.IActions actionRaiser, NonNullList<GameEngine.Input.Shared.Action> buttons)
 		{
 			if (actionRaiser == null)
 				throw new ArgumentNullException(nameof(actionRaiser));

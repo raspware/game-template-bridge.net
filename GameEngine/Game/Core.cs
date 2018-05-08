@@ -1,22 +1,20 @@
 ﻿using System;
 using Bridge.Html5;
 using ProductiveRage.Immutable;
-using Raspware.GameEngine.Input;
-using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine
 {
 	public static partial class Game
 	{
-		private sealed class Core : ICore, ICoreResolution, ICoreButtons, ICoreStageFactory, ICoreRun
+		private sealed class Core : ICore, ICoreResolution, ICoreActions, ICoreStageFactory, ICoreRun
 		{
 			private IStage _stage { get; set; }
 			private int _lastFrame { get; set; }
 
 			private Func<ICore, int, IStage> _stageFactory { get; set; }
 
-			public ICoreButtons SetResolution(Resolution resolution)
+			public ICoreActions SetResolution(Resolution resolution)
 			{
 				if (resolution == null)
 					throw new ArgumentNullException(nameof(resolution));
@@ -31,13 +29,7 @@ namespace Raspware.GameEngine
 			private void InitaliseLayers()
 			{
 				if (Resolution == null)
-					throw new ArgumentNullException(nameof(SetResolution));
-
-				if (Layers != null)
-				{
-					Console.WriteLine("Layers already initalised!");
-					return;
-				}
+					throw new ArgumentNullException(nameof(Resolution));
 
 				Layers = new Layers(Resolution);
 			}
@@ -72,12 +64,12 @@ namespace Raspware.GameEngine
 				Window.RequestAnimationFrame(Tick);
 			}
 
-			public ICoreStageFactory SetButtons(IButtons buttons)
+			public ICoreStageFactory SetActions(NonNullList<Input.Shared.Action> actions)
 			{
-				if (buttons == null)
-					throw new ArgumentNullException(nameof(buttons));
+				if (actions == null)
+					throw new ArgumentNullException(nameof(actions));
 
-				Buttons = buttons;
+				Actions = actions;
 
 				InitaliseActions();
 
@@ -87,11 +79,11 @@ namespace Raspware.GameEngine
 			private void InitaliseActions()
 			{
 				Input.Mouse.Actions.ConfigureInstance(
-				   Buttons,
+				   Actions,
 				   Layers.Controls
 			   );
 				Input.Touch.Actions.ConfigureInstance(
-				 Buttons,
+				 Actions,
 				   Layers.Controls
 				);
 
@@ -104,8 +96,7 @@ namespace Raspware.GameEngine
 				);
 			}
 
-			public IActions Actions { get; private set; }
-			public IButtons Buttons { get; private set; }
+			public NonNullList<Input.Shared.Action> Actions { get; private set; }
 			public Resolution Resolution { get; private set; }
 			public Layers Layers { get; private set; }
 		}

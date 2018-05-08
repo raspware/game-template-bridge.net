@@ -17,14 +17,14 @@ namespace Raspware.ExampleGame
 			/** Custom Game Configuration **/
 			Resolution.ConfigureInstance(Resolution.PixelSize._FHD, Resolution.OrientationTypes.Landscape);
 			Layers.ConfigureInstance();
-			DefaultButtons.ConfigureInstance();
+			DefaultActions.ConfigureInstance();
 
 			GameEngine.Input.Mouse.Actions.ConfigureInstance(
-				DefaultButtons.Instance,
+				DefaultActions.Instance,
 				Layers.Instance.GetLayer(Layers.GenericLayerIds.Controls)
 			);
 			GameEngine.Input.Touch.Actions.ConfigureInstance(
-				DefaultButtons.Instance,
+				DefaultActions.Instance,
 				Layers.Instance.GetLayer(Layers.GenericLayerIds.Controls)
 			);
 
@@ -36,7 +36,7 @@ namespace Raspware.ExampleGame
 					)
 				);
 
-			Game.ConfigureInstance(GetStage, actionRaiser, DefaultButtons.Instance);
+			Game.ConfigureInstance(GetStage, actionRaiser, DefaultActions.Instance);
 
 			Game.Instance.Run(Id.Opening);
 		}
