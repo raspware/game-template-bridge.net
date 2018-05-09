@@ -5,7 +5,7 @@ using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input
 {
-	public sealed class DefaultActions: IActions
+	public static class DefaultActions
 	{
 		public const int Up = 0;
 		public const int Down = 1;
@@ -14,9 +14,7 @@ namespace Raspware.GameEngine.Input
 		public const int Button1 = 4;
 		public const int Cancel = 5;
 
-		public NonNullList<Action> Actions { get; }
-
-		public DefaultActions(Resolution resolution)
+		public static NonNullList<Action> GetActions(Resolution resolution)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
@@ -57,7 +55,7 @@ namespace Raspware.GameEngine.Input
 
 			var right = new Action(
 				Right,
-				new Point (
+				new Point(
 					left.Point.X + (defaultRadius * 4),
 					left.Point.Y,
 					defaultRadius
@@ -67,7 +65,7 @@ namespace Raspware.GameEngine.Input
 
 			var button1 = new Action(
 				Button1,
-				new Point (
+				new Point(
 						resolution.Width - actionButtonsRadius - spacer,
 					resolution.Height - actionButtonsRadius - spacer,
 					actionButtonsRadius
@@ -85,7 +83,7 @@ namespace Raspware.GameEngine.Input
 				Events.Keys._escape
 			);
 
-			Actions = NonNullList.Of(
+			return NonNullList.Of(
 				up,
 				down,
 				left,

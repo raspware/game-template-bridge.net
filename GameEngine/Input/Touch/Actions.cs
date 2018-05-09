@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Bridge.Html5;
-using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Touch
 {
+	// TODO: Sort this out
 	public sealed class Actions
 	{
 		public static IActions Instance { get; private set; }
@@ -20,12 +20,12 @@ namespace Raspware.GameEngine.Input.Touch
 			if (layer == null)
 				throw new ArgumentNullException(nameof(layer));
 
-			Up = new Events(resolution, actions.Up, layer);
+			/*Up = new Events(resolution, actions.Up, layer);
 			Down = new Events(resolution, actions.Down, layer);
 			Left = new Events(resolution, actions.Left, layer);
 			Right = new Events(resolution, actions.Right, layer);
 			Cancel = new Events(resolution, actions.Cancel, layer);
-			Button1 = new Events(resolution, actions.Button1, layer);
+			Button1 = new Events(resolution, actions.Button1, layer);*/
 
 			layer.CanvasElement.OnTouchEnd = OnTouchEndLeaveAndCancel;
 			layer.CanvasElement.OnTouchLeave = OnTouchEndLeaveAndCancel;
@@ -41,14 +41,14 @@ namespace Raspware.GameEngine.Input.Touch
 					if (_currentTouches.ContainsKey(touch.Identifier))
 						continue;
 
-					_currentTouches.Add(
+					/*_currentTouches.Add(
 						touch.Identifier,
-						new DynamicPoint(
+						/*new DynamicPoint(
 							Shared.Position.Instance.GetEventX(touch),
 							Shared.Position.Instance.GetEventY(touch),
 							resolution.RenderAmount(1)
 						)
-					);
+					);*/
 
 					InputTouchDown(touch);
 				}
@@ -62,13 +62,13 @@ namespace Raspware.GameEngine.Input.Touch
 					if (!_currentTouches.ContainsKey(touch.Identifier))
 						continue;
 
-					_currentTouches.Get(touch.Identifier)
-					.Reset(
+					_currentTouches.Get(touch.Identifier);
+					/*.Reset(
 						Shared.Position.Instance.GetEventX(touch),
 						Shared.Position.Instance.GetEventY(touch)
-					);
+					);*/
 
-					InputTouchMove(touch);
+					//InputTouchMove(touch);
 				}
 			};
 		}
@@ -103,16 +103,7 @@ namespace Raspware.GameEngine.Input.Touch
 			Button1.As<Events>().InputMove(touch);
 		}
 
-		public static void ConfigureInstance(Shared.IActions buttons, Layer layer)
-		{
-			if (_configured)
-				throw new Exception($"'{nameof(Instance)}' has already been configured!");
-			if (buttons == null)
-				throw new ArgumentNullException(nameof(buttons));
 
-			Instance = new Actions(Resolution.Instance, buttons, layer);
-			_configured = true;
-		}
 
 		private void OnTouchEndLeaveAndCancel(TouchEvent<HTMLCanvasElement> touchEvent)
 		{

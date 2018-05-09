@@ -1,5 +1,4 @@
 ﻿using System;
-using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Touch
@@ -14,7 +13,9 @@ namespace Raspware.GameEngine.Input.Touch
 		private bool _isInputDown = false;
 		private bool _onceOnButtonDownLock = false;
 
-		public Events(Resolution resolution, Shared.Action button, Layer layer)
+
+		// TODO: Sort this out
+		public Events(Resolution resolution, Action button, Layer layer)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
@@ -24,7 +25,7 @@ namespace Raspware.GameEngine.Input.Touch
 				throw new ArgumentNullException(nameof(layer));
 
 			_resolution = resolution;
-			_button = button;
+			//_button = button;
 			_layer = layer;
 		}
 
@@ -32,8 +33,8 @@ namespace Raspware.GameEngine.Input.Touch
 		{
 			_isInputDown = true;
 
-			if (!_button.Collision(GetCurrentMousePosition(touch)))
-				return;
+			/*if (!_button.Collision(GetCurrentMousePosition(touch)))
+				return;*/
 
 			_isButtonDown = true;
 			_isButtonUp = false;
@@ -43,8 +44,8 @@ namespace Raspware.GameEngine.Input.Touch
 		{
 			_isInputDown = false;
 
-			if (!_button.Collision(GetCurrentMousePosition(touch)))
-				return;
+			/*if (!_button.Collision(GetCurrentMousePosition(touch)))*/
+			return;
 
 			_isButtonDown = false;
 			_isButtonUp = true;
@@ -53,7 +54,7 @@ namespace Raspware.GameEngine.Input.Touch
 
 		public void InputMove(Bridge.Html5.Touch touch)
 		{
-			if (_onceOnButtonDownLock && (!_isInputDown || !_button.Collision(GetCurrentMousePosition(touch))))
+			/*if (_onceOnButtonDownLock && (!_isInputDown || !_button.Collision(GetCurrentMousePosition(touch))))
 				_onceOnButtonDownLock = false;
 
 			if (_isInputDown && _button.Collision(GetCurrentMousePosition(touch)))
@@ -65,7 +66,7 @@ namespace Raspware.GameEngine.Input.Touch
 			{
 				_isButtonDown = false;
 				_isButtonUp = true;
-			}
+			}*/
 		}
 		public bool PressedDown()
 		{
@@ -92,13 +93,13 @@ namespace Raspware.GameEngine.Input.Touch
 			return false;
 		}
 
-		private TemporaryButton GetCurrentMousePosition(Bridge.Html5.Touch touch)
+		/*private TemporaryButton GetCurrentMousePosition(Bridge.Html5.Touch touch)
 		{
 			return new TemporaryButton(
 				Position.Instance.GetEventX(touch),
 				Position.Instance.GetEventY(touch),
 				_resolution.RenderAmount(1)
 			);
-		}
+		}*/
 	}
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using Bridge.Html5;
-using Raspware.GameEngine.Input.Shared;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Mouse
@@ -16,7 +15,7 @@ namespace Raspware.GameEngine.Input.Mouse
 		private bool _isInputDown = false;
 		private bool _onceOnButtonDownLock = false;
 
-		public Events(Resolution resolution, Shared.Action button, Layer layer)
+		public Events(Resolution resolution, Action button, Layer layer)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
@@ -26,7 +25,7 @@ namespace Raspware.GameEngine.Input.Mouse
 				throw new ArgumentNullException(nameof(layer));
 
 			_resolution = resolution;
-			_button = button;
+			//_button = button;
 			_layer = layer;
 		}
 
@@ -34,8 +33,8 @@ namespace Raspware.GameEngine.Input.Mouse
 		{
 			_isInputDown = true;
 
-			if (!_button.Collision(GetCurrentMousePosition(e)))
-				return;
+			/*if (!_button.Collision(GetCurrentMousePosition(e)))
+				return;*/
 
 			_isButtonDown = true;
 			_isButtonUp = false;
@@ -45,8 +44,8 @@ namespace Raspware.GameEngine.Input.Mouse
 		{
 			_isInputDown = false;
 
-			if (!_button.Collision(GetCurrentMousePosition(e)))
-				return;
+			/*if (!_button.Collision(GetCurrentMousePosition(e)))
+				return;*/
 
 			_isButtonDown = false;
 			_isButtonUp = true;
@@ -55,7 +54,7 @@ namespace Raspware.GameEngine.Input.Mouse
 
 		public void InputMove(MouseEvent<HTMLCanvasElement> e)
 		{
-			if (_onceOnButtonDownLock && (!_isInputDown || !_button.Collision(GetCurrentMousePosition(e))))
+			/*if (_onceOnButtonDownLock && (!_isInputDown || !_button.Collision(GetCurrentMousePosition(e))))
 				_onceOnButtonDownLock = false;
 
 			if (_isInputDown && _button.Collision(GetCurrentMousePosition(e)))
@@ -67,7 +66,7 @@ namespace Raspware.GameEngine.Input.Mouse
 			{
 				_isButtonDown = false;
 				_isButtonUp = true;
-			}
+			}*/
 		}
 		public bool PressedDown()
 		{
@@ -96,11 +95,13 @@ namespace Raspware.GameEngine.Input.Mouse
 
 		private Point GetCurrentMousePosition(MouseEvent<HTMLCanvasElement> e)
 		{
-			return new Point(
+			throw new NotImplementedException();
+
+			/*return new Point(
 				Shared.Position.Instance.GetEventX(e),
 				Shared.Position.Instance.GetEventY(e),
 				_resolution.RenderAmount(1)
-			);
+			);*/
 		}
 	}
 }

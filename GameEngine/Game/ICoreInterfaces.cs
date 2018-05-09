@@ -11,7 +11,7 @@ namespace Raspware.GameEngine
 
 	public interface ICoreActions
 	{
-		ICoreStageFactory SetActions(NonNullList<Input.Shared.Action> actions);
+		ICoreStageFactory SetActions(NonNullList<Input.Action> actions);
 	}
 
 	public interface ICoreStageFactory
@@ -28,6 +28,6 @@ namespace Raspware.GameEngine
 	{
 		Resolution Resolution { get; }
 		Layers Layers { get; }
-		NonNullList<Input.Shared.Action> Actions { get; }
+		NonNullList<Input.Action> Actions { get; }
 	}
 }

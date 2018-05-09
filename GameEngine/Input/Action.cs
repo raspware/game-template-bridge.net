@@ -4,7 +4,7 @@ using Raspware.GameEngine.Input.Keyboard;
 
 namespace Raspware.GameEngine.Input
 {
-	public sealed class Action
+	public sealed class Action : IActionKeyboard, IActionTouchAndMouse
 	{
 		public int Id { get; }
 		public Point Point { get; private set; }
