@@ -10,7 +10,7 @@ namespace Raspware.GameEngine.Input.Keyboard
 		private bool _onceOnButtonDownLock = false;
 		private int _keyCode;
 
-		public Events(Keys keyCode)
+		public Events(KeyCodes keyCode)
 		{
 			_keyCode = (int)keyCode;
 		}

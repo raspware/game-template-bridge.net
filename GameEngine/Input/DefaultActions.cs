@@ -14,7 +14,7 @@ namespace Raspware.GameEngine.Input
 		public const int Button1 = 4;
 		public const int Cancel = 5;
 
-		public static NonNullList<Action> GetActions(Resolution resolution)
+		public static NonNullList<ActionConfiguration> GetActionConfigurations(Resolution resolution)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
@@ -23,64 +23,64 @@ namespace Raspware.GameEngine.Input
 			var defaultRadius = resolution.RenderAmount(8);
 			var actionButtonsRadius = resolution.RenderAmount(16);
 
-			var down = new Action(
+			var down = new ActionConfiguration(
 				Down,
+				Events.KeyCodes._downArrow,
 				new Point(
 					spacer + (defaultRadius * 3),
 					resolution.Height - defaultRadius - spacer,
 					defaultRadius
-				),
-				Events.Keys._downArrow
+				)
 			);
 
-			var up = new Action(
+			var up = new ActionConfiguration(
 				Up,
+				Events.KeyCodes._upArrow,
 				new Point(
 					down.Point.X,
 					down.Point.Y - (defaultRadius * 4),
 					defaultRadius
-				),
-				Events.Keys._upArrow
+				)
 			);
 
-			var left = new Action(
+			var left = new ActionConfiguration(
 				Left,
+				Events.KeyCodes._leftArrow,
 				new Point(
 					defaultRadius + spacer,
 					down.Point.Y - (defaultRadius * 2),
 					defaultRadius
-				),
-				Events.Keys._leftArrow
+				)
 			);
 
-			var right = new Action(
+			var right = new ActionConfiguration(
 				Right,
+				Events.KeyCodes._rightArrow,
 				new Point(
 					left.Point.X + (defaultRadius * 4),
 					left.Point.Y,
 					defaultRadius
-				),
-				Events.Keys._rightArrow
+				)
 			);
 
-			var button1 = new Action(
+			var button1 = new ActionConfiguration(
 				Button1,
+				Events.KeyCodes._space,
 				new Point(
 						resolution.Width - actionButtonsRadius - spacer,
 					resolution.Height - actionButtonsRadius - spacer,
 					actionButtonsRadius
-				),
-				Events.Keys._space
+				)
 			);
 
-			var cancel = new Action(
+			var cancel = new ActionConfiguration(
 				Cancel,
+				Events.KeyCodes._escape,
 				new Point(
 					resolution.Width - defaultRadius - spacer,
 					defaultRadius + spacer,
 					defaultRadius
-				),
-				Events.Keys._escape
+				)
 			);
 
 			return NonNullList.Of(

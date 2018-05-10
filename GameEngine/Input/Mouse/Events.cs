@@ -6,35 +6,39 @@ namespace Raspware.GameEngine.Input.Mouse
 {
 	public sealed class Events : IEvents
 	{
-		private Actions _button { get; }
+		private IActionConfigurationMouse _actionConfiguration { get; }
 		private Resolution _resolution { get; }
-		private Layer _layer { get; }
+		private HTMLCanvasElement _controls { get; }
+		private HTMLDivElement _wrapper { get; }
 
 		private bool _isButtonDown = false;
 		private bool _isButtonUp = false;
 		private bool _isInputDown = false;
 		private bool _onceOnButtonDownLock = false;
 
-		public Events(Resolution resolution, Action button, Layer layer)
+		public Events(Resolution resolution, IActionConfigurationMouse actionConfiguration, HTMLCanvasElement controls, HTMLDivElement wrapper)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
-			if (button == null)
-				throw new ArgumentNullException(nameof(button));
-			if (layer == null)
-				throw new ArgumentNullException(nameof(layer));
+			if (actionConfiguration == null)
+				throw new ArgumentNullException(nameof(actionConfiguration));
+			if (controls == null)
+				throw new ArgumentNullException(nameof(controls));
+			if (wrapper == null)
+				throw new ArgumentNullException(nameof(wrapper));
 
 			_resolution = resolution;
-			//_button = button;
-			_layer = layer;
+			_actionConfiguration = actionConfiguration;
+			_controls = controls;
+			_wrapper = wrapper;
 		}
 
 		public void InputDown(MouseEvent<HTMLCanvasElement> e)
 		{
 			_isInputDown = true;
 
-			/*if (!_button.Collision(GetCurrentMousePosition(e)))
-				return;*/
+			if (!_actionConfiguration.Point.Collision(GetCurrentMousePosition(e)))
+				return;
 
 			_isButtonDown = true;
 			_isButtonUp = false;
@@ -44,8 +48,8 @@ namespace Raspware.GameEngine.Input.Mouse
 		{
 			_isInputDown = false;
 
-			/*if (!_button.Collision(GetCurrentMousePosition(e)))
-				return;*/
+			if (!_actionConfiguration.Point.Collision(GetCurrentMousePosition(e)))
+				return;
 
 			_isButtonDown = false;
 			_isButtonUp = true;
@@ -54,10 +58,10 @@ namespace Raspware.GameEngine.Input.Mouse
 
 		public void InputMove(MouseEvent<HTMLCanvasElement> e)
 		{
-			/*if (_onceOnButtonDownLock && (!_isInputDown || !_button.Collision(GetCurrentMousePosition(e))))
+			if (_onceOnButtonDownLock && (!_isInputDown || !_actionConfiguration.Point.Collision(GetCurrentMousePosition(e))))
 				_onceOnButtonDownLock = false;
 
-			if (_isInputDown && _button.Collision(GetCurrentMousePosition(e)))
+			if (_isInputDown && _actionConfiguration.Point.Collision(GetCurrentMousePosition(e)))
 			{
 				_isButtonDown = true;
 				_isButtonUp = false;
@@ -66,7 +70,7 @@ namespace Raspware.GameEngine.Input.Mouse
 			{
 				_isButtonDown = false;
 				_isButtonUp = true;
-			}*/
+			}
 		}
 		public bool PressedDown()
 		{
@@ -95,13 +99,11 @@ namespace Raspware.GameEngine.Input.Mouse
 
 		private Point GetCurrentMousePosition(MouseEvent<HTMLCanvasElement> e)
 		{
-			throw new NotImplementedException();
-
-			/*return new Point(
-				Shared.Position.Instance.GetEventX(e),
-				Shared.Position.Instance.GetEventY(e),
+			return new Point(
+				_resolution.GetEventX(_wrapper, e),
+				_resolution.GetEventY(_wrapper,e),
 				_resolution.RenderAmount(1)
-			);*/
+			);
 		}
 	}
 }

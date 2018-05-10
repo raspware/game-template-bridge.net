@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Bridge.Html5;
 using ProductiveRage.Immutable;
-using Raspware.GameEngine.Input.Keyboard;
+using Raspware.GameEngine.Input;
+using Raspware.GameEngine.Input.Mouse;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine
@@ -65,15 +67,13 @@ namespace Raspware.GameEngine
 				Window.RequestAnimationFrame(Tick);
 			}
 
-			public ICoreStageFactory SetActions(NonNullList<Input.Action> actions)
+			public ICoreStageFactory SetActions(NonNullList<ActionConfiguration> actions)
 			{
 				if (actions == null)
 					throw new ArgumentNullException(nameof(actions));
 
-				Actions = actions;
-
-				InitaliseActions();
-
+				ActionsEvents = new ActionRaisers(Resolution, Layers, actions.ToNonNullList<IActionConfigurationMouse>()).Events;
+				ActionConfigurations = actions;
 				return this;
 			}
 
@@ -99,11 +99,10 @@ namespace Raspware.GameEngine
 					)
 				);*/
 
-				ActionRaisers = new Actions(Layers.Controls, Actions.As<NonNullList<IActionKeyboard>>());
 			}
 
-			public NonNullList<Input.Action> Actions { get; private set; }
-			public Actions ActionRaisers { get; private set; }
+			public Dictionary<int, IEvents> ActionsEvents { get; private set; }
+			public NonNullList<ActionConfiguration> ActionConfigurations { get; private set; }
 			public Resolution Resolution { get; private set; }
 			public Layers Layers { get; private set; }
 		}

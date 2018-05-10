@@ -15,7 +15,7 @@ namespace Raspware.GameEngine.Input.Touch
 
 
 		// TODO: Sort this out
-		public Events(Resolution resolution, Action button, Layer layer)
+		public Events(Resolution resolution, ActionConfiguration button, Layer layer)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));

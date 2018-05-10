@@ -1,8 +1,7 @@
 ﻿namespace Raspware.GameEngine.Input
 {
-	public interface IActionTouchAndMouse
+	public interface IActionConfiguration
 	{
 		int Id { get; }
-		Point Point { get; }
 	}
 }

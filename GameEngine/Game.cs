@@ -19,7 +19,7 @@ namespace Raspware.GameEngine
 
 			return CustomSettings()
 				.SetResolution(resolution)
-				.SetActions(DefaultActions.GetActions(resolution));
+				.SetActions(DefaultActions.GetActionConfigurations(resolution));
 		}
 
 

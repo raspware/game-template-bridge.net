@@ -1,34 +1,25 @@
 ﻿using System;
-using System.Linq;
-using Bridge.Html5;
 using ProductiveRage.Immutable;
 using Raspware.GameEngine;
 using Raspware.GameEngine.Input;
-using Raspware.GameEngine.Input.Shared;
-using Raspware.GameEngine.Rendering;
 
 namespace Raspware.ExampleGame.Stage
 {
 	public sealed class Level : IStage
 	{
-		private bool _renderedControls = false;
-		private readonly GameEngine.Input.IActions _actionRaiser;
-		private readonly NonNullList<GameEngine.Input.Shared.Action> _buttons;
-		private readonly HTMLImageElement _image;
 
 		private string _message;
 		public int Id => Stage.Id.Level;
 
-		public Level(GameEngine.Input.IActions actionRaiser, NonNullList<GameEngine.Input.Shared.Action> buttons)
-		{
-			if (actionRaiser == null)
-				throw new ArgumentNullException(nameof(actionRaiser));
-			if (buttons == null)
-				throw new ArgumentNullException(nameof(buttons));
+		private ICore _core { get; }
 
-			_actionRaiser = actionRaiser;
-			_buttons = buttons;
-			_image = new HTMLImageElement() { Src = Resource.Image.Test };
+		public Level(ICore core)
+		{
+			if (core == null)
+				throw new ArgumentNullException(nameof(core));
+
+			_core = core;
+			_core.Layers.Reset(NonNullList.Of(0));
 		}
 
 		public void Draw()
@@ -38,15 +29,13 @@ namespace Raspware.ExampleGame.Stage
 
 			var data = Data.Instance;
 			int brightness = 70;
-			var levelContext = Layers.Instance.GetLayer(Layers.GenericLayerIds.Level).GetContext();
-			var resolution = Resolution.Instance;
+			var levelContext = _core.Layers.GetStageLayer(0).GetContext();
+			var resolution = _core.Resolution;
 
 			levelContext.FillStyle = "rgb(" + (brightness) + "," + (brightness * 2) + "," + (brightness) + ")";
 			levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
 
 			levelContext.FillStyle = "white";
-
-			levelContext.DrawImage(_image, 0, 0);
 
 			levelContext.Font = resolution.RenderAmount(10).ToString() + "px Consolas, monospace";
 			levelContext.FillText("Playing Game", resolution.RenderAmount(4), resolution.RenderAmount(12));
@@ -66,43 +55,19 @@ namespace Raspware.ExampleGame.Stage
 			levelContext.Font = resolution.RenderAmount(6).ToString() + "px Consolas, monospace";
 			levelContext.FillText(_message, resolution.RenderAmount(4), resolution.RenderAmount(96));
 
-			// render buttons
-			if (_renderedControls)
-				return;
-
-			var controlLayer = Layers.Instance.GetLayer(Layers.GenericLayerIds.Controls);
-			controlLayer.Clear();
-			_buttons.ToList().ForEach(_ => _.Render(controlLayer.GetContext()));
-			_renderedControls = true;
+			_core.RenderEvent(DefaultActions.Up, levelContext);
 		}
 
 		public int Update(int ms)
 		{
 			var data = Data.Instance;
+			var up = _core.ActionsEvents[DefaultActions.Up];
 
 			data.TimePassed += ms;
 			_message = data.TimePassed.ToString();
 
-			if (_actionRaiser.Cancel.OnceOnPressDown())
-				return Stage.Id.PauseGame;
-
-			if (_actionRaiser.Up.OnceOnPressDown())
+			if (up.OnceOnPressDown())
 				data.Score++;
-
-			if (data.Score == 5)
-			{
-				Layers.Instance.GetLayer(Layers.GenericLayerIds.Controls).Clear();
-				return Stage.Id.GameComplete;
-			}
-
-			if (_actionRaiser.Down.OnceOnPressDown())
-				data.Lives--;
-
-			if (data.Lives == 0)
-			{
-				Layers.Instance.GetLayer(Layers.GenericLayerIds.Controls).Clear();
-				return Stage.Id.GameOver;
-			}
 
 			return Id;
 		}

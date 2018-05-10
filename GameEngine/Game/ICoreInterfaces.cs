@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using ProductiveRage.Immutable;
+using Raspware.GameEngine.Input;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine
@@ -11,7 +13,7 @@ namespace Raspware.GameEngine
 
 	public interface ICoreActions
 	{
-		ICoreStageFactory SetActions(NonNullList<Input.Action> actions);
+		ICoreStageFactory SetActions(NonNullList<ActionConfiguration> actions);
 	}
 
 	public interface ICoreStageFactory
@@ -26,8 +28,9 @@ namespace Raspware.GameEngine
 
 	public interface ICore
 	{
+		Dictionary<int, IEvents> ActionsEvents { get; }
+		NonNullList<ActionConfiguration> ActionConfigurations { get; }
 		Resolution Resolution { get; }
-		Layers Layers { get; }
-		NonNullList<Input.Action> Actions { get; }
+		Layers Layers { get;  }
 	}
 }

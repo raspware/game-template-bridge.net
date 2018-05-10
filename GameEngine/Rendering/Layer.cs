@@ -21,7 +21,7 @@ namespace Raspware.GameEngine.Rendering
 
 		public CanvasRenderingContext2D GetContext() => CanvasElement.GetContext(CanvasTypes.CanvasContext2DType.CanvasRenderingContext2D);
 		public int Id { get; }
-		public Layer(Resolution resolution, HTMLDivElement wrapper, int id = 0)
+		public Layer(Resolution resolution, HTMLDivElement wrapper, int id = -1)
 		{
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));

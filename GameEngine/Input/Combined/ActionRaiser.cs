@@ -5,10 +5,10 @@ namespace Raspware.GameEngine.Input.Combined
 {
 
 	// TODO: Sort this out
-	public sealed class Actions
+	public sealed class ActionRaisers
 	{
-		private readonly NonNullList<IActions> _actionsRaisers;
-		public Actions(NonNullList<IActions> actionsRaisers)
+		private readonly NonNullList<IActionRaisers> _actionsRaisers;
+		public ActionRaisers(NonNullList<IActionRaisers> actionsRaisers)
 		{
 			if (actionsRaisers == null)
 				throw new ArgumentNullException(nameof(actionsRaisers));

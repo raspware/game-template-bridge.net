@@ -2,8 +2,8 @@
 
 namespace Raspware.GameEngine.Input
 {
-	public interface IActions
+	public interface IActionRaisers
 	{
-		NonNullList<Action> Actions { get; }
+		NonNullList<ActionConfiguration> Actions { get; }
 	}
 }
