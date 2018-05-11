@@ -8,6 +8,7 @@ namespace Raspware.GameEngine.Input.Combined
 	public sealed class ActionsRaisers : IActionsRaisers
 	{
 		public Dictionary<int, IEvents> Events { get; private set; }
+
 		public ActionsRaisers(NonNullList<IActionConfiguration> actionConfigurations, NonNullList<IActionsRaisers> actionsRaisers)
 		{
 			if (actionConfigurations == null)
