@@ -10,7 +10,7 @@ namespace Raspware.GameEngine.Input.Touch
 	{
 		private Dictionary<int, DynamicPoint> _currentTouches = new Dictionary<int, DynamicPoint>();
 		public Dictionary<int, IEvents> Events { get; }
-		private ActionsRaisers(Resolution resolution, Layers layers, NonNullList<IActionConfigurationTouch> actionConfigurations)
+		public ActionsRaisers(Resolution resolution, Layers layers, NonNullList<IActionConfigurationTouch> actionConfigurations)
 		{
 			if (resolution == null)
 				throw new ArgumentException(nameof(resolution));

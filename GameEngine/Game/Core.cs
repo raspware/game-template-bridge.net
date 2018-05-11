@@ -6,6 +6,7 @@ using ProductiveRage.Immutable;
 using Raspware.GameEngine.Input;
 using Raspware.GameEngine.Input.Keyboard;
 using Raspware.GameEngine.Input.Mouse;
+using Raspware.GameEngine.Input.Touch;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine
@@ -78,7 +79,8 @@ namespace Raspware.GameEngine
 					actions.ToNonNullList<IActionConfiguration>(),
 					NonNullList.Of<IActionsRaisers>(
 						new Input.Keyboard.ActionsRaisers(Layers.Controls.CanvasElement, actions.ToNonNullList<IActionConfigurationKeyboard>()),
-						new Input.Mouse.ActionsRaisers(Resolution, Layers, actions.ToNonNullList<IActionConfigurationMouse>())
+						new Input.Mouse.ActionsRaisers(Resolution, Layers, actions.ToNonNullList<IActionConfigurationMouse>()),
+						new Input.Touch.ActionsRaisers(Resolution, Layers, actions.ToNonNullList<IActionConfigurationTouch>())
 					)
 				).Events;
 
