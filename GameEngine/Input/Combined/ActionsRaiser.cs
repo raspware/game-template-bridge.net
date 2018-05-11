@@ -5,8 +5,6 @@ using ProductiveRage.Immutable;
 
 namespace Raspware.GameEngine.Input.Combined
 {
-
-	// TODO: Sort this out
 	public sealed class ActionsRaisers : IActionsRaisers
 	{
 		public Dictionary<int, IEvents> Events { get; private set; }
