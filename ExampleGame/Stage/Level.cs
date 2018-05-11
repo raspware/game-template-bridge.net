@@ -9,9 +9,10 @@ namespace Raspware.ExampleGame.Stage
 	{
 
 		private string _message;
-		public int Id => Stage.Id.Level;
-
+		private bool _renderedControls;
 		private ICore _core { get; }
+
+		public int Id => Stage.Id.Level;
 
 		public Level(ICore core)
 		{
@@ -28,11 +29,11 @@ namespace Raspware.ExampleGame.Stage
 				return;
 
 			var data = Data.Instance;
-			int brightness = 70;
+			int brightness = 0;
 			var levelContext = _core.Layers.GetStageLayer(0).GetContext();
 			var resolution = _core.Resolution;
 
-			levelContext.FillStyle = "rgb(" + (brightness) + "," + (brightness * 2) + "," + (brightness) + ")";
+			levelContext.FillStyle = "rgb(" + (brightness) + "," + (brightness + 126) + "," + (brightness) + ")";
 			levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
 
 			levelContext.FillStyle = "white";
@@ -55,13 +56,18 @@ namespace Raspware.ExampleGame.Stage
 			levelContext.Font = resolution.RenderAmount(6).ToString() + "px Consolas, monospace";
 			levelContext.FillText(_message, resolution.RenderAmount(4), resolution.RenderAmount(96));
 
-			_core.RenderEvent(DefaultActions.Up, levelContext);
+			if (!_renderedControls)
+			{
+				_core.RenderAction(DefaultActions.Up);
+				_renderedControls = true;
+
+			}
 		}
 
 		public int Update(int ms)
 		{
 			var data = Data.Instance;
-			var up = _core.ActionsEvents[DefaultActions.Up];
+			var up = _core.ActionEvents[DefaultActions.Up];
 
 			data.TimePassed += ms;
 			_message = data.TimePassed.ToString();

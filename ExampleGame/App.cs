@@ -1,6 +1,8 @@
 ﻿using System;
 using Raspware.ExampleGame.Stage;
 using Raspware.GameEngine;
+using Raspware.GameEngine.Input;
+using Raspware.GameEngine.Rendering;
 
 namespace Raspware.ExampleGame
 {
@@ -8,7 +10,10 @@ namespace Raspware.ExampleGame
 	{
 		public static void Main()
 		{
-			Game.DefaultSettings()
+			var resolution = new Resolution(Resolution.PixelSize._nHD, Resolution.OrientationTypes.Landscape);
+			Game.CustomSettings()
+				.SetResolution(resolution)
+				.SetActions(DefaultActions.GetActionConfigurations(resolution))
 				.SetStageFactory(StageFactory)
 				.Run(Id.Level);
 		}
@@ -19,7 +24,7 @@ namespace Raspware.ExampleGame
 			{
 				case Id.Level:
 					return new Level(core);
-				
+
 				default:
 					throw new ArgumentException(nameof(id));
 			}

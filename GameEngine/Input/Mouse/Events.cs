@@ -72,6 +72,7 @@ namespace Raspware.GameEngine.Input.Mouse
 				_isButtonUp = true;
 			}
 		}
+
 		public bool PressedDown()
 		{
 			return _isButtonDown;
@@ -96,12 +97,11 @@ namespace Raspware.GameEngine.Input.Mouse
 			}
 			return false;
 		}
-
 		private Point GetCurrentMousePosition(MouseEvent<HTMLCanvasElement> e)
 		{
 			return new Point(
 				_resolution.GetEventX(_wrapper, e),
-				_resolution.GetEventY(_wrapper,e),
+				_resolution.GetEventY(_wrapper, e),
 				_resolution.RenderAmount(1)
 			);
 		}

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Bridge.Html5;
 using ProductiveRage.Immutable;
 using Raspware.GameEngine.Input;
+using Raspware.GameEngine.Input.Keyboard;
 using Raspware.GameEngine.Input.Mouse;
 using Raspware.GameEngine.Rendering;
 
@@ -10,7 +12,7 @@ namespace Raspware.GameEngine
 {
 	public static partial class Game
 	{
-		private sealed class Core : ICore, ICoreResolution, ICoreActions, ICoreStageFactory, ICoreRun
+		private sealed class Core : ICore, ICoreResolution, ICoreActions, ICoreStageFactory, ICoreRun, ICoreActionRenderers
 		{
 			private IStage _stage { get; set; }
 			private int _lastFrame { get; set; }
@@ -72,37 +74,24 @@ namespace Raspware.GameEngine
 				if (actions == null)
 					throw new ArgumentNullException(nameof(actions));
 
-				ActionsEvents = new ActionRaisers(Resolution, Layers, actions.ToNonNullList<IActionConfigurationMouse>()).Events;
-				ActionConfigurations = actions;
+				ActionEvents = new Input.Combined.ActionsRaisers(
+					actions.ToNonNullList<IActionConfiguration>(),
+					NonNullList.Of<IActionsRaisers>(
+						new Input.Keyboard.ActionsRaisers(Layers.Controls.CanvasElement, actions.ToNonNullList<IActionConfigurationKeyboard>()),
+						new Input.Mouse.ActionsRaisers(Resolution, Layers, actions.ToNonNullList<IActionConfigurationMouse>())
+					)
+				).Events;
+
+				ActionsRenders = actions.ToDictionary(
+					actionConfiguration => actionConfiguration.Id,
+					actionConfiguration => actionConfiguration.As<IActionConfigurationRenderer>()
+				);
+
 				return this;
 			}
 
-			private void InitaliseActions()
-			{
-
-
-
-				/*Input.Mouse.Actions.ConfigureInstance(
-				   Actions,
-				   Layers.Controls
-			   );
-				Input.Touch.Actions.ConfigureInstance(
-				 Actions,
-				   Layers.Controls
-				);
-
-				Actions = new Input.Combined.Actions(
-					NonNullList.Of(
-						new Input.Keyboard.Actions(Layers.Controls, Actions),
-						Input.Mouse.Actions.Instance,
-						Input.Touch.Actions.Instance
-					)
-				);*/
-
-			}
-
-			public Dictionary<int, IEvents> ActionsEvents { get; private set; }
-			public NonNullList<ActionConfiguration> ActionConfigurations { get; private set; }
+			public Dictionary<int, IEvents> ActionEvents { get; private set; }
+			public Dictionary<int, IActionConfigurationRenderer> ActionsRenders { get; private set; }
 			public Resolution Resolution { get; private set; }
 			public Layers Layers { get; private set; }
 		}

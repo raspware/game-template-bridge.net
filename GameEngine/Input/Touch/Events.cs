@@ -1,40 +1,34 @@
-﻿using System;
+﻿using Bridge.Html5;
 using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Touch
 {
 	public sealed class Events : IEvents
 	{
-		private Actions _button { get; }
+		private IActionConfigurationTouch _actionConfiguration { get; }
+		private HTMLDivElement _wrapper { get; }
 		private Resolution _resolution { get; }
 		private Layer _layer { get; }
+
 		private bool _isButtonDown = false;
 		private bool _isButtonUp = false;
 		private bool _isInputDown = false;
 		private bool _onceOnButtonDownLock = false;
 
-
-		// TODO: Sort this out
-		public Events(Resolution resolution, ActionConfiguration button, Layer layer)
+		public Events(Resolution resolution, IActionConfigurationTouch actionConfiguration, HTMLCanvasElement controls, HTMLDivElement wrapper)
 		{
-			if (resolution == null)
-				throw new ArgumentNullException(nameof(resolution));
-			if (button == null)
-				throw new ArgumentNullException(nameof(button));
-			if (layer == null)
-				throw new ArgumentNullException(nameof(layer));
-
+			_wrapper = wrapper;
 			_resolution = resolution;
-			//_button = button;
-			_layer = layer;
+			_actionConfiguration = actionConfiguration;
+
 		}
 
 		public void InputDown(Bridge.Html5.Touch touch)
 		{
 			_isInputDown = true;
 
-			/*if (!_button.Collision(GetCurrentMousePosition(touch)))
-				return;*/
+			if (!_actionConfiguration.Point.Collision(GetCurrentTouchPosition(touch)))
+				return;
 
 			_isButtonDown = true;
 			_isButtonUp = false;
@@ -44,8 +38,8 @@ namespace Raspware.GameEngine.Input.Touch
 		{
 			_isInputDown = false;
 
-			/*if (!_button.Collision(GetCurrentMousePosition(touch)))*/
-			return;
+			if (!_actionConfiguration.Point.Collision(GetCurrentTouchPosition(touch)))
+				return;
 
 			_isButtonDown = false;
 			_isButtonUp = true;
@@ -54,10 +48,10 @@ namespace Raspware.GameEngine.Input.Touch
 
 		public void InputMove(Bridge.Html5.Touch touch)
 		{
-			/*if (_onceOnButtonDownLock && (!_isInputDown || !_button.Collision(GetCurrentMousePosition(touch))))
+			if (_onceOnButtonDownLock && (!_isInputDown || !_actionConfiguration.Point.Collision(GetCurrentTouchPosition(touch))))
 				_onceOnButtonDownLock = false;
 
-			if (_isInputDown && _button.Collision(GetCurrentMousePosition(touch)))
+			if (_isInputDown && _actionConfiguration.Point.Collision(GetCurrentTouchPosition(touch)))
 			{
 				_isButtonDown = true;
 				_isButtonUp = false;
@@ -66,7 +60,7 @@ namespace Raspware.GameEngine.Input.Touch
 			{
 				_isButtonDown = false;
 				_isButtonUp = true;
-			}*/
+			}
 		}
 		public bool PressedDown()
 		{
@@ -93,13 +87,13 @@ namespace Raspware.GameEngine.Input.Touch
 			return false;
 		}
 
-		/*private TemporaryButton GetCurrentMousePosition(Bridge.Html5.Touch touch)
+		private Point GetCurrentTouchPosition(Bridge.Html5.Touch touch)
 		{
-			return new TemporaryButton(
-				Position.Instance.GetEventX(touch),
-				Position.Instance.GetEventY(touch),
+			return new Point(
+				_resolution.GetEventX(_wrapper, touch),
+				_resolution.GetEventY(_wrapper, touch),
 				_resolution.RenderAmount(1)
 			);
-		}*/
+		}
 	}
 }

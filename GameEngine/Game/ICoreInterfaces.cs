@@ -28,9 +28,13 @@ namespace Raspware.GameEngine
 
 	public interface ICore
 	{
-		Dictionary<int, IEvents> ActionsEvents { get; }
-		NonNullList<ActionConfiguration> ActionConfigurations { get; }
+		Dictionary<int, IEvents> ActionEvents { get; }
 		Resolution Resolution { get; }
-		Layers Layers { get;  }
+		Layers Layers { get; }
+	}
+
+	public interface ICoreActionRenderers
+	{
+		Dictionary<int, IActionConfigurationRenderer> ActionsRenders { get; }
 	}
 }

@@ -5,11 +5,11 @@ using ProductiveRage.Immutable;
 
 namespace Raspware.GameEngine.Input.Keyboard
 {
-	public sealed class ActionsRaiser
+	public sealed class ActionsRaisers : IActionsRaisers
 	{
 		public Dictionary<int, IEvents> Events { get; private set; }
 
-		public ActionsRaiser(HTMLCanvasElement controls, NonNullList<IActionConfigurationKeyboard> actionConfigurations)
+		public ActionsRaisers(HTMLCanvasElement controls, NonNullList<IActionConfigurationKeyboard> actionConfigurations)
 		{
 			if (controls == null)
 				throw new ArgumentNullException(nameof(controls));
@@ -23,8 +23,8 @@ namespace Raspware.GameEngine.Input.Keyboard
 			Events = actionsEvents;
 
 			// TODO: Figure out how to apply this to a canvas so it is not so global
-			Document.OnKeyDown = (e) =>  InputKeyDown(e);
-			Document.OnKeyUp =(e) => InputKeyUp(e);
+			Document.OnKeyDown = (e) => InputKeyDown(e);
+			Document.OnKeyUp = (e) => InputKeyUp(e);
 		}
 
 		private void InputKeyDown(KeyboardEvent e)

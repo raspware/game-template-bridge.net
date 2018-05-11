@@ -1,9 +1,9 @@
-﻿using ProductiveRage.Immutable;
+﻿using System.Collections.Generic;
 
 namespace Raspware.GameEngine.Input
 {
-	public interface IActionRaisers
+	public interface IActionsRaisers
 	{
-		NonNullList<ActionConfiguration> Actions { get; }
+		Dictionary<int, IEvents> Events { get; }
 	}
 }
