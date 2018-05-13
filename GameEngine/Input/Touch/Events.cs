@@ -14,6 +14,7 @@ namespace Raspware.GameEngine.Input.Touch
 		private bool _isButtonUp = false;
 		private bool _isInputDown = false;
 		private bool _onceOnButtonDownLock = false;
+		private bool _applyFullscreen = false;
 
 		public Events(Resolution resolution, IActionConfigurationTouch actionConfiguration, HTMLCanvasElement controls, HTMLDivElement wrapper)
 		{
@@ -44,6 +45,23 @@ namespace Raspware.GameEngine.Input.Touch
 			_isButtonDown = false;
 			_isButtonUp = true;
 			_onceOnButtonDownLock = false;
+
+			if (_applyFullscreen)
+			{
+				// Fullscreen
+				/*@
+					var element = this._wrapper;
+					if(element.requestFullscreen)
+						element.requestFullscreen();
+					else if(element.mozRequestFullScreen)
+						element.mozRequestFullScreen();
+					else if(element.webkitRequestFullscreen)
+						element.webkitRequestFullscreen();
+					else if(element.msRequestFullscreen)
+						element.msRequestFullscreen();
+				*/
+				_applyFullscreen = false;
+			}
 		}
 
 		public void InputMove(Bridge.Html5.Touch touch)
@@ -85,6 +103,11 @@ namespace Raspware.GameEngine.Input.Touch
 				return true;
 			}
 			return false;
+		}
+
+		public void ApplyFullscreenOnPressUp(bool applyFullscreen = false)
+		{
+			_applyFullscreen = applyFullscreen;
 		}
 
 		private Point GetCurrentTouchPosition(Bridge.Html5.Touch touch)

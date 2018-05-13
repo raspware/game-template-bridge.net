@@ -78,7 +78,7 @@ namespace Raspware.GameEngine
 				ActionEvents = new Input.Combined.ActionsRaisers(
 					actions.ToNonNullList<IActionConfiguration>(),
 					NonNullList.Of<IActionsRaisers>(
-						new Input.Keyboard.ActionsRaisers(Layers.Controls.CanvasElement, actions.ToNonNullList<IActionConfigurationKeyboard>()),
+						new Input.Keyboard.ActionsRaisers(Layers, actions.ToNonNullList<IActionConfigurationKeyboard>()),
 						new Input.Mouse.ActionsRaisers(Resolution, Layers, actions.ToNonNullList<IActionConfigurationMouse>()),
 						new Input.Touch.ActionsRaisers(Resolution, Layers, actions.ToNonNullList<IActionConfigurationTouch>())
 					)

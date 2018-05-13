@@ -15,6 +15,7 @@ namespace Raspware.GameEngine.Input.Mouse
 		private bool _isButtonUp = false;
 		private bool _isInputDown = false;
 		private bool _onceOnButtonDownLock = false;
+		private bool _applyFullscreen = false;
 
 		public Events(Resolution resolution, IActionConfigurationMouse actionConfiguration, HTMLCanvasElement controls, HTMLDivElement wrapper)
 		{
@@ -48,12 +49,31 @@ namespace Raspware.GameEngine.Input.Mouse
 		{
 			_isInputDown = false;
 
+			if (_applyFullscreen)
+			{
+				// Fullscreen
+				/*@
+					var element = this._wrapper;
+					if(element.requestFullscreen)
+						element.requestFullscreen();
+					else if(element.mozRequestFullScreen)
+						element.mozRequestFullScreen();
+					else if(element.webkitRequestFullscreen)
+						element.webkitRequestFullscreen();
+					else if(element.msRequestFullscreen)
+						element.msRequestFullscreen();
+				*/
+				_applyFullscreen = false;
+			}
+
 			if (!_actionConfiguration.Point.Collision(GetCurrentMousePosition(e)))
 				return;
 
 			_isButtonDown = false;
 			_isButtonUp = true;
 			_onceOnButtonDownLock = false;
+
+			
 		}
 
 		public void InputMove(MouseEvent<HTMLCanvasElement> e)
@@ -97,6 +117,12 @@ namespace Raspware.GameEngine.Input.Mouse
 			}
 			return false;
 		}
+
+		public void ApplyFullscreenOnPressUp(bool applyFullscreen = false)
+		{
+			_applyFullscreen = applyFullscreen;
+		}
+
 		private Point GetCurrentMousePosition(MouseEvent<HTMLCanvasElement> e)
 		{
 			return new Point(

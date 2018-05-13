@@ -1,4 +1,5 @@
-﻿using Bridge.Html5;
+﻿using System;
+using Bridge.Html5;
 
 namespace Raspware.GameEngine.Input.Keyboard
 
@@ -8,11 +9,18 @@ namespace Raspware.GameEngine.Input.Keyboard
 		private bool _buttonDown = false;
 		private bool _buttonUp = false;
 		private bool _onceOnButtonDownLock = false;
+		private bool _applyFullscreen = false;
 		private int _keyCode;
 
-		public Events(KeyCodes keyCode)
+		private HTMLDivElement _wrapper;
+
+		public Events(KeyCodes keyCode, HTMLDivElement wrapper)
 		{
+			if (wrapper == null)
+				throw new ArgumentNullException(nameof(wrapper));
+
 			_keyCode = (int)keyCode;
+			_wrapper = wrapper;
 		}
 
 		public void InputDown(KeyboardEvent e)
@@ -32,6 +40,23 @@ namespace Raspware.GameEngine.Input.Keyboard
 			_buttonDown = false;
 			_buttonUp = true;
 			_onceOnButtonDownLock = false;
+
+			if (_applyFullscreen)
+			{
+				// Fullscreen
+				/*@
+					var element = this._wrapper;
+					if(element.requestFullscreen)
+						element.requestFullscreen();
+					else if(element.mozRequestFullScreen)
+						element.mozRequestFullScreen();
+					else if(element.webkitRequestFullscreen)
+						element.webkitRequestFullscreen();
+					else if(element.msRequestFullscreen)
+						element.msRequestFullscreen();
+				*/
+				_applyFullscreen = false;
+			}
 		}
 
 		public bool PressedDown()
@@ -58,6 +83,11 @@ namespace Raspware.GameEngine.Input.Keyboard
 				return true;
 			}
 			return false;
+		}
+
+		public void ApplyFullscreenOnPressUp(bool applyFullscreen = false)
+		{
+			_applyFullscreen = applyFullscreen;
 		}
 	}
 }
