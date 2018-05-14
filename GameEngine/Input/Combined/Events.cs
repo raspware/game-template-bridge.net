@@ -4,7 +4,7 @@ using ProductiveRage.Immutable;
 
 namespace Raspware.GameEngine.Input.Combined
 {
-	public sealed class Events : IEvents
+	public sealed class Events : IEvents, IEventsFullscreen
 	{
 		private readonly NonNullList<IEvents> _eventsReaders;
 		public Events(NonNullList<IEvents> eventsReaders)
@@ -18,6 +18,6 @@ namespace Raspware.GameEngine.Input.Combined
 		public bool OnceOnPressDown() => _eventsReaders.Any(ev => ev.OnceOnPressDown());
 		public bool PostPressedDown() => _eventsReaders.Any(ev => ev.PostPressedDown());
 		public bool PressedDown() => _eventsReaders.Any(ev => ev.PressedDown());
-		public void ApplyFullscreenOnPressUp(bool applyFullscreen = false) => _eventsReaders.ToList().ForEach(ev => ev.ApplyFullscreenOnPressUp(applyFullscreen));
+		public void ApplyFullscreenOnPressUp() => _eventsReaders.ToList().ForEach(ev => ev.As<IEventsFullscreen>().ApplyFullscreenOnPressUp());
 	}
 }

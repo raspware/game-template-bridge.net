@@ -4,7 +4,7 @@ using Bridge.Html5;
 namespace Raspware.GameEngine.Input.Keyboard
 
 {
-	public sealed partial class Events : IEvents
+	public sealed partial class Events : IEvents, IEventsFullscreen
 	{
 		private bool _buttonDown = false;
 		private bool _buttonUp = false;
@@ -85,9 +85,6 @@ namespace Raspware.GameEngine.Input.Keyboard
 			return false;
 		}
 
-		public void ApplyFullscreenOnPressUp(bool applyFullscreen = false)
-		{
-			_applyFullscreen = applyFullscreen;
-		}
+		public void ApplyFullscreenOnPressUp() => _applyFullscreen = true;
 	}
 }

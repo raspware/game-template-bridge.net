@@ -4,7 +4,7 @@ using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Mouse
 {
-	public sealed class Events : IEvents
+	public sealed class Events : IEvents, IEventsFullscreen
 	{
 		private IActionConfigurationMouse _actionConfiguration { get; }
 		private Resolution _resolution { get; }
@@ -73,7 +73,7 @@ namespace Raspware.GameEngine.Input.Mouse
 			_isButtonUp = true;
 			_onceOnButtonDownLock = false;
 
-			
+
 		}
 
 		public void InputMove(MouseEvent<HTMLCanvasElement> e)
@@ -118,10 +118,7 @@ namespace Raspware.GameEngine.Input.Mouse
 			return false;
 		}
 
-		public void ApplyFullscreenOnPressUp(bool applyFullscreen = false)
-		{
-			_applyFullscreen = applyFullscreen;
-		}
+		public void ApplyFullscreenOnPressUp() => _applyFullscreen = true;
 
 		private Point GetCurrentMousePosition(MouseEvent<HTMLCanvasElement> e)
 		{

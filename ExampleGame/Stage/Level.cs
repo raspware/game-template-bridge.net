@@ -61,7 +61,6 @@ namespace Raspware.ExampleGame.Stage
 				_core.RenderAction(DefaultActions.Up);
 				_core.RenderAction(DefaultActions.Button1);
 				_renderedControls = true;
-
 			}
 		}
 
@@ -78,7 +77,7 @@ namespace Raspware.ExampleGame.Stage
 				data.Score++;
 
 			if (button1.OnceOnPressDown())
-				button1.ApplyFullscreenOnPressUp(true);
+				button1.As<IEventsFullscreen>().ApplyFullscreenOnPressUp();
 
 			return Id;
 		}

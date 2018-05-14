@@ -3,7 +3,7 @@ using Raspware.GameEngine.Rendering;
 
 namespace Raspware.GameEngine.Input.Touch
 {
-	public sealed class Events : IEvents
+	public sealed class Events : IEvents, IEventsFullscreen
 	{
 		private IActionConfigurationTouch _actionConfiguration { get; }
 		private HTMLDivElement _wrapper { get; }
@@ -105,10 +105,7 @@ namespace Raspware.GameEngine.Input.Touch
 			return false;
 		}
 
-		public void ApplyFullscreenOnPressUp(bool applyFullscreen = false)
-		{
-			_applyFullscreen = applyFullscreen;
-		}
+		public void ApplyFullscreenOnPressUp() => _applyFullscreen = true;
 
 		private Point GetCurrentTouchPosition(Bridge.Html5.Touch touch)
 		{

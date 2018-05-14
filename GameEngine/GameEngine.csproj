@@ -46,6 +46,7 @@
     <Compile Include="Game\ICoreInterfaces.cs" />
     <Compile Include="Input\IActionConfiguration.cs" />
     <Compile Include="Input\IActionConfigurationRenderer.cs" />
+    <Compile Include="Input\IEventsFullscreen.cs" />
     <Compile Include="Input\Keyboard\IActionConfigurationKeyboard.cs" />
     <Compile Include="Input\Keyboard\Keys.cs" />
     <Compile Include="Input\CollisionHelper.cs" />
