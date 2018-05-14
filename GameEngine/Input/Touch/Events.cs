@@ -49,22 +49,7 @@ namespace Raspware.GameEngine.Input.Touch
 			if (_applyFullscreen)
 			{
 				_applyFullscreen = false;
-
-				if (CurrentlyFullscreen())
-					return;
-
-				// Fullscreen
-				/*@
-					var element = this._wrapper;
-					if(element.requestFullscreen)
-						element.requestFullscreen();
-					else if(element.mozRequestFullScreen)
-						element.mozRequestFullScreen();
-					else if(element.webkitRequestFullscreen)
-						element.webkitRequestFullscreen();
-					else if(element.msRequestFullscreen)
-						element.msRequestFullscreen();
-				*/
+				EventsHelper.ApplyFullscreen(_wrapper);
 			}
 		}
 
@@ -110,29 +95,6 @@ namespace Raspware.GameEngine.Input.Touch
 		}
 
 		public void ApplyFullscreenOnPressUp() => _applyFullscreen = true;
-		public bool CurrentlyFullscreen()
-		{
-			return (
-				(Document.DocumentElement.ClientWidth == Window.Screen.Width && Document.DocumentElement.ClientHeight == Window.Screen.Height) ||
-				(Window.InnerWidth == Window.Screen.Width && Window.OuterHeight == Window.Screen.Height)
-			);
-		}
-
-		public void ExitFullscreen()
-		{
-			if (!CurrentlyFullscreen())
-				return;
-
-			/*@
-			 if(document.exitFullscreen) {
-				document.exitFullscreen();
-			  } else if(document.mozCancelFullScreen) {
-				document.mozCancelFullScreen();
-			  } else if(document.webkitExitFullscreen) {
-				document.webkitExitFullscreen();
-			  }
-			 */
-		}
 
 		private Point GetCurrentTouchPosition(Bridge.Html5.Touch touch)
 		{

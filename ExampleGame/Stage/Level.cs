@@ -59,6 +59,7 @@ namespace Raspware.ExampleGame.Stage
 			if (!_renderedControls)
 			{
 				_core.RenderAction(DefaultActions.Up);
+				_core.RenderAction(DefaultActions.Left);
 				_core.RenderAction(DefaultActions.Down);
 				_core.RenderAction(DefaultActions.Button1);
 				_renderedControls = true;
@@ -69,6 +70,7 @@ namespace Raspware.ExampleGame.Stage
 		{
 			var data = Data.Instance;
 			var up = _core.ActionEvents[DefaultActions.Up];
+			var left = _core.ActionEvents[DefaultActions.Left];
 			var down = _core.ActionEvents[DefaultActions.Down];
 			var button1 = _core.ActionEvents[DefaultActions.Button1];
 
@@ -82,7 +84,10 @@ namespace Raspware.ExampleGame.Stage
 				button1.As<IEventsFullscreen>().ApplyFullscreenOnPressUp();
 
 			if (down.OnceOnPressDown())
-				Console.WriteLine(button1.As<IEventsFullscreen>().CurrentlyFullscreen());
+				Console.WriteLine(EventsHelper.CurrentlyFullscreen());
+
+			if (left.OnceOnPressDown())
+				EventsHelper.ExitFullscreen();
 
 			return Id;
 		}
