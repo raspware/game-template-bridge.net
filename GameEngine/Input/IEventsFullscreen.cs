@@ -3,8 +3,7 @@
 	public interface IEventsFullscreen
 	{
 		void ApplyFullscreenOnPressUp();
+		void ExitFullscreen();
 		bool CurrentlyFullscreen();
-
-		// TODO: Create an 'exit-out-of-fullscreen' method.
 	}
 }

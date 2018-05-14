@@ -114,6 +114,22 @@ namespace Raspware.GameEngine.Input.Touch
 			);
 		}
 
+		public void ExitFullscreen()
+		{
+			if (!CurrentlyFullscreen())
+				return;
+
+			/*@
+			 if(document.exitFullscreen) {
+				document.exitFullscreen();
+			  } else if(document.mozCancelFullScreen) {
+				document.mozCancelFullScreen();
+			  } else if(document.webkitExitFullscreen) {
+				document.webkitExitFullscreen();
+			  }
+			 */
+		}
+
 		private Point GetCurrentTouchPosition(Bridge.Html5.Touch touch)
 		{
 			return new Point(
@@ -122,7 +138,5 @@ namespace Raspware.GameEngine.Input.Touch
 				_resolution.RenderAmount(1)
 			);
 		}
-
-
 	}
 }

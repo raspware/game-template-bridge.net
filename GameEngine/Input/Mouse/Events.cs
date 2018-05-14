@@ -127,6 +127,21 @@ namespace Raspware.GameEngine.Input.Mouse
 			);
 		}
 
+		public void ExitFullscreen()
+		{
+			if (!CurrentlyFullscreen())
+				return;
+
+			/*@
+			 if(document.exitFullscreen) {
+				document.exitFullscreen();
+			  } else if(document.mozCancelFullScreen) {
+				document.mozCancelFullScreen();
+			  } else if(document.webkitExitFullscreen) {
+				document.webkitExitFullscreen();
+			  }
+			 */
+		}
 
 		private Point GetCurrentMousePosition(MouseEvent<HTMLCanvasElement> e)
 		{

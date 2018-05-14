@@ -20,5 +20,6 @@ namespace Raspware.GameEngine.Input.Combined
 		public bool PressedDown() => _eventsReaders.Any(ev => ev.PressedDown());
 		public bool CurrentlyFullscreen() => _eventsReaders.Any(ev => ev.As<IEventsFullscreen>().CurrentlyFullscreen());
 		public void ApplyFullscreenOnPressUp() => _eventsReaders.ToList().ForEach(ev => ev.As<IEventsFullscreen>().ApplyFullscreenOnPressUp());
+		public void ExitFullscreen() => _eventsReaders.ToList().ForEach(ev => ev.As<IEventsFullscreen>().ExitFullscreen());
 	}
 }

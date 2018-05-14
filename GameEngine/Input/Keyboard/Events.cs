@@ -94,5 +94,20 @@ namespace Raspware.GameEngine.Input.Keyboard
 				(Window.InnerWidth == Window.Screen.Width && Window.OuterHeight == Window.Screen.Height)
 			);
 		}
+		public void ExitFullscreen()
+		{
+			if (!CurrentlyFullscreen())
+				return;
+
+			/*@
+			 if(document.exitFullscreen) {
+				document.exitFullscreen();
+			  } else if(document.mozCancelFullScreen) {
+				document.mozCancelFullScreen();
+			  } else if(document.webkitExitFullscreen) {
+				document.webkitExitFullscreen();
+			  }
+			 */
+		}
 	}
 }
