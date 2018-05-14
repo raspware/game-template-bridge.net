@@ -51,6 +51,11 @@ namespace Raspware.GameEngine.Input.Mouse
 
 			if (_applyFullscreen)
 			{
+				_applyFullscreen = false;
+
+				if (CurrentlyFullscreen())
+					return;
+
 				// Fullscreen
 				/*@
 					var element = this._wrapper;
@@ -63,7 +68,6 @@ namespace Raspware.GameEngine.Input.Mouse
 					else if(element.msRequestFullscreen)
 						element.msRequestFullscreen();
 				*/
-				_applyFullscreen = false;
 			}
 
 			if (!_actionConfiguration.Point.Collision(GetCurrentMousePosition(e)))

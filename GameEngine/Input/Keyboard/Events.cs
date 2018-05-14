@@ -43,6 +43,11 @@ namespace Raspware.GameEngine.Input.Keyboard
 
 			if (_applyFullscreen)
 			{
+				_applyFullscreen = false;
+
+				if (CurrentlyFullscreen())
+					return;
+
 				// Fullscreen
 				/*@
 					var element = this._wrapper;
@@ -55,7 +60,6 @@ namespace Raspware.GameEngine.Input.Keyboard
 					else if(element.msRequestFullscreen)
 						element.msRequestFullscreen();
 				*/
-				_applyFullscreen = false;
 			}
 		}
 

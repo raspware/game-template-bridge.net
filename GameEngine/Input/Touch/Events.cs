@@ -48,6 +48,11 @@ namespace Raspware.GameEngine.Input.Touch
 
 			if (_applyFullscreen)
 			{
+				_applyFullscreen = false;
+
+				if (CurrentlyFullscreen())
+					return;
+
 				// Fullscreen
 				/*@
 					var element = this._wrapper;
@@ -60,7 +65,6 @@ namespace Raspware.GameEngine.Input.Touch
 					else if(element.msRequestFullscreen)
 						element.msRequestFullscreen();
 				*/
-				_applyFullscreen = false;
 			}
 		}
 
