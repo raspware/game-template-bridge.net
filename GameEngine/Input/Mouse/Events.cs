@@ -119,6 +119,14 @@ namespace Raspware.GameEngine.Input.Mouse
 		}
 
 		public void ApplyFullscreenOnPressUp() => _applyFullscreen = true;
+		public bool CurrentlyFullscreen()
+		{
+			return (
+				(Document.DocumentElement.ClientWidth == Window.Screen.Width && Document.DocumentElement.ClientHeight == Window.Screen.Height) ||
+				(Window.InnerWidth == Window.Screen.Width && Window.OuterHeight == Window.Screen.Height)
+			);
+		}
+
 
 		private Point GetCurrentMousePosition(MouseEvent<HTMLCanvasElement> e)
 		{

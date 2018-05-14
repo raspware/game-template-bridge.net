@@ -86,5 +86,13 @@ namespace Raspware.GameEngine.Input.Keyboard
 		}
 
 		public void ApplyFullscreenOnPressUp() => _applyFullscreen = true;
+
+		public bool CurrentlyFullscreen()
+		{
+			return (
+				(Document.DocumentElement.ClientWidth == Window.Screen.Width && Document.DocumentElement.ClientHeight == Window.Screen.Height) ||
+				(Window.InnerWidth == Window.Screen.Width && Window.OuterHeight == Window.Screen.Height)
+			);
+		}
 	}
 }
