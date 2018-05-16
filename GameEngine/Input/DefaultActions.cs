@@ -12,7 +12,7 @@ namespace Raspware.GameEngine.Input
 		public const int Left = 2;
 		public const int Right = 3;
 		public const int Button1 = 4;
-		public const int Cancel = 5;
+		public const int Menu = 5;
 
 		public static NonNullList<ActionConfiguration> GetActionConfigurations(Resolution resolution)
 		{
@@ -73,9 +73,9 @@ namespace Raspware.GameEngine.Input
 				)
 			);
 
-			var cancel = new ActionConfiguration(
-				Cancel,
-				Events.KeyCodes._escape,
+			var menu = new ActionConfiguration(
+				Menu,
+				Events.KeyCodes._m,
 				new Point(
 					resolution.Width - defaultRadius - spacer,
 					defaultRadius + spacer,
@@ -89,7 +89,7 @@ namespace Raspware.GameEngine.Input
 				left,
 				right,
 				button1,
-				cancel
+				menu
 			);
 		}
 	}
