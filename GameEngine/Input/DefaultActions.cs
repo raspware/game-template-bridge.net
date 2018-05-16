@@ -30,7 +30,8 @@ namespace Raspware.GameEngine.Input
 					spacer + (defaultRadius * 3),
 					resolution.Height - defaultRadius - spacer,
 					defaultRadius
-				)
+				),
+				resolution
 			);
 
 			var up = new ActionConfiguration(
@@ -40,7 +41,8 @@ namespace Raspware.GameEngine.Input
 					down.Point.X,
 					down.Point.Y - (defaultRadius * 4),
 					defaultRadius
-				)
+				),
+				resolution
 			);
 
 			var left = new ActionConfiguration(
@@ -50,7 +52,8 @@ namespace Raspware.GameEngine.Input
 					defaultRadius + spacer,
 					down.Point.Y - (defaultRadius * 2),
 					defaultRadius
-				)
+				),
+				resolution
 			);
 
 			var right = new ActionConfiguration(
@@ -60,7 +63,8 @@ namespace Raspware.GameEngine.Input
 					left.Point.X + (defaultRadius * 4),
 					left.Point.Y,
 					defaultRadius
-				)
+				),
+				resolution
 			);
 
 			var button1 = new ActionConfiguration(
@@ -70,7 +74,8 @@ namespace Raspware.GameEngine.Input
 						resolution.Width - actionButtonsRadius - spacer,
 					resolution.Height - actionButtonsRadius - spacer,
 					actionButtonsRadius
-				)
+				),
+				resolution
 			);
 
 			var menu = new ActionConfiguration(
@@ -80,7 +85,8 @@ namespace Raspware.GameEngine.Input
 					resolution.Width - defaultRadius - spacer,
 					defaultRadius + spacer,
 					defaultRadius
-				)
+				),
+				resolution
 			);
 
 			return NonNullList.Of(
