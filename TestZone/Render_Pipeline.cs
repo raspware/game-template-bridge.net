@@ -54,9 +54,13 @@ canvas {
 
 			public void Tick()
 			{
+				var time = Stopwatch.StartNew();
+				time.Start();
 				var context = _canvas.GetContext(CanvasContext2DType.CanvasRenderingContext2D);
-
+				context.ClearRect(0, 0, Width, Height);
 				_layers.Render(context);
+				time.Stop();
+				context.FillText((1000 / time.Elapsed.Milliseconds).ToString() + "fps", 20, 40);
 				Window.RequestAnimationFrame(Tick);
 			}
 
@@ -80,23 +84,11 @@ canvas {
 				var width = layers.Width;
 				var height = layers.Height;
 
-				var time = Stopwatch.StartNew();
-				time.Start();
-
 				for (var y = 0; y <= _bufferCanvas.Height; y += height)
-				{
 					for (var x = 0; x <= _bufferCanvas.Width; x += width)
-					{
-						bufferContext.DrawImage(layers.GetPattern(), x, y, width, height);
-					}
-				}
+						bufferContext.DrawImage(layers.GetPattern(),x, y, width, height);
 
 				bufferContext.Font = "40px Consolas, monospace";
-				bufferContext.FillText($"Patterns: {layers.GetPatternAmount()}", 20, 80);
-				
-				time.Stop();
-				bufferContext.FillText((1000 / time.Elapsed.Milliseconds).ToString() + "fps", 20, 40);
-
 				context.DrawImage(_bufferCanvas, 0, 0);
 			}
 		}
@@ -126,15 +118,19 @@ canvas {
 				if (context == null)
 					throw new ArgumentNullException(nameof(context));
 
-				BuildPattern(this.Height, this.Width);
+				if (GetPatternAmount() < 10)
+				{
+					BuildPattern(this.Height, this.Width);
+					context.Font = "40px Consolas, monospace";
+					context.FillText($"Patterns: {GetPatternAmount()}", 20, 80);
+					return;
+				}
+
 				_layers.ToList().ForEach(_ => _.Render(context, this));
 			}
 
 			public void BuildPattern(int height, int width)
 			{
-				if (_patterns.Count >= 10)
-					return;
-
 				var canvas = new HTMLCanvasElement() { Height = height, Width = width };
 				var context = canvas.GetContext(CanvasContext2DType.CanvasRenderingContext2D);
 
