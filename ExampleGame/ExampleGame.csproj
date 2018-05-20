@@ -58,12 +58,20 @@
       <HintPath>..\packages\Bridge.Html5.16.8.2\lib\net40\Bridge.Html5.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Bridge.React, Version=3.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bridge.React.3.1.7\lib\net40\Bridge.React.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Bridge.Newtonsoft.Json.1.6.0\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ProductiveRage.Immutable, Version=2.11.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ProductiveRage.Immutable.2.11.1\lib\net40\ProductiveRage.Immutable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ProductiveRage.Immutable.Extensions, Version=2.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ProductiveRage.Immutable.Extensions.2.6.0\lib\net40\ProductiveRage.Immutable.Extensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -74,6 +82,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Analyzer Include="..\packages\Bridge.React.3.1.7\analyzers\dotnet\cs\Bridge.React.Analyser.dll" />
     <Analyzer Include="..\packages\ProductiveRage.Immutable.2.11.1\analyzers\dotnet\cs\ProductiveRage.Immutable.Analyser.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
