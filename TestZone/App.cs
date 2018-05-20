@@ -4,7 +4,7 @@
 	{
 		public static void Main()
 		{
-			Initalise_Test.Go();
+			Render_Pipeline.Go();
 		}
 	}
 }
