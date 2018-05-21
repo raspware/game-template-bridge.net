@@ -55,7 +55,7 @@ canvas {
 			public void Tick()
 			{
 				var current = DateTime.Now.Millisecond;
-				var fps = current - lastTick;
+
 
 				var context = _canvas.GetContext(CanvasContext2DType.CanvasRenderingContext2D);
 				context.ClearRect(0, 0, _canvas.Width, _canvas.Height);
@@ -63,6 +63,7 @@ canvas {
 
 				_layers.Render(context);
 
+				var fps = 1000 / (current - lastTick);
 				context.FillText(fps + "fps", 20, 40);
 				lastTick = current;
 
