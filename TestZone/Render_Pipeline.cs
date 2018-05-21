@@ -70,7 +70,6 @@ canvas {
 			}
 		}
 
-
 		private sealed class Layers
 		{
 			private const double _patternChunkSize = 0.25;
@@ -114,14 +113,15 @@ canvas {
 				if (context == null)
 					throw new ArgumentNullException(nameof(context));
 
-				if (_patternChunks.Count < 100 && !patternChunksFinishedWith)
+				if (_patternChunks.Count < 30 && !patternChunksFinishedWith)
 				{
 					_patternChunks.Add(CreatePatternChunk());
 					context.FillText($"Pattern Chunks: {_patternChunks.Count()}", 20, 80);
 					return;
 				}
 
-				if (_patterns.Count < 500)
+
+				if (_patterns.Count < 30)
 				{
 					_patterns.Add(CreatePattern());
 					context.FillText($"Patterns: {_patterns.Count()}", 20, 80);
@@ -146,19 +146,25 @@ canvas {
 			{
 				return _patternChunks[_r.Next(0, _patternChunks.Count)];
 			}
-
 			private HTMLImageElement CreatePatternChunk()
 			{
 				var canvas = new HTMLCanvasElement() { Height = _patternChunkHeight, Width = _patternChunkWidth };
-				var context = canvas.GetContext(CanvasContext2DType.CanvasRenderingContext2D);
-				for (var y = 0; y <= canvas.Height; y++)
-					for (var x = 0; x <= canvas.Width; x++)
-					{
-						context.FillStyle = Pattern.GetRandomGrey(_r);
-						context.FillRect(x, y, 1, 1);
-					}
+				var context = (CanvasRenderingContext2D)canvas.GetContext("2d");
+				var imageData = context.GetImageData(0, 0, _patternChunkWidth, _patternChunkHeight);
+
+				for (var pixelIndex = 0; pixelIndex < imageData.Data.Length; pixelIndex += 4)
+				{
+					imageData.Data[pixelIndex] =
+					imageData.Data[pixelIndex + 1] =
+					imageData.Data[pixelIndex + 2] =
+						_r.Next(100, 210).As<byte>();
+					imageData.Data[pixelIndex + 3] = 255;
+				}
+
+				context.PutImageData(imageData, 0, 0);
 				return new HTMLImageElement() { Src = canvas.ToDataURL() };
 			}
+
 			private HTMLImageElement CreatePattern()
 			{
 				var canvas = new HTMLCanvasElement() { Height = PatternHeight, Width = PatternWidth };
@@ -189,18 +195,6 @@ canvas {
 				for (var y = 0; y <= layers.Height; y += height)
 					for (var x = 0; x <= layers.Width; x += width)
 						context.DrawImage(layers.GetPattern(), x, y, width, height);
-			}
-		}
-
-		private static class Pattern
-		{
-			public static string GetRandomGrey(Random random)
-			{
-				if (random == null)
-					throw new ArgumentNullException(nameof(random));
-
-				var level = random.Next(100, 210);
-				return $"rgb({level},{level},{level})";
 			}
 		}
 	}
