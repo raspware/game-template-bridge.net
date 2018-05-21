@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Bridge.Html5;
 using ProductiveRage.Immutable;
@@ -10,8 +9,6 @@ namespace Raspware.TestZone
 {
 	public static class Render_Pipeline
 	{
-		private const int Width = 1920;
-		private const int Height = 1080;
 		public static void Go()
 		{
 			var pipeline = new Pipeline();
@@ -20,16 +17,19 @@ namespace Raspware.TestZone
 
 		private sealed class Pipeline
 		{
-			private Layers _layers;
+			private long lastTick = DateTime.Now.Millisecond;
+			private readonly Layers _layers;
 			private readonly HTMLCanvasElement _canvas;
 
 			public Pipeline()
 			{
-				_layers = new Layers(NonNullList.Of(
-					new Layer()
-				));
-
-				_canvas = GetNewCanvas();
+				_canvas = new HTMLCanvasElement() { Height = 1080, Width = 1920 };
+				_layers = new Layers(
+					NonNullList.Of(new Layer()),
+					_canvas.Width,
+					_canvas.Height,
+					0.1
+				);
 
 				var style = new HTMLStyleElement()
 				{
@@ -54,63 +54,59 @@ canvas {
 
 			public void Tick()
 			{
-				var time = Stopwatch.StartNew();
-				time.Start();
+				var current = DateTime.Now.Millisecond;
+				var fps = current - lastTick;
+
 				var context = _canvas.GetContext(CanvasContext2DType.CanvasRenderingContext2D);
-				context.ClearRect(0, 0, Width, Height);
+				context.ClearRect(0, 0, _canvas.Width, _canvas.Height);
+				context.Font = "40px Consolas, monospace";
+
 				_layers.Render(context);
-				time.Stop();
-				context.FillText((1000 / time.Elapsed.Milliseconds).ToString() + "fps", 20, 40);
+
+				context.FillText(fps + "fps", 20, 40);
+				lastTick = current;
+
 				Window.RequestAnimationFrame(Tick);
 			}
-
 		}
 
-		private sealed class Layer
-		{
-			private readonly HTMLCanvasElement _bufferCanvas;
-			public Layer()
-			{
-				_bufferCanvas = GetNewCanvas();
-			}
-			public void Render(CanvasRenderingContext2D context, Layers layers)
-			{
-				if (context == null)
-					throw new ArgumentNullException(nameof(context));
-				if (layers == null)
-					throw new ArgumentNullException(nameof(layers));
-
-				var bufferContext = _bufferCanvas.GetContext(CanvasContext2DType.CanvasRenderingContext2D);
-				var width = layers.Width;
-				var height = layers.Height;
-
-				for (var y = 0; y <= _bufferCanvas.Height; y += height)
-					for (var x = 0; x <= _bufferCanvas.Width; x += width)
-						bufferContext.DrawImage(layers.GetPattern(),x, y, width, height);
-
-				bufferContext.Font = "40px Consolas, monospace";
-				context.DrawImage(_bufferCanvas, 0, 0);
-			}
-		}
 
 		private sealed class Layers
 		{
-			private CanvasRenderingContext2D _bufferContext => GetNewCanvas().GetContext(CanvasContext2DType.CanvasRenderingContext2D);
+			private const double _patternChunkSize = 0.25;
+
+			private readonly int _patternChunkHeight;
+			private readonly int _patternChunkWidth;
+			private readonly Random _r = new Random();
+
 			private NonNullList<Layer> _layers;
 			private List<HTMLImageElement> _patterns = new List<HTMLImageElement>();
+			private List<HTMLImageElement> _patternChunks = new List<HTMLImageElement>();
+			private bool patternChunksFinishedWith;
 
-			public double Amount = 0.1;
-			public int Height;
-			public int Width;
+			public readonly int PatternHeight;
+			public readonly int PatternWidth;
+			public readonly int Height;
+			public readonly int Width;
 
-			public Layers(NonNullList<Layer> layers)
+			public Layers(NonNullList<Layer> layers, int width, int height, double size)
 			{
 				if (layers == null)
 					throw new ArgumentNullException(nameof(layers));
+				if (width == 0)
+					throw new ArgumentException(nameof(width));
+				if (height == 0)
+					throw new ArgumentException(nameof(height));
+				if (size == 0)
+					throw new ArgumentException(nameof(size));
 
 				_layers = layers;
-				Height = int.Parse((GetNewCanvas().Height * Amount).ToString());
-				Width = int.Parse((GetNewCanvas().Width * Amount).ToString());
+				Width = width;
+				Height = height;
+				PatternHeight = int.Parse((Height * size).ToString());
+				PatternWidth = int.Parse((Width * size).ToString());
+				_patternChunkHeight = int.Parse((PatternHeight * _patternChunkSize).ToString());
+				_patternChunkWidth = int.Parse((PatternWidth * _patternChunkSize).ToString());
 			}
 
 			public void Render(CanvasRenderingContext2D context)
@@ -118,70 +114,94 @@ canvas {
 				if (context == null)
 					throw new ArgumentNullException(nameof(context));
 
-				if (GetPatternAmount() < 10)
+				if (_patternChunks.Count < 100 && !patternChunksFinishedWith)
 				{
-					BuildPattern(this.Height, this.Width);
-					context.Font = "40px Consolas, monospace";
-					context.FillText($"Patterns: {GetPatternAmount()}", 20, 80);
+					_patternChunks.Add(CreatePatternChunk());
+					context.FillText($"Pattern Chunks: {_patternChunks.Count()}", 20, 80);
 					return;
+				}
+
+				if (_patterns.Count < 500)
+				{
+					_patterns.Add(CreatePattern());
+					context.FillText($"Patterns: {_patterns.Count()}", 20, 80);
+					return;
+				}
+
+				if (!_patternChunks.Any())
+				{
+					patternChunksFinishedWith = true;
+					_patternChunks.Clear();
 				}
 
 				_layers.ToList().ForEach(_ => _.Render(context, this));
 			}
 
-			public void BuildPattern(int height, int width)
+			public HTMLImageElement GetPattern()
 			{
-				var canvas = new HTMLCanvasElement() { Height = height, Width = width };
-				var context = canvas.GetContext(CanvasContext2DType.CanvasRenderingContext2D);
+				return _patterns[_r.Next(0, _patterns.Count)];
+			}
 
+			public HTMLImageElement GetPatternChunk()
+			{
+				return _patternChunks[_r.Next(0, _patternChunks.Count)];
+			}
+
+			private HTMLImageElement CreatePatternChunk()
+			{
+				var canvas = new HTMLCanvasElement() { Height = _patternChunkHeight, Width = _patternChunkWidth };
+				var context = canvas.GetContext(CanvasContext2DType.CanvasRenderingContext2D);
 				for (var y = 0; y <= canvas.Height; y++)
 					for (var x = 0; x <= canvas.Width; x++)
 					{
-						context.FillStyle = Pattern.GetRandomGrey();
-						context.FillRect(x,y,1,1);
+						context.FillStyle = Pattern.GetRandomGrey(_r);
+						context.FillRect(x, y, 1, 1);
 					}
-
-				_patterns.Add(new HTMLImageElement()
-				{
-					Src = canvas.ToDataURL(),
-				});
+				return new HTMLImageElement() { Src = canvas.ToDataURL() };
 			}
-
-			public HTMLImageElement GetPattern()
+			private HTMLImageElement CreatePattern()
 			{
-				var r = new Random();
-				return _patterns[r.Next(0, _patterns.Count)];
+				var canvas = new HTMLCanvasElement() { Height = PatternHeight, Width = PatternWidth };
+				var context = canvas.GetContext(CanvasContext2DType.CanvasRenderingContext2D);
+
+				var width = _patternChunkWidth;
+				var height = _patternChunkHeight;
+				for (var y = 0; y <= canvas.Height; y += height)
+					for (var x = 0; x <= canvas.Width; x += width)
+						context.DrawImage(GetPatternChunk(), x, y, width, height);
+
+				return new HTMLImageElement() { Src = canvas.ToDataURL() };
 			}
+		}
 
-			public int GetPatternAmount()
+		private sealed class Layer
+		{
+			public Layer() { }
+			public void Render(CanvasRenderingContext2D context, Layers layers)
 			{
-				return _patterns.Count;
+				if (context == null)
+					throw new ArgumentNullException(nameof(context));
+				if (layers == null)
+					throw new ArgumentNullException(nameof(layers));
+
+				var width = layers.PatternWidth;
+				var height = layers.PatternHeight;
+				for (var y = 0; y <= layers.Height; y += height)
+					for (var x = 0; x <= layers.Width; x += width)
+						context.DrawImage(layers.GetPattern(), x, y, width, height);
 			}
 		}
 
 		private static class Pattern
 		{
-			public static string GetRandomGrey()
+			public static string GetRandomGrey(Random random)
 			{
-				var level = new Random().Next(80, 200);
+				if (random == null)
+					throw new ArgumentNullException(nameof(random));
+
+				var level = random.Next(100, 210);
 				return $"rgb({level},{level},{level})";
 			}
-			public static string GetRandomColour()
-			{
-				var r = new Random().Next(0, 255);
-				var g = new Random().Next(0, 255);
-				var b = new Random().Next(0, 255);
-				return $"rgb({r},{g},{b})";
-			}
-			public static byte GetRandomByte()
-			{
-				return byte.Parse(new Random().Next(0, 255).ToString());
-			}
-		}
-
-		private static HTMLCanvasElement GetNewCanvas(int height = Height, int width = Width)
-		{
-			return new HTMLCanvasElement() { Height = height, Width = width };
 		}
 	}
 }
