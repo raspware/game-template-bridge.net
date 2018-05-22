@@ -4,7 +4,7 @@
 	{
 		public static void Main()
 		{
-			Render_Pipeline.Go();
+			Canvas_Pixels.Go();
 		}
 	}
 }
