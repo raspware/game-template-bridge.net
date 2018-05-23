@@ -21,6 +21,13 @@ namespace Raspware.ExampleGame.Stage
 
 			_core = core;
 			_core.Layers.Reset(NonNullList.Of(0));
+			_core.DeactivateActions();
+			_core.ActivateActions(NonNullList.Of(
+				DefaultActions.Up,
+				DefaultActions.Left,
+				DefaultActions.Down,
+				DefaultActions.Button1
+			));
 		}
 
 		public void Draw()
@@ -58,10 +65,7 @@ namespace Raspware.ExampleGame.Stage
 
 			if (!_renderedControls)
 			{
-				_core.RenderAction(DefaultActions.Up);
-				_core.RenderAction(DefaultActions.Left);
-				_core.RenderAction(DefaultActions.Down);
-				_core.RenderAction(DefaultActions.Button1);
+				_core.RenderActions();
 				_renderedControls = true;
 			}
 		}

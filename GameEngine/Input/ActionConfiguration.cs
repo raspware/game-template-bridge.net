@@ -13,6 +13,7 @@ namespace Raspware.GameEngine.Input
 		public int Id { get; }
 		public Point Point { get; private set; }
 		public Keyboard.Events.KeyCodes KeyCode { get; private set; }
+		private bool _active;
 
 		public ActionConfiguration(int id, Keyboard.Events.KeyCodes keyCode, Point point, Resolution resolution)
 		{
@@ -24,11 +25,25 @@ namespace Raspware.GameEngine.Input
 			Id = id;
 			Point = point;
 			KeyCode = keyCode;
+			_active = true;
 			_resolution = resolution;
 		}
 
 		// TODO: Turn this into an override memeber
 		public void Render(CanvasRenderingContext2D context)
+		{
+			if (context == null)
+				throw new ArgumentNullException(nameof(context));
+
+			if (_active)
+				RenderActive(context);
+			else
+				RenderInactive(context);
+		}
+
+
+
+		private void RenderActive(CanvasRenderingContext2D context)
 		{
 			if (context == null)
 				throw new ArgumentNullException(nameof(context));
@@ -46,5 +61,21 @@ namespace Raspware.GameEngine.Input
 			context.Fill();
 			context.ClosePath();
 		}
+
+		private void RenderInactive(CanvasRenderingContext2D context)
+		{
+			if (context == null)
+				throw new ArgumentNullException(nameof(context));
+
+			context.BeginPath();
+			context.Arc(Point.X, Point.Y, Point.Radius, 0, Math.PI * 2);
+			context.FillStyle = "rgba(255,255,255,0.05)";
+			context.Fill();
+			context.ClosePath();
+		}
+
+		public void Activate() { _active = true; }
+
+		public void Deactivate() { _active = false; }
 	}
 }
