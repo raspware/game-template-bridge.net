@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Raspware.Base64ResourceEncoder
 {
@@ -11,24 +11,27 @@ namespace Raspware.Base64ResourceEncoder
 	{
 		private static void Main(string[] args)
 		{
-			var writer = new StringBuilder();
-			writer.AppendLine($"namespace Raspware.ExampleGame.Resource");
-			writer.AppendLine("{");
+			var sb = new StringBuilder();
+			var sw = new StringWriter(sb);
 
-			WriteOutClass(writer, new Resource("Audio"));
-			writer.Append("\n");
-			WriteOutClass(writer, new Resource("Image"));
+			using (var writer = new JsonTextWriter(sw))
+			{
+				writer.Formatting = Formatting.Indented;
+				writer.WriteStartObject();
 
-			writer.Append("}");
-
-			var output = writer.ToString();
+				// TODO: Collect 'Audio/Image' names from the folder names rather than hardcoding them
+				WriteOutResource(writer, new Resource("Audio"));
+				WriteOutResource(writer, new Resource("Image"));
+				writer.WriteEndObject();
+			}
+			var output = sb.ToString();
 
 			// TODO: Maybe do some logging? As there is only one file, not sure if we need to do a lock.
 			var resourceFile = new FileInfo(Path.GetFullPath(
 					Path.Combine(
 						Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-						@"..\..\..\ExampleGame\",
-						"Resource.cs"
+						"",
+						"resources.json"
 					)
 				));
 
@@ -38,13 +41,25 @@ namespace Raspware.Base64ResourceEncoder
 			Console.ReadKey();
 		}
 
-		private static void WriteOutClass(StringBuilder writer, Resource resourse)
+		private static void WriteOutResource(JsonTextWriter writer, Resource resourse)
 		{
-			writer.AppendLine($"\t/// <summary>This is automatically generated, DO NOT EDIT!</summary>");
-			writer.AppendLine($"\tpublic static class {resourse.Type}");
-			writer.AppendLine("\t{");
-			resourse.Dictionary.ToList().ForEach(_ => writer.AppendLine($"\t\tpublic static readonly string {_.Key} = \"{_.Value}\";"));
-			writer.AppendLine("\t}");
+			if (writer == null)
+				throw new ArgumentNullException(nameof(writer));
+			if (resourse == null)
+				throw new ArgumentNullException(nameof(resourse));
+
+			writer.WritePropertyName(resourse.Type);
+			writer.WriteStartArray();
+			foreach (var r in resourse.Dictionary)
+			{
+				writer.WriteStartObject();
+				writer.WritePropertyName("Title");
+				writer.WriteValue(r.Key);
+				writer.WritePropertyName("Src");
+				writer.WriteValue(r.Value);
+				writer.WriteEndObject();
+			}
+			writer.WriteEnd();
 		}
 	}
 }

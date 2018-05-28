@@ -24,7 +24,7 @@ namespace Raspware.Base64ResourceEncoder
 				Path.GetFullPath(
 					Path.Combine(
 						Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-						@"..\..\..\Resources\" + folderName
+						@"Resources\" + folderName
 					)
 				)
 			);
