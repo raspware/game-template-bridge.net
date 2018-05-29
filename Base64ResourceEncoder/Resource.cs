@@ -11,7 +11,7 @@ namespace Raspware.Base64ResourceEncoder
 		public Resource(string folderNameAndType)
 		{
 			if (string.IsNullOrWhiteSpace(folderNameAndType))
-				throw new ArgumentNullException(nameof(folderNameAndType));
+				throw new ArgumentException(nameof(folderNameAndType));
 
 			Type = folderNameAndType;
 			Dictionary = GetDictionary(GetResourceLocation(folderNameAndType));
@@ -24,10 +24,26 @@ namespace Raspware.Base64ResourceEncoder
 				Path.GetFullPath(
 					Path.Combine(
 						Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-						@"Resources\" + folderName
+						folderName
 					)
 				)
 			);
+		}
+
+		public static List<string> GetResourceFolderNames()
+		{
+			var resourcesPath =
+				Path.GetFullPath(
+					Path.Combine(
+						Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+					)
+				);
+
+			var folderNames = new List<string>();
+			foreach (string s in Directory.GetDirectories(resourcesPath))
+				folderNames.Add(s.Remove(0, resourcesPath.Length).Replace("\\", ""));
+
+			return folderNames.Any() ? folderNames : null;
 		}
 
 		private static Dictionary<string, string> GetDictionary(DirectoryInfo location)

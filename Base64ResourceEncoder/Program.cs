@@ -11,22 +11,23 @@ namespace Raspware.Base64ResourceEncoder
 	{
 		private static void Main(string[] args)
 		{
+			var folderNames = Resource.GetResourceFolderNames();
+
+			if (folderNames == null)
+				throw new ArgumentNullException(nameof(folderNames));
+
 			var sb = new StringBuilder();
 			var sw = new StringWriter(sb);
 
 			using (var writer = new JsonTextWriter(sw))
 			{
-				writer.Formatting = Formatting.Indented;
+				writer.Formatting = Formatting.None;
 				writer.WriteStartObject();
-
-				// TODO: Collect 'Audio/Image' names from the folder names rather than hardcoding them
-				WriteOutResource(writer, new Resource("Audio"));
-				WriteOutResource(writer, new Resource("Image"));
+				folderNames.ForEach(resource => WriteOutResource(writer, new Resource(resource)));
 				writer.WriteEndObject();
 			}
 			var output = sb.ToString();
 
-			// TODO: Maybe do some logging? As there is only one file, not sure if we need to do a lock.
 			var resourceFile = new FileInfo(Path.GetFullPath(
 					Path.Combine(
 						Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
@@ -37,29 +38,34 @@ namespace Raspware.Base64ResourceEncoder
 
 			File.WriteAllText(resourceFile.FullName, output);
 
-			Console.WriteLine("Done!");
+			Console.WriteLine("Done! Press 'any' key.");
 			Console.ReadKey();
 		}
 
-		private static void WriteOutResource(JsonTextWriter writer, Resource resourse)
+		private static void WriteOutResource(JsonTextWriter writer, Resource resource)
 		{
 			if (writer == null)
 				throw new ArgumentNullException(nameof(writer));
-			if (resourse == null)
-				throw new ArgumentNullException(nameof(resourse));
+			if (resource == null)
+				throw new ArgumentNullException(nameof(resource));
 
-			writer.WritePropertyName(resourse.Type);
+			writer.WritePropertyName(resource.Type);
+			Console.WriteLine("------");
+			Console.WriteLine($"{resource.Type}\n------");
+
 			writer.WriteStartArray();
-			foreach (var r in resourse.Dictionary)
+			foreach (var r in resource.Dictionary)
 			{
 				writer.WriteStartObject();
 				writer.WritePropertyName("Title");
+				Console.WriteLine($"(*) {r.Key}");
 				writer.WriteValue(r.Key);
 				writer.WritePropertyName("Src");
 				writer.WriteValue(r.Value);
 				writer.WriteEndObject();
 			}
 			writer.WriteEnd();
+			Console.WriteLine("\n");
 		}
 	}
 }
