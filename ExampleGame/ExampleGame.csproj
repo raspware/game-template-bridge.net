@@ -79,6 +79,10 @@
       <Project>{ba7fb4db-5817-481d-92f7-4a99653bdc7c}</Project>
       <Name>GameEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TestZone\TestZone.csproj">
+      <Project>{1998C34B-C0CB-4628-A3D3-AC1530218533}</Project>
+      <Name>TestZone</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Bridge.React.3.1.7\analyzers\dotnet\cs\Bridge.React.Analyser.dll" />

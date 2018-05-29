@@ -38,6 +38,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="AsyncAjax.cs" />
     <Compile Include="Audio.cs" />
     <Compile Include="Fluent_Test.cs" />
     <Compile Include="Initalise_Test.cs" />

@@ -4,7 +4,7 @@
 	{
 		public static void Main()
 		{
-			Canvas_Pixels.Go();
+
 		}
 	}
 }

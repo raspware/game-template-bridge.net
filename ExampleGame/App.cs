@@ -3,6 +3,7 @@ using Raspware.ExampleGame.Stage;
 using Raspware.GameEngine;
 using Raspware.GameEngine.Input;
 using Raspware.GameEngine.Rendering;
+using Raspware.TestZone;
 
 namespace Raspware.ExampleGame
 {
@@ -10,6 +11,10 @@ namespace Raspware.ExampleGame
 	{
 		public static void Main()
 		{
+			AsyncAjax.Main2();
+
+			return;
+
 			var resolution = new Resolution(Resolution.PixelSize._nHD, Resolution.OrientationTypes.Landscape);
 			Game.CustomSettings()
 				.SetResolution(resolution)
