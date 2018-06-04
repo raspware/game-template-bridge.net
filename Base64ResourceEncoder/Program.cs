@@ -45,21 +45,15 @@ namespace Raspware.Base64ResourceEncoder
 				));
 
 			File.WriteAllText(resourceFile.FullName, output);
-			Console.WriteLine("Wrote JSON! Press 'any' key.");
+			Console.WriteLine("Wrote JSON!");
 
 			if (!resources.Any())
 			{
-				Console.WriteLine("No resources to write out Bridge helper!");
+				Console.WriteLine("No resources to write out Bridge helper! Press 'any' key.");
 				Console.ReadKey();
 				return;
 			}
 
-			var bridgeStringBuilder = new StringWriter();
-			bridgeStringBuilder.WriteLine("namespace Resources \n{");
-			resources.ForEach(resource => WriteOutBridgeResource(bridgeStringBuilder, resource));
-			bridgeStringBuilder.Write("}");
-
-			output = bridgeStringBuilder.ToString();
 			resourceFile = new FileInfo(Path.GetFullPath(
 					Path.Combine(
 						Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
@@ -67,6 +61,16 @@ namespace Raspware.Base64ResourceEncoder
 						"Resources.cs"
 					)
 				));
+
+			var bridgeStringBuilder = new StringWriter();
+
+			var grandParent = Directory.GetParent(resourceFile.DirectoryName).Name;
+			bridgeStringBuilder.WriteLine($"namespace {grandParent}.Resources \n{{");
+			resources.ForEach(resource => WriteOutBridgeResource(bridgeStringBuilder, resource));
+			bridgeStringBuilder.Write("}");
+
+			output = bridgeStringBuilder.ToString();
+
 			File.WriteAllText(resourceFile.FullName, output);
 
 			Console.WriteLine("Wrote Bridge File! Press 'any' key.");
@@ -108,7 +112,7 @@ namespace Raspware.Base64ResourceEncoder
 			Console.WriteLine("------");
 			Console.WriteLine($"{resource.Item.Type}\n------");
 
-			writer.Write($"\tpublic static class {resource.Item.Type}\n{{");
+			writer.Write($"\tpublic static class {resource.Item.Type}\n\t{{");
 			foreach (var r in resource.Item.Dictionary)
 			{
 				Console.WriteLine($"(*) {r.Key}");
