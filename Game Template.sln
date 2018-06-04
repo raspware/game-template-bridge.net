@@ -15,6 +15,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Base64ResourceObjects", "Ba
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Base64ResourceObjects\Base64ResourceObjects.projitems*{45fbddd4-4ecc-45b7-991e-2d5498ec2eaa}*SharedItemsImports = 4
 		Base64ResourceObjects\Base64ResourceObjects.projitems*{4b7faecc-b12b-4817-8879-62dced7e55a5}*SharedItemsImports = 13
 		Base64ResourceObjects\Base64ResourceObjects.projitems*{c7a677cf-7531-425e-a7ef-ff02b135bab7}*SharedItemsImports = 4
 	EndGlobalSection
