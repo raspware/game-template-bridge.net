@@ -63,9 +63,7 @@ namespace Raspware.Base64ResourceEncoder
 				));
 
 			var bridgeStringBuilder = new StringWriter();
-
-			var grandParent = Directory.GetParent(resourceFile.DirectoryName).Name;
-			bridgeStringBuilder.WriteLine($"namespace {grandParent}.Resources \n{{");
+			bridgeStringBuilder.WriteLine($"namespace Resources \n{{");
 			resources.ForEach(resource => WriteOutBridgeResource(bridgeStringBuilder, resource));
 			bridgeStringBuilder.Write("}");
 

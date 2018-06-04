@@ -13,11 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base64ResourceEncoder", "Ba
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Base64ResourceObjects", "Base64ResourceObjects\Base64ResourceObjects.shproj", "{4B7FAECC-B12B-4817-8879-62DCED7E55A5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generated", "Generated", "{493D9A3F-8879-4464-BF76-D4B861D99A66}"
-	ProjectSection(SolutionItems) = preProject
-		ExampleGame\Resources\Resources.cs = ExampleGame\Resources\Resources.cs
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Base64ResourceObjects\Base64ResourceObjects.projitems*{4b7faecc-b12b-4817-8879-62dced7e55a5}*SharedItemsImports = 13
