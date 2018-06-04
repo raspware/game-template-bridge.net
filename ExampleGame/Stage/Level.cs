@@ -1,15 +1,27 @@
 ﻿using System;
+using System.Linq;
+using Bridge.Html5;
 using ProductiveRage.Immutable;
 using Raspware.GameEngine;
+using Raspware.GameEngine.Base64ResourceObjects;
 using Raspware.GameEngine.Input;
 
 namespace Raspware.ExampleGame.Stage
 {
+	public sealed class R
+	{
+		public readonly JSONItemObject[] Images;
+		public readonly JSONItemObject[] Audio;
+	}
+
 	public sealed class Level : IStage
 	{
 
 		private string _message;
 		private bool _renderedControls;
+		private bool _first;
+		private bool _loaded;
+		private JSONItemObject _item;
 		private ICore _core { get; }
 
 		public int Id => Stage.Id.Level;
@@ -32,7 +44,7 @@ namespace Raspware.ExampleGame.Stage
 
 		public void Draw()
 		{
-			if (_message == "")
+			if (_message == "" || !_loaded)
 				return;
 
 			var data = Data.Instance;
@@ -60,6 +72,9 @@ namespace Raspware.ExampleGame.Stage
 			levelContext.Font = resolution.RenderAmount(4).ToString() + "px Consolas, monospace";
 			levelContext.FillText("Press [DOWN] to lose :(", resolution.RenderAmount(107), resolution.RenderAmount(67));
 
+			levelContext.Font = resolution.RenderAmount(4).ToString() + "px Consolas, monospace";
+			levelContext.FillText($"'{_item.Title}'", resolution.RenderAmount(10), resolution.RenderAmount(20));
+
 			levelContext.Font = resolution.RenderAmount(6).ToString() + "px Consolas, monospace";
 			levelContext.FillText(_message, resolution.RenderAmount(4), resolution.RenderAmount(96));
 
@@ -73,6 +88,39 @@ namespace Raspware.ExampleGame.Stage
 		public int Update(int ms)
 		{
 			var data = Data.Instance;
+
+			if (!_first)
+			{
+				var request = new XMLHttpRequest();
+				request.OnReadyStateChange = () =>
+				{
+					if (request.ReadyState != AjaxReadyState.Done)
+						return;
+					
+
+					if ((request.Status == 200) || (request.Status == 304))
+					{
+
+						var j = JSON.Parse(request.Response.ToString());
+						var strongJ = j.As<R>();
+						_item = strongJ.Audio.Where(_ => _.Title == Resources.Audio.Theme).First();
+					}
+					else
+					{
+
+					}
+					_loaded = true;
+				};
+				request.Open("GET", "resources.json");
+				request.Send();
+
+				_first = true;
+			}
+
+
+			if (!_loaded)
+				return Id;
+
 			var up = _core.ActionEvents[DefaultActions.Up];
 			var left = _core.ActionEvents[DefaultActions.Left];
 			var down = _core.ActionEvents[DefaultActions.Down];
