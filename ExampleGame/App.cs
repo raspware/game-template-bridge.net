@@ -10,8 +10,6 @@ namespace Raspware.ExampleGame
 	{
 		public static void Main()
 		{
-			// TODO: Break 'Base64ResourceEncoder' into its own solution and start a serialisation component.
-			// TODO: As well as creating a JSON file, create an ENUM/String Literal generator based on the file name to be used as a key
 			var resolution = new Resolution(Resolution.PixelSize._nHD, Resolution.OrientationTypes.Landscape);
 			Game.CustomSettings()
 				.SetResolution(resolution)
