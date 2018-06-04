@@ -63,7 +63,7 @@ namespace Raspware.Base64ResourceEncoder
 				));
 
 			var bridgeStringBuilder = new StringWriter();
-			bridgeStringBuilder.WriteLine($"namespace Resources \n{{");
+			bridgeStringBuilder.WriteLine("namespace Resources \n{");
 			resources.ForEach(resource => WriteOutBridgeResource(bridgeStringBuilder, resource));
 			bridgeStringBuilder.Write("}");
 
