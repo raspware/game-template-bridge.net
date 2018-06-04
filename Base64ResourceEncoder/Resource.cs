@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Raspware.GameEngine.Base64ResourceObjects;
 
 namespace Raspware.Base64ResourceEncoder
 {
@@ -13,8 +14,7 @@ namespace Raspware.Base64ResourceEncoder
 			if (string.IsNullOrWhiteSpace(folderNameAndType))
 				throw new ArgumentException(nameof(folderNameAndType));
 
-			Type = folderNameAndType;
-			Dictionary = GetDictionary(GetResourceLocation(folderNameAndType));
+			Item = new Item(folderNameAndType, GetDictionary(GetResourceLocation(folderNameAndType)));
 		}
 
 		private static DirectoryInfo GetResourceLocation(string folderName)
@@ -58,7 +58,7 @@ namespace Raspware.Base64ResourceEncoder
 				);
 		}
 
-		public Dictionary<string, string> Dictionary { get; }
-		public string Type { get; }
+
+		public Item Item { get; }
 	}
 }
