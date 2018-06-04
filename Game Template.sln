@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleGame", "ExampleGame\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base64ResourceEncoder", "Base64ResourceEncoder\Base64ResourceEncoder.csproj", "{C7A677CF-7531-425E-A7EF-FF02B135BAB7}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Base64ResourceObjects", "Base64ResourceObjects\Base64ResourceObjects.shproj", "{4B7FAECC-B12B-4817-8879-62DCED7E55A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
