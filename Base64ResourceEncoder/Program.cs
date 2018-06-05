@@ -87,14 +87,14 @@ namespace Raspware.Base64ResourceEncoder
 			Console.WriteLine($"{resource.Item.Type}\n------");
 
 			writer.WriteStartArray();
-			foreach (var r in resource.Item.Dictionary)
+			foreach (var r in resource.Item.Objects)
 			{
 				writer.WriteStartObject();
 				writer.WritePropertyName("Title");
-				Console.WriteLine($"(*) {r.Key}");
-				writer.WriteValue(r.Key);
+				Console.WriteLine($"(*) {r.Title}");
+				writer.WriteValue(r.Title);
 				writer.WritePropertyName("Src");
-				writer.WriteValue(r.Value);
+				writer.WriteValue(r.Src);
 				writer.WriteEndObject();
 			}
 			writer.WriteEnd();
@@ -111,10 +111,10 @@ namespace Raspware.Base64ResourceEncoder
 			Console.WriteLine($"{resource.Item.Type}\n------");
 
 			writer.Write($"\tpublic static class {resource.Item.Type}\n\t{{");
-			foreach (var r in resource.Item.Dictionary)
+			foreach (var r in resource.Item.Objects)
 			{
-				Console.WriteLine($"(*) {r.Key}");
-				writer.Write($"\n\t\tpublic const string {r.Key} = \"{r.Key}\"; ");
+				Console.WriteLine($"(*) {r.Title}");
+				writer.Write($"\n\t\tpublic const string {r.Title} = \"{r.Title}\"; ");
 			}
 			writer.WriteLine("\n\t}");
 

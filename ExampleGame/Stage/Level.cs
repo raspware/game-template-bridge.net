@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Bridge.Html5;
 using ProductiveRage.Immutable;
 using Raspware.GameEngine;
@@ -8,12 +7,6 @@ using Raspware.GameEngine.Input;
 
 namespace Raspware.ExampleGame.Stage
 {
-	public sealed class R
-	{
-		public readonly JSONItemObject[] Images;
-		public readonly JSONItemObject[] Audio;
-	}
-
 	public sealed class Level : IStage
 	{
 
@@ -21,7 +14,7 @@ namespace Raspware.ExampleGame.Stage
 		private bool _renderedControls;
 		private bool _first;
 		private bool _loaded;
-		private JSONItemObject _item;
+		private string _item;
 		private ICore _core { get; }
 
 		public int Id => Stage.Id.Level;
@@ -73,7 +66,7 @@ namespace Raspware.ExampleGame.Stage
 			levelContext.FillText("Press [DOWN] to lose :(", resolution.RenderAmount(107), resolution.RenderAmount(67));
 
 			levelContext.Font = resolution.RenderAmount(4).ToString() + "px Consolas, monospace";
-			levelContext.FillText($"'{_item.Title}'", resolution.RenderAmount(10), resolution.RenderAmount(20));
+			levelContext.FillText($"'{_item}'", resolution.RenderAmount(10), resolution.RenderAmount(20));
 
 			levelContext.Font = resolution.RenderAmount(6).ToString() + "px Consolas, monospace";
 			levelContext.FillText(_message, resolution.RenderAmount(4), resolution.RenderAmount(96));
@@ -96,14 +89,15 @@ namespace Raspware.ExampleGame.Stage
 				{
 					if (request.ReadyState != AjaxReadyState.Done)
 						return;
-					
+
 
 					if ((request.Status == 200) || (request.Status == 304))
 					{
+						var j = JSON.Parse(request.Response.ToString()).As<DefaultJSONResources>();
+						var audio = DefaultJSONResources.ConvertToDictionary(j.Audio);
+						var images = DefaultJSONResources.ConvertToDictionary(j.Images);
 
-						var j = JSON.Parse(request.Response.ToString());
-						var strongJ = j.As<R>();
-						_item = strongJ.Audio.Where(_ => _.Title == Resources.Audio.Theme).First();
+						_item = images[Resources.Images.Test];
 					}
 					else
 					{

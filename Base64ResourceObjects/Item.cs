@@ -5,18 +5,18 @@ namespace Raspware.GameEngine.Base64ResourceObjects
 {
 	public sealed class Item
 	{
-		public Item(string type, Dictionary<string, string> dictionary)
+		public Item(string type, List<JSONItemObject> objects)
 		{
 			if (string.IsNullOrWhiteSpace(type))
 				throw new ArgumentException(nameof(type));
-			if (dictionary == null)
-				throw new ArgumentNullException(nameof(dictionary));
+			if (objects == null)
+				throw new ArgumentNullException(nameof(objects));
 
 			Type = type;
-			Dictionary = dictionary;
+			Objects = objects;
 		}
 		
 		public string Type { get; }
-		public Dictionary<string, string> Dictionary { get; }
+		public List<JSONItemObject> Objects{ get; }
 	}
 }

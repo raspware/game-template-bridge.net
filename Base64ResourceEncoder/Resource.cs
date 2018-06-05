@@ -14,7 +14,7 @@ namespace Raspware.Base64ResourceEncoder
 			if (string.IsNullOrWhiteSpace(folderNameAndType))
 				throw new ArgumentException(nameof(folderNameAndType));
 
-			Item = new Item(folderNameAndType, GetDictionary(GetResourceLocation(folderNameAndType)));
+			Item = new Item(folderNameAndType, GetObjects(GetResourceLocation(folderNameAndType)));
 		}
 
 		private static DirectoryInfo GetResourceLocation(string folderName)
@@ -46,16 +46,17 @@ namespace Raspware.Base64ResourceEncoder
 			return folderNames.Any() ? folderNames : null;
 		}
 
-		private static Dictionary<string, string> GetDictionary(DirectoryInfo location)
+		private static List<JSONItemObject> GetObjects(DirectoryInfo location)
 		{
-			// TODO: Maybe this needs some validation
-			return location.EnumerateFiles("*.*", SearchOption.TopDirectoryOnly)
-				.ToDictionary(
-					file => file.Name.Split('.').First(),
-
-					// Ref: https://stackoverflow.com/questions/25919387/c-sharp-converting-file-into-base64string-and-back-again
-					file => $"data:{location.Name.ToLower()}/{file.Extension.Split('.').Last()};base64,{Convert.ToBase64String(File.ReadAllBytes(file.FullName))}"
-				);
+			var objects = new List<JSONItemObject>();
+			foreach (var file in location.EnumerateFiles("*.*", SearchOption.TopDirectoryOnly).ToList())
+			{
+				objects.Add(new JSONItemObject(
+					file.Name.Split('.').First(),
+					$"data:{location.Name.ToLower()}/{file.Extension.Split('.').Last()};base64,{Convert.ToBase64String(File.ReadAllBytes(file.FullName))}"
+				));
+			}
+			return objects;
 		}
 
 
