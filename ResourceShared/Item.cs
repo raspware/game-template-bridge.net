@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Raspware.GameEngine.Base64ResourceObjects
+namespace Raspware.GameEngine.ResourceShared
 {
-	public sealed class JSONItemObject
+	public sealed class Item
 	{
-		public JSONItemObject(string title, string src)
+		public Item(string title, string src)
 		{
 			if (string.IsNullOrWhiteSpace(title))
 				throw new ArgumentNullException(nameof(title));

@@ -11,13 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleGame", "ExampleGame\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base64ResourceEncoder", "Base64ResourceEncoder\Base64ResourceEncoder.csproj", "{C7A677CF-7531-425E-A7EF-FF02B135BAB7}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Base64ResourceObjects", "Base64ResourceObjects\Base64ResourceObjects.shproj", "{4B7FAECC-B12B-4817-8879-62DCED7E55A5}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ResourceShared", "ResourceShared\ResourceShared.shproj", "{4B7FAECC-B12B-4817-8879-62DCED7E55A5}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Base64ResourceObjects\Base64ResourceObjects.projitems*{45fbddd4-4ecc-45b7-991e-2d5498ec2eaa}*SharedItemsImports = 4
-		Base64ResourceObjects\Base64ResourceObjects.projitems*{4b7faecc-b12b-4817-8879-62dced7e55a5}*SharedItemsImports = 13
-		Base64ResourceObjects\Base64ResourceObjects.projitems*{c7a677cf-7531-425e-a7ef-ff02b135bab7}*SharedItemsImports = 4
+		ResourceShared\ResourceShared.projitems*{4b7faecc-b12b-4817-8879-62dced7e55a5}*SharedItemsImports = 13
+		ResourceShared\ResourceShared.projitems*{ba7fb4db-5817-481d-92f7-4a99653bdc7c}*SharedItemsImports = 4
+		ResourceShared\ResourceShared.projitems*{c7a677cf-7531-425e-a7ef-ff02b135bab7}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

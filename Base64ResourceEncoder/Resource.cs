@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Raspware.GameEngine.Base64ResourceObjects;
+using Raspware.GameEngine.ResourceShared;
 
-namespace Raspware.Base64ResourceEncoder
+namespace Raspware.GameEngine.Base64ResourceEncoder
 {
 	public sealed class Resource
 	{
@@ -14,7 +14,7 @@ namespace Raspware.Base64ResourceEncoder
 			if (string.IsNullOrWhiteSpace(folderNameAndType))
 				throw new ArgumentException(nameof(folderNameAndType));
 
-			Item = new Item(folderNameAndType, GetObjects(GetResourceLocation(folderNameAndType)));
+			Item = new ResourceTypeAndItems(folderNameAndType, GetObjects(GetResourceLocation(folderNameAndType)));
 		}
 
 		private static DirectoryInfo GetResourceLocation(string folderName)
@@ -46,12 +46,12 @@ namespace Raspware.Base64ResourceEncoder
 			return folderNames.Any() ? folderNames : null;
 		}
 
-		private static List<JSONItemObject> GetObjects(DirectoryInfo location)
+		private static List<Item> GetObjects(DirectoryInfo location)
 		{
-			var objects = new List<JSONItemObject>();
+			var objects = new List<Item>();
 			foreach (var file in location.EnumerateFiles("*.*", SearchOption.TopDirectoryOnly).ToList())
 			{
-				objects.Add(new JSONItemObject(
+				objects.Add(new Item(
 					file.Name.Split('.').First(),
 					$"data:{location.Name.ToLower()}/{file.Extension.Split('.').Last()};base64,{Convert.ToBase64String(File.ReadAllBytes(file.FullName))}"
 				));
@@ -60,6 +60,6 @@ namespace Raspware.Base64ResourceEncoder
 		}
 
 
-		public Item Item { get; }
+		public ResourceTypeAndItems Item { get; }
 	}
 }

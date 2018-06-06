@@ -9,8 +9,6 @@
     <Import_RootNamespace>Raspware.GameEngine.Base64ResourceObjects</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)DefaultJSONResources.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Item.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)JSONItemObject.cs" />
   </ItemGroup>
 </Project>

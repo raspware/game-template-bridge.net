@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C7A677CF-7531-425E-A7EF-FF02B135BAB7}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Raspware.Base64ResourceEncoder</RootNamespace>
-    <AssemblyName>Raspware.Base64ResourceEncoder</AssemblyName>
+    <RootNamespace>Raspware.GameEngine.Base64ResourceEncoder</RootNamespace>
+    <AssemblyName>Raspware.GameEngine.Base64ResourceEncoder</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ResourceTypeAndItems.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs" />
@@ -54,6 +55,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="..\Base64ResourceObjects\Base64ResourceObjects.projitems" Label="Shared" />
+  <Import Project="..\ResourceShared\ResourceShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

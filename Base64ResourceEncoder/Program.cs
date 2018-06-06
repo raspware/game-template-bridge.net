@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace Raspware.Base64ResourceEncoder
+namespace Raspware.GameEngine.Base64ResourceEncoder
 {
 
 	public static class Program
@@ -87,7 +87,7 @@ namespace Raspware.Base64ResourceEncoder
 			Console.WriteLine($"{resource.Item.Type}\n------");
 
 			writer.WriteStartArray();
-			foreach (var r in resource.Item.Objects)
+			foreach (var r in resource.Item.Items)
 			{
 				writer.WriteStartObject();
 				writer.WritePropertyName("Title");
@@ -111,7 +111,7 @@ namespace Raspware.Base64ResourceEncoder
 			Console.WriteLine($"{resource.Item.Type}\n------");
 
 			writer.Write($"\tpublic static class {resource.Item.Type}\n\t{{");
-			foreach (var r in resource.Item.Objects)
+			foreach (var r in resource.Item.Items)
 			{
 				Console.WriteLine($"(*) {r.Title}");
 				writer.Write($"\n\t\tpublic const string {r.Title} = \"{r.Title}\"; ");

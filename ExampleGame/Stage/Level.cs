@@ -2,7 +2,6 @@
 using Bridge.Html5;
 using ProductiveRage.Immutable;
 using Raspware.GameEngine;
-using Raspware.GameEngine.Base64ResourceObjects;
 using Raspware.GameEngine.Input;
 
 namespace Raspware.ExampleGame.Stage
@@ -13,7 +12,6 @@ namespace Raspware.ExampleGame.Stage
 		private string _message;
 		private bool _renderedControls;
 		private bool _first;
-		private bool _loaded;
 		private HTMLImageElement _image;
 		private HTMLAudioElement _audio;
 		private ICore _core { get; }
@@ -44,7 +42,7 @@ namespace Raspware.ExampleGame.Stage
 			var levelContext = _core.Layers.GetStageLayer(0).GetContext();
 			var resolution = _core.Resolution;
 
-			if (!_loaded)
+			if (!GameEngine.Resources.ResourcesOther.Loaded)
 			{
 				levelContext.FillStyle = "rgb(" + (brightness) + "," + (brightness) + "," + (brightness) + ")";
 				levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
@@ -55,6 +53,9 @@ namespace Raspware.ExampleGame.Stage
 			}
 
 			var data = Data.Instance;
+
+			_image = GameEngine.Resources.ResourcesOther.Pool.Images[ExampleGame.Resources.Image.Test];
+			_audio = GameEngine.Resources.ResourcesOther.Pool.Audio[Resources.Audio.Theme];
 
 			levelContext.FillStyle = "rgb(" + (brightness) + "," + (brightness + 126) + "," + (brightness) + ")";
 			levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
@@ -98,35 +99,11 @@ namespace Raspware.ExampleGame.Stage
 
 			if (!_first)
 			{
-				var request = new XMLHttpRequest();
-				request.OnReadyStateChange = () =>
-				{
-					if (request.ReadyState != AjaxReadyState.Done)
-						return;
-
-					if ((request.Status == 200) || (request.Status == 304))
-					{
-						var j = JSON.Parse(request.Response.ToString()).As<DefaultJSONResources>();
-						var audio = DefaultJSONResources.ConvertToDictionary(j.Audio);
-						var images = DefaultJSONResources.ConvertToDictionary(j.Image);
-
-						_image = new HTMLImageElement() { Src = images[Resources.Image.Test] };
-						_audio = new HTMLAudioElement() { Src = audio[Resources.Audio.Theme] };
-					}
-					else
-					{
-
-					}
-					Window.SetTimeout(() => { _loaded = true; }, 3000);
-				};
-				request.Open("GET", "resources.json");
-				request.Send();
-
+				GameEngine.Resources.ResourcesOther.Load("resources.json");
 				_first = true;
 			}
 
-
-			if (!_loaded)
+			if (!GameEngine.Resources.ResourcesOther.Loaded)
 				return Id;
 
 			var up = _core.ActionEvents[DefaultActions.Up];
