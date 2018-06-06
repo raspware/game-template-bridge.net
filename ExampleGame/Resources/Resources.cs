@@ -4,7 +4,7 @@ namespace Resources
 	{
 		public const string Theme = "Theme"; 
 	}
-	public static class Images
+	public static class Image
 	{
 		public const string Test = "Test"; 
 	}

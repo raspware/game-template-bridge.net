@@ -7,7 +7,7 @@ namespace Raspware.GameEngine.Base64ResourceObjects
 {
 	public sealed class DefaultJSONResources
 	{
-		public readonly JSONItemObject[] Images;
+		public readonly JSONItemObject[] Image;
 		public readonly JSONItemObject[] Audio;
 
 		public static Dictionary<string, string> ConvertToDictionary(JSONItemObject[] objects)

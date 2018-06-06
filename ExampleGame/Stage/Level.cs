@@ -95,9 +95,9 @@ namespace Raspware.ExampleGame.Stage
 					{
 						var j = JSON.Parse(request.Response.ToString()).As<DefaultJSONResources>();
 						var audio = DefaultJSONResources.ConvertToDictionary(j.Audio);
-						var images = DefaultJSONResources.ConvertToDictionary(j.Images);
+						var images = DefaultJSONResources.ConvertToDictionary(j.Image);
 
-						_item = images[Resources.Images.Test];
+						_item = images[Resources.Image.Test];
 					}
 					else
 					{
