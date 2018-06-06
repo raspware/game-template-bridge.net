@@ -14,7 +14,8 @@ namespace Raspware.ExampleGame.Stage
 		private bool _renderedControls;
 		private bool _first;
 		private bool _loaded;
-		private string _item;
+		private HTMLImageElement _image;
+		private HTMLAudioElement _audio;
 		private ICore _core { get; }
 
 		public int Id => Stage.Id.Level;
@@ -37,13 +38,23 @@ namespace Raspware.ExampleGame.Stage
 
 		public void Draw()
 		{
-			if (_message == "" || !_loaded)
+			if (_message == "")
 				return;
-
-			var data = Data.Instance;
 			int brightness = 0;
 			var levelContext = _core.Layers.GetStageLayer(0).GetContext();
 			var resolution = _core.Resolution;
+
+			if (!_loaded)
+			{
+				levelContext.FillStyle = "rgb(" + (brightness) + "," + (brightness) + "," + (brightness) + ")";
+				levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
+				levelContext.FillStyle = "white";
+				levelContext.Font = resolution.RenderAmount(10).ToString() + "px Consolas, monospace";
+				levelContext.FillText("Loading...", resolution.RenderAmount(4), resolution.RenderAmount(12));
+				return;
+			}
+
+			var data = Data.Instance;
 
 			levelContext.FillStyle = "rgb(" + (brightness) + "," + (brightness + 126) + "," + (brightness) + ")";
 			levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
@@ -66,7 +77,10 @@ namespace Raspware.ExampleGame.Stage
 			levelContext.FillText("Press [DOWN] to lose :(", resolution.RenderAmount(107), resolution.RenderAmount(67));
 
 			levelContext.Font = resolution.RenderAmount(4).ToString() + "px Consolas, monospace";
-			levelContext.FillText($"'{_item}'", resolution.RenderAmount(10), resolution.RenderAmount(20));
+			levelContext.FillText($"'{_image.Width}x{_image.Height}'", resolution.RenderAmount(10), resolution.RenderAmount(20));
+
+			levelContext.Font = resolution.RenderAmount(4).ToString() + "px Consolas, monospace";
+			levelContext.FillText($"'{_audio.Duration}'", resolution.RenderAmount(10), resolution.RenderAmount(25));
 
 			levelContext.Font = resolution.RenderAmount(6).ToString() + "px Consolas, monospace";
 			levelContext.FillText(_message, resolution.RenderAmount(4), resolution.RenderAmount(96));
@@ -90,20 +104,20 @@ namespace Raspware.ExampleGame.Stage
 					if (request.ReadyState != AjaxReadyState.Done)
 						return;
 
-
 					if ((request.Status == 200) || (request.Status == 304))
 					{
 						var j = JSON.Parse(request.Response.ToString()).As<DefaultJSONResources>();
 						var audio = DefaultJSONResources.ConvertToDictionary(j.Audio);
 						var images = DefaultJSONResources.ConvertToDictionary(j.Image);
 
-						_item = images[Resources.Image.Test];
+						_image = new HTMLImageElement() { Src = images[Resources.Image.Test] };
+						_audio = new HTMLAudioElement() { Src = audio[Resources.Audio.Theme] };
 					}
 					else
 					{
 
 					}
-					_loaded = true;
+					Window.SetTimeout(() => { _loaded = true; }, 3000);
 				};
 				request.Open("GET", "resources.json");
 				request.Send();
