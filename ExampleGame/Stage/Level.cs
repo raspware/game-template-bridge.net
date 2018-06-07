@@ -1,6 +1,7 @@
 ﻿using System;
 using Bridge.Html5;
 using ProductiveRage.Immutable;
+using Raspware.ExampleGame.Resources;
 using Raspware.GameEngine;
 using Raspware.GameEngine.Input;
 
@@ -8,12 +9,13 @@ namespace Raspware.ExampleGame.Stage
 {
 	public sealed class Level : IStage
 	{
-
 		private string _message;
 		private bool _renderedControls;
 		private bool _first;
+		private bool _musicPlayed;
 		private HTMLImageElement _image;
 		private HTMLAudioElement _audio;
+		private ResourcePool _resourcePool;
 		private ICore _core { get; }
 
 		public int Id => Stage.Id.Level;
@@ -32,17 +34,20 @@ namespace Raspware.ExampleGame.Stage
 				DefaultActions.Down,
 				DefaultActions.Button1
 			));
+
+			_resourcePool = new ResourcePool();
 		}
 
 		public void Draw()
 		{
 			if (_message == "")
 				return;
+
 			int brightness = 0;
 			var levelContext = _core.Layers.GetStageLayer(0).GetContext();
 			var resolution = _core.Resolution;
 
-			if (!GameEngine.Resources.ResourcesOther.Loaded)
+			if (!_resourcePool.Loaded)
 			{
 				levelContext.FillStyle = "rgb(" + (brightness) + "," + (brightness) + "," + (brightness) + ")";
 				levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
@@ -54,8 +59,14 @@ namespace Raspware.ExampleGame.Stage
 
 			var data = Data.Instance;
 
-			_image = GameEngine.Resources.ResourcesOther.Pool.Images[ExampleGame.Resources.Image.Test];
-			_audio = GameEngine.Resources.ResourcesOther.Pool.Audio[Resources.Audio.Theme];
+			_image = _resourcePool.Images[Image.Test];
+			_audio = _resourcePool.Audio[Audio.Theme];
+
+			if (!_musicPlayed)
+			{
+				_musicPlayed = true;
+				_audio.Play();
+			}
 
 			levelContext.FillStyle = "rgb(" + (brightness) + "," + (brightness + 126) + "," + (brightness) + ")";
 			levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
@@ -99,11 +110,11 @@ namespace Raspware.ExampleGame.Stage
 
 			if (!_first)
 			{
-				GameEngine.Resources.ResourcesOther.Load("resources.json");
+				_resourcePool.Load("resources.json");
 				_first = true;
 			}
 
-			if (!GameEngine.Resources.ResourcesOther.Loaded)
+			if (!_resourcePool.Loaded)
 				return Id;
 
 			var up = _core.ActionEvents[DefaultActions.Up];
