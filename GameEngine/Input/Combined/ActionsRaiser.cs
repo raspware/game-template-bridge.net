@@ -21,11 +21,13 @@ namespace Raspware.GameEngine.Input.Combined
 				actionsEvents.Add(
 					action.Id,
 					new Events(
-						 actionsRaisers
-						 .SelectMany(actionsRaiser => actionsRaiser.Events)
-						 .Where(eventsDictionary => eventsDictionary.Key == action.Id)
-						 .Select(eventsDictionary => eventsDictionary.Value)
-						 .ToNonNullList()
+						NonNullList.Of(
+							 actionsRaisers
+								 .SelectMany(actionsRaiser => actionsRaiser.Events)
+								 .Where(eventsDictionary => eventsDictionary.Key == action.Id)
+								 .Select(eventsDictionary => eventsDictionary.Value)
+								 .ToArray()
+						 )
 					)
 				);
 

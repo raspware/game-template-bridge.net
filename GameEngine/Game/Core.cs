@@ -76,11 +76,11 @@ namespace Raspware.GameEngine
 					throw new ArgumentNullException(nameof(actions));
 
 				ActionEvents = new Input.Combined.ActionsRaisers(
-					actions.ToNonNullList<IActionConfiguration>(),
+					NonNullList.Of<IActionConfiguration>(actions.ToArray()),
 					NonNullList.Of<IActionsRaisers>(
-						new Input.Keyboard.ActionsRaisers(Layers, actions.ToNonNullList<IActionConfigurationKeyboard>()),
-						new Input.Mouse.ActionsRaisers(Resolution, Layers, actions.ToNonNullList<IActionConfigurationMouse>()),
-						new Input.Touch.ActionsRaisers(Resolution, Layers, actions.ToNonNullList<IActionConfigurationTouch>())
+						new Input.Keyboard.ActionsRaisers(Layers, NonNullList.Of<IActionConfigurationKeyboard>(actions.ToArray())),
+						new Input.Mouse.ActionsRaisers(Resolution, Layers, NonNullList.Of<IActionConfigurationMouse>(actions.ToArray())),
+						new Input.Touch.ActionsRaisers(Resolution, Layers, NonNullList.Of<IActionConfigurationTouch>(actions.ToArray()))
 					)
 				).Events;
 
