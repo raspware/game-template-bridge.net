@@ -1,18 +1,32 @@
-﻿namespace Raspware.GameEngine
+﻿using System;
+
+namespace Raspware.GameEngine
 {
 	public class Speed
 	{
-		public readonly double Amount;
 		public double Current { private set; get; }
 		public readonly double Max;
 		public readonly double Min;
+		public readonly double IncreaseBy;
+		public readonly double DecreaseBy;
 
-		public Speed(double amount, double max, double min = 0)
+		public Speed(double max, double increaseBy, double min = -1, double decreaseBy = -1)
 		{
-			Amount = amount;
+			if (increaseBy <= 0)
+				throw new ArgumentException($"{nameof(increaseBy)} must be greater than zero.");
+			if (max <= 0)
+				throw new ArgumentException($"{nameof(max)} must be greater than zero.");
+
+			if (min < 0)
+				min = 0;
+
+			if (decreaseBy <= 0)
+				decreaseBy = increaseBy;
+
 			Max = max;
 			Min = min;
-			Current = 0;
+			DecreaseBy = decreaseBy;
+			IncreaseBy = increaseBy;
 		}
 
 		public void Update(int ms, bool increase = false)
@@ -20,13 +34,12 @@
 			Update((double)ms, increase);
 		}
 
-		public void Update(double ms, bool increase = false)
+		private void Update(double ms, bool increase = false)
 		{
-			var frameAmount = ms * Amount;
 			if (increase)
-				Current += frameAmount;
+				Current += (ms * IncreaseBy);
 			else
-				Current -= frameAmount;
+				Current -= (ms * DecreaseBy);
 
 			if (Current < Min)
 				Current = Min;
