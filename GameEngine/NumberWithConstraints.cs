@@ -6,45 +6,55 @@ namespace Raspware.GameEngine
 	{
 		public double Current { private set; get; }
 		public readonly double Max;
-		public readonly double Min;
 		public readonly double IncreaseBy;
-		public readonly double DecreaseBy;
 
-		public NumberWithConstraints(double max, double increaseBy, double min = -1, double decreaseBy = -1)
+		public NumberWithConstraints(double max, double increaseBy)
 		{
 			if (increaseBy <= 0)
 				throw new ArgumentException($"{nameof(increaseBy)} must be greater than zero.");
 			if (max <= 0)
 				throw new ArgumentException($"{nameof(max)} must be greater than zero.");
 
-			if (min < 0)
-				min = 0;
-
-			if (decreaseBy <= 0)
-				decreaseBy = increaseBy;
-
 			Max = max;
-			Min = min;
-			DecreaseBy = decreaseBy;
 			IncreaseBy = increaseBy;
 		}
 
-		public void Update(int ms, bool increase = false)
+		public void Update(int ms, bool increase = false, bool stopping = false)
 		{
-			Update((double)ms, increase);
+			Update((double)ms, increase, stopping);
 		}
 
-		private void Update(double ms, bool increase = false)
+		public void Update(double ms, bool increase = false, bool stopping = false)
 		{
-			if (increase)
+			if (stopping)
+			{
+				if (Current == 0)
+					return;
+				else if (Current < 0)
+				{
+					Current += (ms * (IncreaseBy * 2));
+					if (Current > 0)
+						Current = 0;
+				}
+				else if (Current > 0)
+				{
+					Current -= (ms * (IncreaseBy * 2));
+					if (Current < 0)
+						Current = 0;
+				}
+			}
+			else if (increase)
+			{
 				Current += (ms * IncreaseBy);
+				if (Current > Max)
+					Current = Max;
+			}
 			else
-				Current -= (ms * DecreaseBy);
-
-			if (Current < Min)
-				Current = Min;
-			else if (Current > Max)
-				Current = Max;
+			{
+				Current -= (ms * IncreaseBy);
+				if (Current < -Max)
+					Current = -Max;
+			}
 		}
 	}
 }

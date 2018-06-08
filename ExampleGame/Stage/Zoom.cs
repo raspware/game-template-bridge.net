@@ -31,8 +31,8 @@ namespace Raspware.ExampleGame.Stage
 			_resourcePool = new ResourcePool();
 			_camera = new Camera(
 				new NumberWithConstraints(2, 0.01),
-				new NumberWithConstraints(5, 0.005, 0, 0.01),
-				new NumberWithConstraints(5, 0.005, 0, 0.01)
+				new NumberWithConstraints(5, 0.01),
+				new NumberWithConstraints(5, 0.01)
 			);
 		}
 
@@ -90,12 +90,12 @@ namespace Raspware.ExampleGame.Stage
 			if (up.PressedDown() || down.PressedDown())
 				_camera.MoveY.Update(ms, true);
 			else
-				_camera.MoveY.Update(ms);
+				_camera.MoveY.Update(ms, false, true);
 
 			if (left.PressedDown() || right.PressedDown())
 				_camera.MoveX.Update(ms, true);
 			else
-				_camera.MoveX.Update(ms);
+				_camera.MoveX.Update(ms, false, true);
 
 			if (down.PressedDown())
 			{
