@@ -6,6 +6,7 @@ namespace Raspware.ExampleGame.Resources
 	}
 	public static class Image
 	{
+		public const string Background = "Background";
 		public const string Test = "Test";
 	}
 }

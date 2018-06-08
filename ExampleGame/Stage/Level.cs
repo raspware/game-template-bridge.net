@@ -59,7 +59,7 @@ namespace Raspware.ExampleGame.Stage
 
 			var data = Data.Instance;
 
-			_image = _resourcePool.Images[Image.Test];
+			_image = _resourcePool.Images[Image.Background];
 			_audio = _resourcePool.Audio[Audio.Theme];
 
 			if (!_musicPlayed)
@@ -68,8 +68,7 @@ namespace Raspware.ExampleGame.Stage
 				_audio.Play();
 			}
 
-			levelContext.FillStyle = "rgb(" + (brightness) + "," + (brightness + 126) + "," + (brightness) + ")";
-			levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
+			levelContext.DrawImage(_image, 0, 0);
 
 			levelContext.FillStyle = "white";
 

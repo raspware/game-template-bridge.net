@@ -15,7 +15,7 @@ namespace Raspware.ExampleGame
 				.SetResolution(resolution)
 				.SetActions(DefaultActions.GetActionConfigurations(resolution))
 				.SetStageFactory(StageFactory)
-				.Run(Id.Level);
+				.Run(Id.Zoom);
 		}
 
 		public static IStage StageFactory(ICore core, int id)
@@ -24,6 +24,8 @@ namespace Raspware.ExampleGame
 			{
 				case Id.Level:
 					return new Level(core);
+				case Id.Zoom:
+					return new Zoom(core);
 
 				default:
 					throw new ArgumentException(nameof(id));

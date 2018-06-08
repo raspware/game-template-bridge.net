@@ -3,5 +3,6 @@
 	public static class Id
 	{
 		public const int Level = 2;
+		public const int Zoom = 3;
 	}
 }
