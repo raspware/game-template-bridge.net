@@ -151,7 +151,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(SolutionDir)\ExampleGame\Resources\resources.json" "$(ProjectDir)" /Y /I</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(SolutionDir)ExampleGame\Resources\resources.json" "$(ProjectDir)" /Y /I</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
