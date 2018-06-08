@@ -2,7 +2,7 @@
 
 namespace Raspware.GameEngine
 {
-	public class Speed
+	public class NumberWithConstraints
 	{
 		public double Current { private set; get; }
 		public readonly double Max;
@@ -10,7 +10,7 @@ namespace Raspware.GameEngine
 		public readonly double IncreaseBy;
 		public readonly double DecreaseBy;
 
-		public Speed(double max, double increaseBy, double min = -1, double decreaseBy = -1)
+		public NumberWithConstraints(double max, double increaseBy, double min = -1, double decreaseBy = -1)
 		{
 			if (increaseBy <= 0)
 				throw new ArgumentException($"{nameof(increaseBy)} must be greater than zero.");
