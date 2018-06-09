@@ -18,9 +18,11 @@ namespace Raspware.GameEngine.Rendering
 			MoveY = moveY;
 			X = 0;
 			Y = 0;
+			ZoomAmount = 1;
 		}
 
 		private bool _up;
+		private bool _zoomIn;
 		private bool _left;
 
 		public NumberWithConstraints Zoom { private set; get; }
@@ -28,6 +30,7 @@ namespace Raspware.GameEngine.Rendering
 		public NumberWithConstraints MoveY { private set; get; }
 		public int X { private set; get; }
 		public int Y { private set; get; }
+		public double ZoomAmount { private set; get; }
 		public void UpdateYDirection(bool up = false)
 		{
 			_up = up;
@@ -38,18 +41,31 @@ namespace Raspware.GameEngine.Rendering
 			_left = left;
 		}
 
+		public void UpdateZoom(bool zoomIn = false)
+		{
+			_zoomIn = zoomIn;
+		}
+
 		public void Update()
 		{
 			// Back to an int as we are dealing with 1px pixels.
 			if (_up)
-				Y += (int)MoveY.Current;
-			else
 				Y -= (int)MoveY.Current;
+			else
+				Y += (int)MoveY.Current;
 
 			if (_left)
-				X -= (int)MoveX.Current;
-			else
 				X += (int)MoveX.Current;
+			else
+				X -= (int)MoveX.Current;
+
+			if (_zoomIn)
+				ZoomAmount += Zoom.Current;
+			else
+				ZoomAmount -= Zoom.Current;
+
+			if (ZoomAmount < 1)
+				ZoomAmount = 1;
 		}
 	}
 }

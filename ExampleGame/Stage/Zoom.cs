@@ -30,7 +30,7 @@ namespace Raspware.ExampleGame.Stage
 			_core.ActivateActions();
 			_resourcePool = new ResourcePool();
 			_camera = new Camera(
-				new NumberWithConstraints(2, 0.01),
+				new NumberWithConstraints(0.5, 0.00001),
 				new NumberWithConstraints(5, 0.01),
 				new NumberWithConstraints(5, 0.01)
 			);
@@ -58,7 +58,7 @@ namespace Raspware.ExampleGame.Stage
 			_image = _resourcePool.Images[Image.Background];
 
 			levelContext.ClearRect(0, 0, resolution.Width, resolution.Height);
-			levelContext.DrawImage(_image, _camera.X, _camera.Y);
+			levelContext.DrawImage(_image, _camera.X, _camera.Y, (int)(_image.Width * _camera.ZoomAmount) ,(int)(_image.Height * _camera.ZoomAmount));
 
 			if (!_renderedControls)
 			{
@@ -97,6 +97,12 @@ namespace Raspware.ExampleGame.Stage
 			else
 				_camera.MoveX.Update(ms, false, true);
 
+			if (button1.PressedDown() || menu.PressedDown())
+				_camera.Zoom.Update(ms, true);
+			else
+				_camera.Zoom.Update(ms, false, true);
+
+
 			if (down.PressedDown())
 			{
 				_camera.UpdateYDirection(true);
@@ -115,6 +121,16 @@ namespace Raspware.ExampleGame.Stage
 			if (right.PressedDown())
 			{
 				_camera.UpdateXDirection();
+			}
+
+			if (button1.PressedDown())
+			{
+				_camera.UpdateZoom(true);
+			}
+
+			if (menu.PressedDown())
+			{
+				_camera.UpdateZoom();
 			}
 
 			_camera.Update();
