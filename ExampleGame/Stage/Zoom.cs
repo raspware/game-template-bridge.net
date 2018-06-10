@@ -58,7 +58,13 @@ namespace Raspware.ExampleGame.Stage
 			_image = _resourcePool.Images[Image.Background];
 
 			levelContext.ClearRect(0, 0, resolution.Width, resolution.Height);
-			levelContext.DrawImage(_image, _camera.X, _camera.Y, (int)(_image.Width * _camera.ZoomAmount), (int)(_image.Height * _camera.ZoomAmount));
+			levelContext.DrawImage(
+				_image,
+				(int)(_camera.X * _camera.ZoomAmount),
+				(int)(_camera.Y * _camera.ZoomAmount),
+				(int)(_image.Width * _camera.ZoomAmount),
+				(int)(_image.Height * _camera.ZoomAmount)
+			);
 
 			levelContext.FillStyle = "white";
 			levelContext.Font = resolution.RenderAmount(10).ToString() + "px Consolas, monospace";
