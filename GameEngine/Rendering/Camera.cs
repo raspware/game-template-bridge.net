@@ -4,7 +4,7 @@ namespace Raspware.GameEngine.Rendering
 {
 	public class Camera
 	{
-		public Camera(NumberWithConstraints zoom, NumberWithConstraints moveX, NumberWithConstraints moveY)
+		public Camera(NumberWithConstraints zoom, int zoomMax, NumberWithConstraints moveX, NumberWithConstraints moveY)
 		{
 			if (zoom == null)
 				throw new ArgumentNullException(nameof(zoom));
@@ -13,6 +13,7 @@ namespace Raspware.GameEngine.Rendering
 			if (moveY == null)
 				throw new ArgumentNullException(nameof(moveY));
 
+			_zoomMax = zoomMax;
 			Zoom = zoom;
 			MoveX = moveX;
 			MoveY = moveY;
@@ -24,6 +25,7 @@ namespace Raspware.GameEngine.Rendering
 		private bool _up;
 		private bool _zoomIn;
 		private bool _left;
+		private int _zoomMax;
 
 		public NumberWithConstraints Zoom { private set; get; }
 		public NumberWithConstraints MoveX { private set; get; }
@@ -67,8 +69,8 @@ namespace Raspware.GameEngine.Rendering
 			if (ZoomAmount < 1)
 				ZoomAmount = 1;
 
-			if (ZoomAmount > 2)
-				ZoomAmount = 2;
+			if (ZoomAmount > _zoomMax)
+				ZoomAmount = _zoomMax;
 		}
 	}
 }

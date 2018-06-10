@@ -31,6 +31,7 @@ namespace Raspware.ExampleGame.Stage
 			_resourcePool = new ResourcePool();
 			_camera = new Camera(
 				new NumberWithConstraints(0.02, 0.00001),
+				4,
 				new NumberWithConstraints(5, 0.01),
 				new NumberWithConstraints(5, 0.01)
 			);
