@@ -66,6 +66,9 @@ namespace Raspware.GameEngine.Rendering
 
 			if (ZoomAmount < 1)
 				ZoomAmount = 1;
+
+			if (ZoomAmount > 2)
+				ZoomAmount = 2;
 		}
 	}
 }

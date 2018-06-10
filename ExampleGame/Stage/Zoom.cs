@@ -30,7 +30,7 @@ namespace Raspware.ExampleGame.Stage
 			_core.ActivateActions();
 			_resourcePool = new ResourcePool();
 			_camera = new Camera(
-				new NumberWithConstraints(0.5, 0.00001),
+				new NumberWithConstraints(0.02, 0.00001),
 				new NumberWithConstraints(5, 0.01),
 				new NumberWithConstraints(5, 0.01)
 			);
@@ -58,7 +58,13 @@ namespace Raspware.ExampleGame.Stage
 			_image = _resourcePool.Images[Image.Background];
 
 			levelContext.ClearRect(0, 0, resolution.Width, resolution.Height);
-			levelContext.DrawImage(_image, _camera.X, _camera.Y, (int)(_image.Width * _camera.ZoomAmount) ,(int)(_image.Height * _camera.ZoomAmount));
+			levelContext.DrawImage(_image, _camera.X, _camera.Y, (int)(_image.Width * _camera.ZoomAmount), (int)(_image.Height * _camera.ZoomAmount));
+
+			levelContext.FillStyle = "white";
+			levelContext.Font = resolution.RenderAmount(10).ToString() + "px Consolas, monospace";
+			levelContext.FillText("zoom: " + _camera.Zoom.Current.ToString(), resolution.RenderAmount(4), resolution.RenderAmount(12));
+			levelContext.FillText("x: " + _camera.MoveX.Current.ToString(), resolution.RenderAmount(4), resolution.RenderAmount(18));
+			levelContext.FillText("y: " + _camera.MoveY.Current.ToString(), resolution.RenderAmount(4), resolution.RenderAmount(24));
 
 			if (!_renderedControls)
 			{
