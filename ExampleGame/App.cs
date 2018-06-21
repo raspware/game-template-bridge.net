@@ -10,7 +10,7 @@ namespace Raspware.ExampleGame
 	{
 		public static void Main()
 		{
-			var resolution = new Resolution(Resolution.PixelSize._nHD, Resolution.OrientationTypes.Landscape);
+			var resolution = new Resolution(Resolution.PixelSize._xxsmall, Resolution.OrientationTypes.Landscape);
 			Game.CustomSettings()
 				.SetResolution(resolution)
 				.SetActions(DefaultActions.GetActionConfigurations(resolution))

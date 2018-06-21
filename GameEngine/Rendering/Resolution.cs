@@ -6,8 +6,14 @@ namespace Raspware.GameEngine.Rendering
 	{
 		public enum PixelSize
 		{
+			/// <summary>(80x45 or 45x45)</summary>
+			_xxsmall = 1,
+			/// <summary>(160x90 or 90x90)</summary>
+			_xsmall,
+			/// <summary>(320x180 or 180x180)</summary>
+			_small,
 			/// <summary>(640x360 or 360x360)</summary>
-			_nHD = 1,
+			_nHD,
 			/// <summary>(1280x720 or 720x720)</summary>
 			_HD,
 			/// <summary>(1920x1080 or 1080x1080)</summary>
@@ -28,7 +34,7 @@ namespace Raspware.GameEngine.Rendering
 		}
 
 		private static bool _configured { get; set; } = false;
-		
+
 		public Resolution(PixelSize size, OrientationTypes orientation)
 		{
 			Orientation = orientation;
@@ -36,17 +42,17 @@ namespace Raspware.GameEngine.Rendering
 			switch (orientation)
 			{
 				case OrientationTypes.Landscape:
-					Height = 360 * (int)size;
+					Height = 45 * (int)size;
 					Amount = Height * 0.01;
-					Width = 640 * (int)size;
+					Width = 80 * (int)size;
 					break;
 				case OrientationTypes.Portrait:
-					Height = 640 * (int)size;
-					Width = 360 * (int)size;
+					Height = 80 * (int)size;
+					Width = 45 * (int)size;
 					Amount = Width * 0.01;
 					break;
 				case OrientationTypes.Square:
-					Height = 360 * (int)size;
+					Height = 45 * (int)size;
 					Amount = Height * 0.01;
 					Width = Height;
 					break;
@@ -54,7 +60,7 @@ namespace Raspware.GameEngine.Rendering
 					throw new ArgumentException(nameof(orientation));
 			}
 		}
-		
+
 		public int Width { get; }
 		public int Height { get; }
 		public double Amount { get; }
