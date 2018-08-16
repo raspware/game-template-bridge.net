@@ -4,5 +4,6 @@
 	{
 		public const int Level = 2;
 		public const int Zoom = 3;
+		public const int RayCaster = 4;
 	}
 }

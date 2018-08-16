@@ -42,8 +42,9 @@
     <Compile Include="Data.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resources.cs" />
-    <Compile Include="Stage\Zoom.cs" />
+    <Compile Include="Stage\RayCaster.cs" />
     <Compile Include="Stage\Level.cs" />
+    <Compile Include="Stage\Zoom.cs" />
     <Compile Include="Stage\Ids.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -10,12 +10,12 @@ namespace Raspware.ExampleGame
 	{
 		public static void Main()
 		{
-			var resolution = new Resolution(Resolution.PixelSize._xxsmall, Resolution.OrientationTypes.Landscape);
+			var resolution = new Resolution(Resolution.PixelSize._FHD, Resolution.OrientationTypes.Landscape);
 			Game.CustomSettings()
 				.SetResolution(resolution)
 				.SetActions(DefaultActions.GetActionConfigurations(resolution))
 				.SetStageFactory(StageFactory)
-				.Run(Id.Zoom);
+				.Run(Id.RayCaster);
 		}
 
 		public static IStage StageFactory(ICore core, int id)
@@ -26,6 +26,8 @@ namespace Raspware.ExampleGame
 					return new Level(core);
 				case Id.Zoom:
 					return new Zoom(core);
+				case Id.RayCaster:
+					return new RayCaster(core);
 
 				default:
 					throw new ArgumentException(nameof(id));
