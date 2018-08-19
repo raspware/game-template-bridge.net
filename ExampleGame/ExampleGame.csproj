@@ -44,6 +44,12 @@
     <Compile Include="Resources\Resources.cs" />
     <Compile Include="Stage\RayCaster.cs" />
     <Compile Include="Stage\Level.cs" />
+    <Compile Include="Stage\RayCasterAdditional\Bitmap.cs" />
+    <Compile Include="Stage\RayCasterAdditional\Inspect.cs" />
+    <Compile Include="Stage\RayCasterAdditional\Map.cs" />
+    <Compile Include="Stage\RayCasterAdditional\Origin.cs" />
+    <Compile Include="Stage\RayCasterAdditional\Player.cs" />
+    <Compile Include="Stage\RayCasterAdditional\Step.cs" />
     <Compile Include="Stage\Zoom.cs" />
     <Compile Include="Stage\Ids.cs" />
   </ItemGroup>
@@ -67,6 +73,7 @@
     <Reference Include="ProductiveRage.Immutable, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ProductiveRage.Immutable.3.0.0\lib\net40\ProductiveRage.Immutable.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEngine\GameEngine.csproj">
