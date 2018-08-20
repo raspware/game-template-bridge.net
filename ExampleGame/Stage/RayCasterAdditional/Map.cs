@@ -43,7 +43,7 @@ namespace Raspware.ExampleGame.Stage.RayCasterAdditional
 				Light = 2;
 		}
 
-		public Step[] Cast(Player point, double angle, double range)
+		public Origin[] Cast(Player point, double angle, double range)
 		{
 			var self = this;
 			var sin = Math.Sin(angle);
@@ -52,7 +52,7 @@ namespace Raspware.ExampleGame.Stage.RayCasterAdditional
 			return Ray(new Origin(point.X, point.Y, 0, 0), self, sin, cos, range);
 		}
 
-		private Step[] Ray(Origin origin, Map map, double sin, double cos, double range)
+		private Origin[] Ray(Origin origin, Map map, double sin, double cos, double range)
 		{
 			var stepX = new Step(sin, cos, origin.X, origin.Y, false);
 			var stepY = new Step(cos, sin, origin.Y, origin.Y, true);
@@ -60,8 +60,8 @@ namespace Raspware.ExampleGame.Stage.RayCasterAdditional
 				Inspect(map, sin, cos, stepX, 1, 0, origin.Distance, stepX.Y)
 			: Inspect(map, sin, cos, stepY, 0, 1, origin.Distance, stepY.X);
 
-			if (nextStep.Distance > range) return new[] { new Step( origin. };
-			return new[] { origin }.Concat(Ray(new Origin(nextStep.X, nextStep.Y, nextStep.Height, nextStep.Distance), map, sin, cos, range));
+			if (nextStep.Distance > range) return new[] { origin };
+			return new Origin[] { origin, new Origin(nextStep.X, nextStep.Y, nextStep.Height, nextStep.Distance) };
 		}
 
 		private Step Inspect(Map map, double sin, double cos, Step step, double shiftX, double shiftY, double distance, double offset)
@@ -74,6 +74,12 @@ namespace Raspware.ExampleGame.Stage.RayCasterAdditional
 			else step.Shading = sin < 0 ? 2 : 1;
 			step.Offset = offset - Math.Floor(offset);
 			return step;
+		}
+
+		public void Update(double seconds)
+		{
+			if (Light > 0) Light = Math.Max(Light - 10 * seconds, 0);
+			else if (Math.Random() * 5 < seconds) Light = 2;
 		}
 	}
 }

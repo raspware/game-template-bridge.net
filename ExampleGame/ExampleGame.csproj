@@ -45,6 +45,7 @@
     <Compile Include="Stage\RayCaster.cs" />
     <Compile Include="Stage\Level.cs" />
     <Compile Include="Stage\RayCasterAdditional\Bitmap.cs" />
+    <Compile Include="Stage\RayCasterAdditional\Camera.cs" />
     <Compile Include="Stage\RayCasterAdditional\Inspect.cs" />
     <Compile Include="Stage\RayCasterAdditional\Map.cs" />
     <Compile Include="Stage\RayCasterAdditional\Origin.cs" />
