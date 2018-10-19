@@ -8,22 +8,30 @@ namespace Raspware.GameEngine.Rendering
 		{
 			/// <summary>(80x45 or 45x45)</summary>
 			_xxsmall = 1,
+
 			/// <summary>(160x90 or 90x90)</summary>
 			_xsmall,
+
 			/// <summary>(320x180 or 180x180)</summary>
-			_small,
+			_small = 4,
+
 			/// <summary>(640x360 or 360x360)</summary>
-			_nHD,
+			_nHD = 8,
+
 			/// <summary>(1280x720 or 720x720)</summary>
-			_HD,
+			_HD = 16,
+
 			/// <summary>(1920x1080 or 1080x1080)</summary>
-			_FHD,
+			_FHD = 24,
+
 			/// <summary>(2560x1440 or 1440x1440)</summary>
-			_QHD,
+			_QHD = 32,
+
 			/// <summary>(3200x1800 or 1800x1800)</summary>
-			_QHDplus,
+			_QHDplus = 40,
+
 			/// <summary>(3820x2160 or 2160x2160)</summary>
-			_4K_UHD
+			_4K_UHD = 48
 		}
 
 		public enum OrientationTypes
