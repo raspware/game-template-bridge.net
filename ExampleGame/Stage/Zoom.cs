@@ -4,6 +4,7 @@ using ProductiveRage.Immutable;
 using Raspware.ExampleGame.Resources;
 using Raspware.GameEngine;
 using Raspware.GameEngine.Input;
+using Raspware.GameEngine.Rendering;
 
 namespace Raspware.ExampleGame.Stage
 {
@@ -52,8 +53,8 @@ namespace Raspware.ExampleGame.Stage
 				levelContext.FillStyle = "rgb(" + (brightness) + "," + (brightness) + "," + (brightness) + ")";
 				levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
 				levelContext.FillStyle = "white";
-				levelContext.Font = resolution.RenderAmount(10).ToString() + "px Consolas, monospace";
-				levelContext.FillText("Loading...", resolution.RenderAmount(4), resolution.RenderAmount(12));
+				levelContext.Font = resolution.MultiplyClamp(10) + "px Consolas, monospace";
+				levelContext.FillText("Loading...", resolution.MultiplyClamp(4), resolution.MultiplyClamp(12));
 				return;
 			}
 
@@ -72,29 +73,29 @@ namespace Raspware.ExampleGame.Stage
 
 			levelContext.FillStyle = "white";
 
-			levelContext.Font = resolution.RenderAmount(10).ToString() + "px Consolas, monospace";
-			levelContext.FillText("Playing Game", resolution.RenderAmount(4), resolution.RenderAmount(12));
+			levelContext.Font = resolution.MultiplyClamp(10) + "px Consolas, monospace";
+			levelContext.FillText("Playing Game", resolution.MultiplyClamp(4), resolution.MultiplyClamp(12));
 
-			levelContext.Font = resolution.RenderAmount(20).ToString() + "px Consolas, monospace";
-			levelContext.FillText("Score: " + data.Score, resolution.RenderAmount(4), resolution.RenderAmount(42));
+			levelContext.Font = resolution.MultiplyClamp(20)+ "px Consolas, monospace";
+			levelContext.FillText("Score: " + data.Score, resolution.MultiplyClamp(4), resolution.MultiplyClamp(42));
 
-			levelContext.Font = resolution.RenderAmount(4).ToString() + "px Consolas, monospace";
-			levelContext.FillText("Press [UP] to win :)", resolution.RenderAmount(115), resolution.RenderAmount(36.5));
+			levelContext.Font = resolution.MultiplyClamp(4) + "px Consolas, monospace";
+			levelContext.FillText("Press [UP] to win :)", resolution.MultiplyClamp(115), resolution.MultiplyClamp(36.5));
 
-			levelContext.Font = resolution.RenderAmount(20).ToString() + "px Consolas, monospace";
-			levelContext.FillText("Lives: " + data.Lives, resolution.RenderAmount(4), resolution.RenderAmount(72));
+			levelContext.Font = resolution.MultiplyClamp(20)+ "px Consolas, monospace";
+			levelContext.FillText("Lives: " + data.Lives, resolution.MultiplyClamp(4), resolution.MultiplyClamp(72));
 
-			levelContext.Font = resolution.RenderAmount(4).ToString() + "px Consolas, monospace";
-			levelContext.FillText("Press [DOWN] to lose :(", resolution.RenderAmount(107), resolution.RenderAmount(67));
+			levelContext.Font = resolution.MultiplyClamp(4) + "px Consolas, monospace";
+			levelContext.FillText("Press [DOWN] to lose :(", resolution.MultiplyClamp(107), resolution.MultiplyClamp(67));
 
-			levelContext.Font = resolution.RenderAmount(4).ToString() + "px Consolas, monospace";
-			levelContext.FillText($"'{_image.Width}x{_image.Height}'", resolution.RenderAmount(10), resolution.RenderAmount(20));
+			levelContext.Font = resolution.MultiplyClamp(4) + "px Consolas, monospace";
+			levelContext.FillText($"'{_image.Width}x{_image.Height}'", resolution.MultiplyClamp(10), resolution.MultiplyClamp(20));
 
-			levelContext.Font = resolution.RenderAmount(4).ToString() + "px Consolas, monospace";
-			levelContext.FillText($"'{_audio.Duration}'", resolution.RenderAmount(10), resolution.RenderAmount(25));
+			levelContext.Font = resolution.MultiplyClamp(4) + "px Consolas, monospace";
+			levelContext.FillText($"'{_audio.Duration}'", resolution.MultiplyClamp(10), resolution.MultiplyClamp(25));
 
-			levelContext.Font = resolution.RenderAmount(6).ToString() + "px Consolas, monospace";
-			levelContext.FillText(_message, resolution.RenderAmount(4), resolution.RenderAmount(96));
+			levelContext.Font = resolution.MultiplyClamp(6) + "px Consolas, monospace";
+			levelContext.FillText(_message, resolution.MultiplyClamp(4), resolution.MultiplyClamp(96));
 
 			if (!_renderedControls)
 			{

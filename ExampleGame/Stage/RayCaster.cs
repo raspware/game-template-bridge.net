@@ -26,9 +26,11 @@ namespace Raspware.ExampleGame.Stage
 			_core.Layers.Reset(NonNullList.Of(0));
 			_core.ActivateActions();
 
+			
+			_player = new Player(15.3, -1.2, Math.PI * 0.3);
+			_map = new Map(32);
+
 			/*var display = Document.getElementById('display');
-			var player = new Player(15.3, -1.2, Math.PI * 0.3);
-			var map = new Map(32);
 			var controls = new Controls();
 			var camera = new Camera(display, MOBILE ? 160 : 320, 0.8);
 			var loop = new GameLoop();

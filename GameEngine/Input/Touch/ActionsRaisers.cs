@@ -45,7 +45,7 @@ namespace Raspware.GameEngine.Input.Touch
 						new DynamicPoint(
 							resolution.GetEventX(layers.Wrapper, touch),
 							resolution.GetEventY(layers.Wrapper, touch),
-							resolution.RenderAmount(1)
+							resolution.Multiply(1)
 						)
 					);
 

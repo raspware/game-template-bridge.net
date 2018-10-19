@@ -76,6 +76,7 @@
     <Compile Include="Rendering\Layer.cs" />
     <Compile Include="Rendering\Layers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\ResolutionExtensions.cs" />
     <Compile Include="ResourcePool\JSONResources.cs" />
     <Compile Include="ResourcePool\Load.cs" />
   </ItemGroup>

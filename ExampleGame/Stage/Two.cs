@@ -2,6 +2,7 @@
 using ProductiveRage.Immutable;
 using Raspware.GameEngine;
 using Raspware.GameEngine.Input;
+using Raspware.GameEngine.Rendering;
 
 namespace Raspware.ExampleGame.Stage
 {
@@ -30,11 +31,11 @@ namespace Raspware.ExampleGame.Stage
 			levelContext.FillStyle = "blue";
 			levelContext.FillRect(0, 0, resolution.Width, resolution.Height);
 			levelContext.FillStyle = "white";
-			levelContext.Font = resolution.RenderAmount(10).ToString() + "px Consolas, monospace";
-			levelContext.FillText("Two", resolution.RenderAmount(4), resolution.RenderAmount(12));
+			levelContext.Font = resolution.MultiplyClamp(10) + "px Consolas, monospace";
+			levelContext.FillText("Two", resolution.MultiplyClamp(4), resolution.MultiplyClamp(12));
 
-			levelContext.FillText(_count.ToString(), resolution.RenderAmount(4), resolution.RenderAmount(20));
-
+			levelContext.FillText(_count.ToString(),resolution.MultiplyClamp(4), resolution.MultiplyClamp(20));
+			
 			if (!_renderedControls)
 			{
 				_core.Layers.Controls.Clear();

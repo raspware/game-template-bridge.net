@@ -121,7 +121,7 @@ namespace Raspware.GameEngine.Input.Mouse
 			return new Point(
 				_resolution.GetEventX(_wrapper, e),
 				_resolution.GetEventY(_wrapper, e),
-				_resolution.RenderAmount(7)
+				_resolution.Multiply(7)
 			);
 		}
 	}

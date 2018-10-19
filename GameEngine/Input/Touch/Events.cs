@@ -110,7 +110,7 @@ namespace Raspware.GameEngine.Input.Touch
 			return new Point(
 				_resolution.GetEventX(_wrapper, touch),
 				_resolution.GetEventY(_wrapper, touch),
-				_resolution.RenderAmount(7)
+				_resolution.Multiply(7)
 			);
 		}
 	}

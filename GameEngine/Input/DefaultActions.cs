@@ -19,16 +19,16 @@ namespace Raspware.GameEngine.Input
 			if (resolution == null)
 				throw new ArgumentNullException(nameof(resolution));
 
-			var spacer = resolution.RenderAmount(2);
-			var defaultRadius = resolution.RenderAmount(8);
-			var actionButtonsRadius = resolution.RenderAmount(16);
+			var spacer = resolution.Multiply(2);
+			var defaultRadius = resolution.Multiply(8);
+			var actionButtonsRadius = resolution.Multiply(16);
 
 			var down = new ActionConfiguration(
 				Down,
 				Events.KeyCodes._downArrow,
 				new Point(
-					spacer + (defaultRadius * 3),
-					resolution.Height - defaultRadius - spacer,
+					resolution.Clamp(spacer + (defaultRadius * 3)),
+					resolution.Clamp(resolution.Height - defaultRadius - spacer),
 					defaultRadius
 				),
 				resolution
@@ -39,7 +39,7 @@ namespace Raspware.GameEngine.Input
 				Events.KeyCodes._upArrow,
 				new Point(
 					down.Point.X,
-					down.Point.Y - (defaultRadius * 4),
+					resolution.Clamp(down.Point.Y - (defaultRadius * 4)),
 					defaultRadius
 				),
 				resolution
@@ -49,8 +49,8 @@ namespace Raspware.GameEngine.Input
 				Left,
 				Events.KeyCodes._leftArrow,
 				new Point(
-					defaultRadius + spacer,
-					down.Point.Y - (defaultRadius * 2),
+					resolution.Clamp(defaultRadius + spacer),
+					resolution.Clamp(down.Point.Y - (defaultRadius * 2)),
 					defaultRadius
 				),
 				resolution
@@ -60,7 +60,7 @@ namespace Raspware.GameEngine.Input
 				Right,
 				Events.KeyCodes._rightArrow,
 				new Point(
-					left.Point.X + (defaultRadius * 4),
+					resolution.Clamp(left.Point.X + (defaultRadius * 4)),
 					left.Point.Y,
 					defaultRadius
 				),
@@ -71,8 +71,8 @@ namespace Raspware.GameEngine.Input
 				Button1,
 				Events.KeyCodes._space,
 				new Point(
-						resolution.Width - actionButtonsRadius - spacer,
-					resolution.Height - actionButtonsRadius - spacer,
+					resolution.Clamp(resolution.Width - actionButtonsRadius - spacer),
+					resolution.Clamp(resolution.Height - actionButtonsRadius - spacer),
 					actionButtonsRadius
 				),
 				resolution
@@ -82,8 +82,8 @@ namespace Raspware.GameEngine.Input
 				Menu,
 				Events.KeyCodes._m,
 				new Point(
-					resolution.Width - defaultRadius - spacer,
-					defaultRadius + spacer,
+					resolution.Clamp(resolution.Width - defaultRadius - spacer),
+					resolution.Clamp(defaultRadius + spacer),
 					defaultRadius
 				),
 				resolution

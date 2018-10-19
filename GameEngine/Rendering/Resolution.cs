@@ -73,15 +73,5 @@ namespace Raspware.GameEngine.Rendering
 		public int Height { get; }
 		public double Amount { get; }
 		public OrientationTypes Orientation { get; }
-
-		public int RenderAmount(int multiply)
-		{
-			return RenderAmount((double)multiply);
-		}
-
-		public int RenderAmount(double multiply)
-		{
-			return Convert.ToInt32(Math.Floor(multiply * Amount));
-		}
 	}
 }

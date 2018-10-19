@@ -4,6 +4,7 @@ using ProductiveRage.Immutable;
 using Raspware.ExampleGame.Resources;
 using Raspware.GameEngine;
 using Raspware.GameEngine.Input;
+using Raspware.GameEngine.Rendering;
 
 namespace Raspware.ExampleGame.Stage
 {
@@ -43,8 +44,8 @@ namespace Raspware.ExampleGame.Stage
 				levelContext.FillStyle = "rgb(" + (brightness) + "," + (brightness) + "," + (brightness) + ")";
 				levelContext.FillRect(0, 0, resolution.Width, resolution.Height); // Clear
 				levelContext.FillStyle = "white";
-				levelContext.Font = resolution.RenderAmount(10).ToString() + "px Consolas, monospace";
-				levelContext.FillText("Loading...", resolution.RenderAmount(4), resolution.RenderAmount(12));
+				levelContext.Font = resolution.MultiplyClamp(10) + "px Consolas, monospace";
+				levelContext.FillText("Loading...", resolution.MultiplyClamp(4), resolution.MultiplyClamp(12));
 				return;
 			}
 
@@ -71,13 +72,6 @@ namespace Raspware.ExampleGame.Stage
 
 			if (!_resourcePool.Loaded)
 				return Id;
-
-			var up = _core.ActionEvents[DefaultActions.Up];
-			var down = _core.ActionEvents[DefaultActions.Down];
-			var left = _core.ActionEvents[DefaultActions.Left];
-			var right = _core.ActionEvents[DefaultActions.Right];
-			var button1 = _core.ActionEvents[DefaultActions.Button1];
-			var menu = _core.ActionEvents[DefaultActions.Menu];
 
 			data.TimePassed += ms;
 			_message = data.TimePassed.ToString();

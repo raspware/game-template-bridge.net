@@ -49,14 +49,14 @@ namespace Raspware.GameEngine.Input
 				throw new ArgumentNullException(nameof(context));
 
 			context.BeginPath();
-			context.Arc(Point.X, Point.Y, Point.Radius - _resolution.RenderAmount(0.5), 0, Math.PI * 2);
+			context.Arc(Point.X, Point.Y, Point.Radius - _resolution.Multiply(0.5), 0, Math.PI * 2);
 			context.StrokeStyle = "rgba(255,255,255,0.4)";
-			context.LineWidth = _resolution.RenderAmount(1);
+			context.LineWidth = _resolution.Multiply(1);
 			context.Stroke();
 			context.ClosePath();
 
 			context.BeginPath();
-			context.Arc(Point.X, Point.Y, Point.Radius - _resolution.RenderAmount(1.5), 0, Math.PI * 2);
+			context.Arc(Point.X, Point.Y, Point.Radius - _resolution.Multiply(1.5), 0, Math.PI * 2);
 			context.FillStyle = "rgba(255,255,255,0.4)";
 			context.Fill();
 			context.ClosePath();
