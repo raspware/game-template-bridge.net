@@ -15,7 +15,7 @@ namespace Raspware.ExampleGame
 				.SetResolution(resolution)
 				.SetActions(DefaultActions.GetActionConfigurations(resolution))
 				.SetStageFactory(StageFactory)
-				.Run(Id.RayCaster);
+				.Run(Id.One);
 		}
 
 		public static IStage StageFactory(ICore core, int id)
@@ -28,6 +28,10 @@ namespace Raspware.ExampleGame
 					return new Zoom(core);
 				case Id.RayCaster:
 					return new RayCaster(core);
+				case Id.One:
+					return new One(core);
+				case Id.Two:
+					return new Two(core);
 
 				default:
 					throw new ArgumentException(nameof(id));
