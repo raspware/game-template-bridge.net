@@ -43,11 +43,14 @@ namespace Raspware.GameEngine.Rendering
 			Wrapper.OnMouseUp = CancelDefault;
 			Wrapper.OnMouseWheel = CancelDefault;
 			Wrapper.OnContextMenu = CancelDefault;
+
+			Window.OnResize = ResizeWindow;
 		}
 
 		public void Resize(bool forceResize = false)
 		{
-			Global.SetTimeout(() => { // Placed this in a 'SetTimeout' just to make sure the event calling it has finished.
+			Global.SetTimeout(() =>
+			{ // Placed this in a 'SetTimeout' just to make sure the event calling it has finished.
 				if (Wrapper.ClientHeight == _lastHeight && Wrapper.ClientWidth == _lastWidth && !forceResize)
 					return;
 
@@ -89,6 +92,15 @@ namespace Raspware.GameEngine.Rendering
 			if (e == null)
 				throw new ArgumentNullException(nameof(e));
 			e.PreventDefault();
+		}
+
+		private void ResizeWindow(Event e)
+		{
+			if (e == null)
+				throw new ArgumentNullException(nameof(e));
+			e.PreventDefault();
+
+			Global.SetTimeout(() => { Resize(true); }, 100);
 		}
 	}
 }
