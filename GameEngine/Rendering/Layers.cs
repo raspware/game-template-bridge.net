@@ -45,18 +45,20 @@ namespace Raspware.GameEngine.Rendering
 			Wrapper.OnContextMenu = CancelDefault;
 		}
 
-		public void Resize()
+		public void Resize(bool forceResize = false)
 		{
-			if (Wrapper.ClientHeight == _lastHeight && Wrapper.ClientWidth == _lastWidth)
-				return;
+			Global.SetTimeout(() => { // Placed this in a 'SetTimeout' just to make sure the event calling it has finished.
+				if (Wrapper.ClientHeight == _lastHeight && Wrapper.ClientWidth == _lastWidth && !forceResize)
+					return;
 
-			foreach (var layer in _stageLayers)
-				layer.Resize();
+				foreach (var layer in _stageLayers)
+					layer.Resize();
 
-			Controls.Resize();
+				Controls.Resize();
 
-			_lastHeight = Wrapper.ClientHeight;
-			_lastWidth = Wrapper.ClientWidth;
+				_lastHeight = Wrapper.ClientHeight;
+				_lastWidth = Wrapper.ClientWidth;
+			});
 		}
 
 		public Layer GetStageLayer(int id)
@@ -78,6 +80,8 @@ namespace Raspware.GameEngine.Rendering
 
 			foreach (var layer in _stageLayers)
 				_stageWrapper.AppendChild(layer.CanvasElement);
+
+			Resize(true); // There is a chance that the window dimensions have not changed, so force the resize, otherwise it would exit early.
 		}
 
 		private static void CancelDefault(Event e)
