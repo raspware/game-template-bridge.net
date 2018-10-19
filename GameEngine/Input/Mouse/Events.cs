@@ -39,46 +39,53 @@ namespace Raspware.GameEngine.Input.Mouse
 			_isInputDown = true;
 
 			if (!_actionConfiguration.Point.Collision(GetCurrentMousePosition(e)))
+			{
+				if (_isButtonDown)
+				{
+					_isButtonDown = false;
+					_isButtonUp = true;
+				}
 				return;
+			}
 
-			_isButtonDown = true;
-			_isButtonUp = false;
+			// at this point we know we are on the button
+			if (!_isButtonDown)
+			{
+				_isButtonDown = true;
+				_isButtonUp = false;
+			}
 		}
 
 		public void InputUp(MouseEvent<HTMLCanvasElement> e)
 		{
 			_isInputDown = false;
 
+			if (_isButtonDown) {
+				_isButtonDown = false;
+				_isButtonUp = true;
+				_onceOnButtonDownLock = false;
+			}
+
 			if (_applyFullscreen)
 			{
 				_applyFullscreen = false;
 				EventsHelper.ApplyFullscreen(_wrapper);
 			}
-
-			if (!_actionConfiguration.Point.Collision(GetCurrentMousePosition(e)))
-				return;
-
-			_isButtonDown = false;
-			_isButtonUp = true;
-			_onceOnButtonDownLock = false;
-
-
 		}
 
 		public void InputMove(MouseEvent<HTMLCanvasElement> e)
 		{
-			if (_onceOnButtonDownLock && (!_isInputDown || !_actionConfiguration.Point.Collision(GetCurrentMousePosition(e))))
-				_onceOnButtonDownLock = false;
-
-			if (_isInputDown && _actionConfiguration.Point.Collision(GetCurrentMousePosition(e)))
-			{
-				_isButtonDown = true;
-				_isButtonUp = false;
-			}
-			else
+			if (_isButtonDown && !_actionConfiguration.Point.Collision(GetCurrentMousePosition(e)))
 			{
 				_isButtonDown = false;
 				_isButtonUp = true;
+				return;
+			}
+
+			if (!_isButtonDown && _actionConfiguration.Point.Collision(GetCurrentMousePosition(e)) && _isInputDown)
+			{
+				_isButtonDown = true;
+				_isButtonUp = false;
 			}
 		}
 
