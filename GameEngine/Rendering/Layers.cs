@@ -62,7 +62,7 @@ namespace Raspware.GameEngine.Rendering
 
 				_lastHeight = Wrapper.ClientHeight;
 				_lastWidth = Wrapper.ClientWidth;
-			});
+			}, 100);
 		}
 
 		public Layer GetStageLayer(int id)
