@@ -15,6 +15,7 @@ namespace Raspware.GameEngine.Input.Touch
 		private bool _isInputDown = false;
 		private bool _onceOnButtonDownLock = false;
 		private bool _applyFullscreen = false;
+		private int _identifier = -1;
 
 		public Events(Resolution resolution, IActionConfigurationTouch actionConfiguration, HTMLCanvasElement controls, HTMLDivElement wrapper)
 		{
@@ -25,6 +26,9 @@ namespace Raspware.GameEngine.Input.Touch
 
 		public void InputDown(Bridge.Html5.Touch touch)
 		{
+			if (_identifier != -1)
+				return;
+
 			_isInputDown = true;
 
 			if (!_actionConfiguration.Point.Collision(GetCurrentTouchPosition(touch)))
@@ -40,6 +44,7 @@ namespace Raspware.GameEngine.Input.Touch
 			// at this point we know we are on the button
 			if (!_isButtonDown)
 			{
+				_identifier = touch.Identifier;
 				_isButtonDown = true;
 				_isButtonUp = false;
 			}
@@ -47,6 +52,9 @@ namespace Raspware.GameEngine.Input.Touch
 
 		public void InputUp(Bridge.Html5.Touch touch)
 		{
+			if (_identifier == -1 || _identifier != touch.Identifier)
+				return;
+
 			_isInputDown = false;
 
 			if (_isButtonDown)
@@ -54,6 +62,7 @@ namespace Raspware.GameEngine.Input.Touch
 				_isButtonDown = false;
 				_isButtonUp = true;
 				_onceOnButtonDownLock = false;
+				_identifier = -1;
 			}
 
 			if (_applyFullscreen)
@@ -65,10 +74,14 @@ namespace Raspware.GameEngine.Input.Touch
 
 		public void InputMove(Bridge.Html5.Touch touch)
 		{
+			if (_identifier == -1 || _identifier != touch.Identifier)
+				return;
+
 			if (_isButtonDown && !_actionConfiguration.Point.Collision(GetCurrentTouchPosition(touch)))
 			{
 				_isButtonDown = false;
 				_isButtonUp = true;
+				_identifier = -1;
 				return;
 			}
 
@@ -76,6 +89,7 @@ namespace Raspware.GameEngine.Input.Touch
 			{
 				_isButtonDown = true;
 				_isButtonUp = false;
+				_identifier = touch.Identifier;
 			}
 		}
 		public bool PressedDown()

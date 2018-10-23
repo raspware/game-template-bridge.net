@@ -8,5 +8,7 @@
 
 		public const int One = 5;
 		public const int Two = 6;
+
+		public const int Touch = 7;
 	}
 }

@@ -15,7 +15,7 @@ namespace Raspware.ExampleGame
 				.SetResolution(resolution)
 				.SetActions(DefaultActions.GetActionConfigurations(resolution))
 				.SetStageFactory(StageFactory)
-				.Run(Id.One);
+				.Run(Id.Touch);
 		}
 
 		public static IStage StageFactory(ICore core, int id)
@@ -32,6 +32,8 @@ namespace Raspware.ExampleGame
 					return new One(core);
 				case Id.Two:
 					return new Two(core);
+				case Id.Touch:
+					return new Touch(core);
 
 				default:
 					throw new ArgumentException(nameof(id));
