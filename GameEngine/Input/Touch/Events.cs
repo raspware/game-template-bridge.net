@@ -74,10 +74,7 @@ namespace Raspware.GameEngine.Input.Touch
 
 		public void InputMove(Bridge.Html5.Touch touch)
 		{
-			if (_identifier == -1 || _identifier != touch.Identifier)
-				return;
-
-			if (_isButtonDown && !_actionConfiguration.Point.Collision(GetCurrentTouchPosition(touch)))
+			if (_isButtonDown && !_actionConfiguration.Point.Collision(GetCurrentTouchPosition(touch)) && _identifier == touch.Identifier)
 			{
 				_isButtonDown = false;
 				_isButtonUp = true;
@@ -85,7 +82,7 @@ namespace Raspware.GameEngine.Input.Touch
 				return;
 			}
 
-			if (!_isButtonDown && _actionConfiguration.Point.Collision(GetCurrentTouchPosition(touch)) && _isInputDown)
+			if (!_isButtonDown && _actionConfiguration.Point.Collision(GetCurrentTouchPosition(touch)))
 			{
 				_isButtonDown = true;
 				_isButtonUp = false;
@@ -124,7 +121,7 @@ namespace Raspware.GameEngine.Input.Touch
 			return new Point(
 				_resolution.GetEventX(_wrapper, touch),
 				_resolution.GetEventY(_wrapper, touch),
-				_resolution.Multiply(7)
+				_resolution.Multiply(6)
 			);
 		}
 	}
