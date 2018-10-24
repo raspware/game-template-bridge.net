@@ -46,6 +46,7 @@ namespace Raspware.GameEngine.Rendering
 
 			Window.AddEventListener(EventType.Resize, ResizeLayer);
 			Window.AddEventListener(EventType.Load, ResizeLayer);
+			Window.AddEventListener(EventType.Focus, ResizeLayer);
 		}
 
 		public void Resize(bool forceResize = false)
