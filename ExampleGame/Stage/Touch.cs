@@ -39,11 +39,23 @@ namespace Raspware.ExampleGame.Stage
 				_renderedControls = true;
 			}
 
+			if (_core.ActionEvents[DefaultActions.Menu].PressedDown())
+				levelContext.FillText("MENU", resolution.MultiplyClamp(70), resolution.MultiplyClamp(24));
+
+			if (_core.ActionEvents[DefaultActions.Up].PressedDown())
+				levelContext.FillText("UP", resolution.MultiplyClamp(20), resolution.MultiplyClamp(24));
+
+			if (_core.ActionEvents[DefaultActions.Down].PressedDown())
+				levelContext.FillText("DOWN", resolution.MultiplyClamp(20), resolution.MultiplyClamp(48));
+
+			if (_core.ActionEvents[DefaultActions.Left].PressedDown())
+				levelContext.FillText("LEFT", resolution.MultiplyClamp(4), resolution.MultiplyClamp(36));
+
 			if (_core.ActionEvents[DefaultActions.Right].PressedDown())
-				levelContext.FillText("RIGHT", resolution.MultiplyClamp(4), resolution.MultiplyClamp(24));
+				levelContext.FillText("RIGHT", resolution.MultiplyClamp(30), resolution.MultiplyClamp(36));
 
 			if (_core.ActionEvents[DefaultActions.Button1].PressedDown())
-				levelContext.FillText("BUTTON1", resolution.MultiplyClamp(4), resolution.MultiplyClamp(36));
+				levelContext.FillText("BUTTON1", resolution.MultiplyClamp(70), resolution.MultiplyClamp(36));
 		}
 
 		public int Update(int ms)
