@@ -8,7 +8,7 @@ namespace Raspware.GameEngine.Input.Touch
 {
 	public sealed class ActionsRaisers : IActionsRaisers
 	{
-		private Dictionary<int, DynamicPoint> _currentTouches = new Dictionary<int, DynamicPoint>();
+		private Dictionary<int, bool> _currentToucheIdentifiers = new Dictionary<int, bool>();
 		public Dictionary<int, IEvents> Events { get; }
 		public ActionsRaisers(Resolution resolution, Layers layers, NonNullList<IActionConfigurationTouch> actionConfigurations)
 		{
@@ -37,17 +37,10 @@ namespace Raspware.GameEngine.Input.Touch
 				var touches = e.ChangedTouches;
 				foreach (var touch in touches)
 				{
-					if (_currentTouches.ContainsKey(touch.Identifier))
+					if (_currentToucheIdentifiers.ContainsKey(touch.Identifier))
 						continue;
 
-					_currentTouches.Add(
-						touch.Identifier,
-						new DynamicPoint(
-							resolution.GetEventX(layers.Wrapper, touch),
-							resolution.GetEventY(layers.Wrapper, touch),
-							resolution.Multiply(1)
-						)
-					);
+					_currentToucheIdentifiers.Add(touch.Identifier, true);
 
 					InputTouchDown(touch);
 				}
@@ -58,14 +51,8 @@ namespace Raspware.GameEngine.Input.Touch
 				var touches = e.ChangedTouches;
 				foreach (var touch in touches)
 				{
-					if (!_currentTouches.ContainsKey(touch.Identifier))
+					if (!_currentToucheIdentifiers.ContainsKey(touch.Identifier))
 						continue;
-
-					_currentTouches.Get(touch.Identifier)
-					.Reset(
-						resolution.GetEventX(layers.Wrapper, touch),
-						resolution.GetEventY(layers.Wrapper, touch)
-					);
 
 					InputTouchMove(touch);
 				}
@@ -98,8 +85,8 @@ namespace Raspware.GameEngine.Input.Touch
 			var touches = touchEvent.ChangedTouches;
 			foreach (var touch in touches)
 			{
-				if (_currentTouches.ContainsKey(touch.Identifier))
-					_currentTouches.Remove(touch.Identifier);
+				if (_currentToucheIdentifiers.ContainsKey(touch.Identifier))
+					_currentToucheIdentifiers.Remove(touch.Identifier);
 
 				InputTouchUp(touch);
 			}
