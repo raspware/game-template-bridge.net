@@ -9,6 +9,7 @@ namespace Raspware.ExampleGame.Stage
 	public sealed class Touch : IStage
 	{
 		private ICore _core { get; }
+		private TextBox _textBox;
 		public int Id => Stage.Id.Touch;
 		private bool _renderedControls { get; set; }
 
@@ -20,6 +21,8 @@ namespace Raspware.ExampleGame.Stage
 			_core = core;
 			_core.Layers.Reset(NonNullList.Of(0));
 			_core.Layers.Controls.Clear();
+
+			_textBox = new TextBox("Touch", _core.Resolution.MultiplyClamp(10), _core.Resolution);
 		}
 
 		public void Draw()
@@ -29,9 +32,9 @@ namespace Raspware.ExampleGame.Stage
 
 			levelContext.FillStyle = "orange";
 			levelContext.FillRect(0, 0, resolution.Width, resolution.Height);
-			levelContext.FillStyle = "white";
-			levelContext.Font = resolution.MultiplyClamp(10).ToString() + "px Consolas, monospace";
-			levelContext.FillText("Touch", resolution.MultiplyClamp(4), resolution.MultiplyClamp(12));
+
+			_textBox.UpdatePosition(resolution.MultiplyClamp(4), resolution.MultiplyClamp(4));
+			_textBox.Render(levelContext);
 
 			if (!_renderedControls)
 			{
