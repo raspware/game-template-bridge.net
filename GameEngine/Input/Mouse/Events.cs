@@ -1,6 +1,7 @@
 ﻿using System;
 using Bridge.Html5;
 using Raspware.GameEngine.Rendering;
+using Raspware.GameEngine.Shape;
 
 namespace Raspware.GameEngine.Input.Mouse
 {
@@ -38,7 +39,7 @@ namespace Raspware.GameEngine.Input.Mouse
 		{
 			_isInputDown = true;
 
-			if (!_actionConfiguration.Point.Collision(GetCurrentMousePosition(e)))
+			if (!_actionConfiguration.Circle.Collision(GetCurrentMousePosition(e)))
 			{
 				if (_isButtonDown)
 				{
@@ -75,14 +76,14 @@ namespace Raspware.GameEngine.Input.Mouse
 
 		public void InputMove(MouseEvent<HTMLCanvasElement> e)
 		{
-			if (_isButtonDown && !_actionConfiguration.Point.Collision(GetCurrentMousePosition(e)))
+			if (_isButtonDown && !_actionConfiguration.Circle.Collision(GetCurrentMousePosition(e)))
 			{
 				_isButtonDown = false;
 				_isButtonUp = true;
 				return;
 			}
 
-			if (!_isButtonDown && _actionConfiguration.Point.Collision(GetCurrentMousePosition(e)) && _isInputDown)
+			if (!_isButtonDown && _actionConfiguration.Circle.Collision(GetCurrentMousePosition(e)) && _isInputDown)
 			{
 				_isButtonDown = true;
 				_isButtonUp = false;
@@ -116,9 +117,9 @@ namespace Raspware.GameEngine.Input.Mouse
 
 		public void ApplyFullscreenOnPressUp() => _applyFullscreen = true;
 
-		private Point GetCurrentMousePosition(MouseEvent<HTMLCanvasElement> e)
+		private Circle GetCurrentMousePosition(MouseEvent<HTMLCanvasElement> e)
 		{
-			return new Point(
+			return new Circle(
 				_resolution.GetEventX(_wrapper, e),
 				_resolution.GetEventY(_wrapper, e),
 				_resolution.Multiply(7)

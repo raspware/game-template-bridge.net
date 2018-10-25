@@ -1,15 +1,16 @@
 ﻿using System;
+using Raspware.GameEngine.Shape;
 
 namespace Raspware.GameEngine.Input
 {
 	public static class CollisionHelper
 	{
-		public static bool Collision(this IPoint point1, IPoint point2)
+		public static bool Collision(this Circle circle1, Circle circle2)
 		{
-			var dx = point1.X - point2.X;
-			var dy = point1.Y - point2.Y;
+			var dx = circle1.X - circle2.X;
+			var dy = circle1.Y - circle2.Y;
 			var distance = Math.Sqrt(dx * dx + dy * dy);
-			return distance < point1.Radius + point2.Radius;
+			return distance < circle1.Radius + circle2.Radius;
 		}
 	}
 }

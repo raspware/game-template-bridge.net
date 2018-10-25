@@ -2,6 +2,7 @@
 using ProductiveRage.Immutable;
 using Raspware.GameEngine.Input.Keyboard;
 using Raspware.GameEngine.Rendering;
+using Raspware.GameEngine.Shape;
 
 namespace Raspware.GameEngine.Input
 {
@@ -26,7 +27,7 @@ namespace Raspware.GameEngine.Input
 			var down = new ActionConfiguration(
 				Down,
 				Events.KeyCodes._downArrow,
-				new Point(
+				new Circle(
 					resolution.Clamp(spacer + (defaultRadius * 3)),
 					resolution.Clamp(resolution.Height - defaultRadius - spacer),
 					defaultRadius
@@ -37,9 +38,9 @@ namespace Raspware.GameEngine.Input
 			var up = new ActionConfiguration(
 				Up,
 				Events.KeyCodes._upArrow,
-				new Point(
-					down.Point.X,
-					resolution.Clamp(down.Point.Y - (defaultRadius * 4)),
+				new Circle(
+					down.Circle.X,
+					resolution.Clamp(down.Circle.Y - (defaultRadius * 4)),
 					defaultRadius
 				),
 				resolution
@@ -48,9 +49,9 @@ namespace Raspware.GameEngine.Input
 			var left = new ActionConfiguration(
 				Left,
 				Events.KeyCodes._leftArrow,
-				new Point(
+				new Circle(
 					resolution.Clamp(defaultRadius + spacer),
-					resolution.Clamp(down.Point.Y - (defaultRadius * 2)),
+					resolution.Clamp(down.Circle.Y - (defaultRadius * 2)),
 					defaultRadius
 				),
 				resolution
@@ -59,9 +60,9 @@ namespace Raspware.GameEngine.Input
 			var right = new ActionConfiguration(
 				Right,
 				Events.KeyCodes._rightArrow,
-				new Point(
-					resolution.Clamp(left.Point.X + (defaultRadius * 4)),
-					left.Point.Y,
+				new Circle(
+					resolution.Clamp(left.Circle.X + (defaultRadius * 4)),
+					left.Circle.Y,
 					defaultRadius
 				),
 				resolution
@@ -70,7 +71,7 @@ namespace Raspware.GameEngine.Input
 			var button1 = new ActionConfiguration(
 				Button1,
 				Events.KeyCodes._space,
-				new Point(
+				new Circle(
 					resolution.Clamp(resolution.Width - actionButtonsRadius - spacer),
 					resolution.Clamp(resolution.Height - actionButtonsRadius - spacer),
 					actionButtonsRadius
@@ -81,7 +82,7 @@ namespace Raspware.GameEngine.Input
 			var menu = new ActionConfiguration(
 				Menu,
 				Events.KeyCodes._m,
-				new Point(
+				new Circle(
 					resolution.Clamp(resolution.Width - defaultRadius - spacer),
 					resolution.Clamp(defaultRadius + spacer),
 					defaultRadius

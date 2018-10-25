@@ -6,7 +6,7 @@
 		public double Y { get; private set; }
 		public double Radius { get; private set; }
 
-		public Circle(int x, int y, double radius)
+		public Circle(double x, double y, double radius)
 		{
 			X = x;
 			Y = y;

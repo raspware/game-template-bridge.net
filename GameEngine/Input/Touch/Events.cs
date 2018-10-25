@@ -1,5 +1,6 @@
 ﻿using Bridge.Html5;
 using Raspware.GameEngine.Rendering;
+using Raspware.GameEngine.Shape;
 
 namespace Raspware.GameEngine.Input.Touch
 {
@@ -31,7 +32,7 @@ namespace Raspware.GameEngine.Input.Touch
 
 			_isInputDown = true;
 
-			if (!_actionConfiguration.Point.Collision(GetCurrentTouchPosition(touch)))
+			if (!_actionConfiguration.Circle.Collision(GetCurrentTouchPosition(touch)))
 			{
 				if (_isButtonDown)
 				{
@@ -74,7 +75,7 @@ namespace Raspware.GameEngine.Input.Touch
 
 		public void InputMove(Bridge.Html5.Touch touch)
 		{
-			if (_isButtonDown && !_actionConfiguration.Point.Collision(GetCurrentTouchPosition(touch)) && _identifier == touch.Identifier)
+			if (_isButtonDown && !_actionConfiguration.Circle.Collision(GetCurrentTouchPosition(touch)) && _identifier == touch.Identifier)
 			{
 				_isButtonDown = false;
 				_isButtonUp = true;
@@ -82,7 +83,7 @@ namespace Raspware.GameEngine.Input.Touch
 				return;
 			}
 
-			if (!_isButtonDown && _actionConfiguration.Point.Collision(GetCurrentTouchPosition(touch)))
+			if (!_isButtonDown && _actionConfiguration.Circle.Collision(GetCurrentTouchPosition(touch)))
 			{
 				_isButtonDown = true;
 				_isButtonUp = false;
@@ -116,9 +117,9 @@ namespace Raspware.GameEngine.Input.Touch
 
 		public void ApplyFullscreenOnPressUp() => _applyFullscreen = true;
 
-		private Point GetCurrentTouchPosition(Bridge.Html5.Touch touch)
+		private Circle GetCurrentTouchPosition(Bridge.Html5.Touch touch)
 		{
-			return new Point(
+			return new Circle(
 				_resolution.GetEventX(_wrapper, touch),
 				_resolution.GetEventY(_wrapper, touch),
 				_resolution.Multiply(6)

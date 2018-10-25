@@ -1,8 +1,10 @@
-﻿namespace Raspware.GameEngine.Input.Mouse
+﻿using Raspware.GameEngine.Shape;
+
+namespace Raspware.GameEngine.Input.Mouse
 {
 	public interface IActionConfigurationMouse
 	{
 		int Id { get; }
-		Point Point { get; }
+		Circle Circle { get; }
 	}
 }

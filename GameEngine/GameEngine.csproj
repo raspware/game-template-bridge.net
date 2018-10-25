@@ -56,9 +56,7 @@
     <Compile Include="Input\DefaultActions.cs" />
     <Compile Include="Input\ActionConfiguration.cs" />
     <Compile Include="Input\IActionRaisers.cs" />
-    <Compile Include="Input\IPoint.cs" />
     <Compile Include="Input\Mouse\IActionConfigurationMouse.cs" />
-    <Compile Include="Input\Point.cs" />
     <Compile Include="Input\Touch\IActionConfigurationTouch.cs" />
     <Compile Include="Rendering\Position.cs" />
     <Compile Include="Input\Touch\ActionsRaisers.cs" />
