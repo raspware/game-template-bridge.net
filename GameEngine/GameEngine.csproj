@@ -78,6 +78,9 @@
     <Compile Include="Rendering\ResolutionExtensions.cs" />
     <Compile Include="ResourcePool\JSONResources.cs" />
     <Compile Include="ResourcePool\Load.cs" />
+    <Compile Include="Shape\Box.cs" />
+    <Compile Include="Shape\Circle.cs" />
+    <Compile Include="Shape\IShape.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bridge.json" />
