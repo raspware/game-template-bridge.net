@@ -51,7 +51,6 @@
     <Compile Include="Input\IEventsFullscreen.cs" />
     <Compile Include="Input\Keyboard\IActionConfigurationKeyboard.cs" />
     <Compile Include="Input\Keyboard\Keys.cs" />
-    <Compile Include="Input\CollisionHelper.cs" />
     <Compile Include="Input\ActionHelper.cs" />
     <Compile Include="Input\DefaultActions.cs" />
     <Compile Include="Input\ActionConfiguration.cs" />
@@ -79,6 +78,7 @@
     <Compile Include="Shape\Box.cs" />
     <Compile Include="Shape\Circle.cs" />
     <Compile Include="Shape\IShape.cs" />
+    <Compile Include="Shape\ShapeHelper.cs" />
     <Compile Include="TextBox.cs" />
   </ItemGroup>
   <ItemGroup>

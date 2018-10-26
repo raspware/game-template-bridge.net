@@ -61,7 +61,8 @@ namespace Raspware.GameEngine.Input.Mouse
 		{
 			_isInputDown = false;
 
-			if (_isButtonDown) {
+			if (_isButtonDown)
+			{
 				_isButtonDown = false;
 				_isButtonUp = true;
 				_onceOnButtonDownLock = false;

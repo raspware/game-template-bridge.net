@@ -37,7 +37,7 @@ namespace Raspware.GameEngine.Input.Keyboard
 		private void InputKeyUp(KeyboardEvent e)
 		{
 			foreach (var key in Events.Keys)
-				Events[key].As<Events>().InputUp(e);			
+				Events[key].As<Events>().InputUp(e);
 		}
 	}
 }

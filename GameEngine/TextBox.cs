@@ -64,7 +64,7 @@ namespace Raspware.GameEngine
 
 			context.FillStyle = "black";
 			context.Font = (size * 1.05) + "px Consolas, monospace";
-			context.FillText(letter.ToString(),  _resolution.Clamp(x + (size * 0.0045)), _resolution.Clamp(y + (size * 0.775)));
+			context.FillText(letter.ToString(), _resolution.Clamp(x + (size * 0.0045)), _resolution.Clamp(y + (size * 0.775)));
 		}
 
 		public void Render(CanvasRenderingContext2D context)

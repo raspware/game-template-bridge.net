@@ -14,7 +14,7 @@ namespace Raspware.GameEngine.Rendering
 			return value * resolution.Amount;
 		}
 
-		public static double Multiply(this Resolution resolution,  int value)
+		public static double Multiply(this Resolution resolution, int value)
 		{
 			return resolution.Multiply((double)value);
 		}

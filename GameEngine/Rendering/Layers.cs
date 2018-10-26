@@ -102,7 +102,8 @@ namespace Raspware.GameEngine.Rendering
 				throw new ArgumentNullException(nameof(e));
 			e.PreventDefault();
 
-			Global.SetTimeout(() => {
+			Global.SetTimeout(() =>
+			{
 				Resize(true);
 			});
 		}

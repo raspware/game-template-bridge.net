@@ -70,18 +70,18 @@ namespace Raspware.GameEngine.Rendering
 			{
 				_width = _wrapper.ClientWidth;
 				_height = _wrapper.ClientWidth;
-				_top = Math.Floor(((double)_wrapper.ClientHeight - _height) * 0.5);
+				_top = Math.Floor((_wrapper.ClientHeight - _height) * 0.5);
 				return;
 			}
 
 			_width = _wrapper.ClientHeight;
 			_height = _wrapper.ClientHeight;
-			_left = Math.Floor(((double)_wrapper.ClientWidth - _width) * 0.5);
+			_left = Math.Floor((_wrapper.ClientWidth - _width) * 0.5);
 		}
 
 		private void ResizeLandscape()
 		{
-			var ratioPercent = ((double)_wrapper.ClientHeight / (double)_wrapper.ClientWidth); // target = 0.6
+			var ratioPercent = (_wrapper.ClientHeight / (double)_wrapper.ClientWidth); // target = 0.6
 			if (ratioPercent > 0.55 && ratioPercent < 0.65) // This give a little bit of room
 			{
 				_width = _wrapper.ClientWidth;
@@ -91,19 +91,19 @@ namespace Raspware.GameEngine.Rendering
 			{
 				_width = Math.Floor(_wrapper.ClientHeight * 1.6);
 				_height = _wrapper.ClientHeight;
-				_left = Math.Floor(((double)_wrapper.ClientWidth - _width) * 0.5);
+				_left = Math.Floor((_wrapper.ClientWidth - _width) * 0.5);
 			}
 			else // Too tall
 			{
 				_width = _wrapper.ClientWidth;
 				_height = Math.Floor(_wrapper.ClientWidth * 0.6);
-				_top = Math.Floor(((double)_wrapper.ClientHeight - _height) * 0.5);
+				_top = Math.Floor((_wrapper.ClientHeight - _height) * 0.5);
 			}
 		}
 
 		private void ResizePortrait()
 		{
-			var ratioPercent = ((double)_wrapper.ClientWidth / (double)_wrapper.ClientHeight); // target = 0.6
+			var ratioPercent = (_wrapper.ClientWidth / (double)_wrapper.ClientHeight); // target = 0.6
 			if (ratioPercent > 0.55 && ratioPercent < 0.65) // This give a little bit of room
 			{
 				_width = _wrapper.ClientWidth;
@@ -113,13 +113,13 @@ namespace Raspware.GameEngine.Rendering
 			{
 				_height = _wrapper.ClientHeight;
 				_width = Math.Floor(_wrapper.ClientHeight * 0.6);
-				_left = Math.Floor(((double)_wrapper.ClientWidth - _width) * 0.5);
+				_left = Math.Floor((_wrapper.ClientWidth - _width) * 0.5);
 			}
 			else // Too tall
 			{
 				_height = Math.Floor(_wrapper.ClientWidth * 1.6);
 				_width = _wrapper.ClientWidth;
-				_top = Math.Floor(((double)_wrapper.ClientHeight - _height) * 0.5);
+				_top = Math.Floor((_wrapper.ClientHeight - _height) * 0.5);
 			}
 		}
 	}
