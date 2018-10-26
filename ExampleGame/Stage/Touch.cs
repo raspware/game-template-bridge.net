@@ -23,24 +23,27 @@ namespace Raspware.ExampleGame.Stage
 			_core.Layers.Controls.Clear();
 
 			_textBox = new TextBox("Touch", _core.Resolution.MultiplyClamp(10), _core.Resolution);
+			_textBox.UpdatePosition(_core.Resolution.MultiplyClamp(4), _core.Resolution.MultiplyClamp(4));
 		}
 
 		public void Draw()
 		{
+			if (!_renderedControls)
+			{
+				_core.RenderActions();
+				_renderedControls = true;
+			}
+
 			var levelContext = _core.Layers.GetStageLayer(0).GetContext();
 			var resolution = _core.Resolution;
 
 			levelContext.FillStyle = "orange";
 			levelContext.FillRect(0, 0, resolution.Width, resolution.Height);
 
-			_textBox.UpdatePosition(resolution.MultiplyClamp(4), resolution.MultiplyClamp(4));
 			_textBox.Render(levelContext);
 
-			if (!_renderedControls)
-			{
-				_core.RenderActions();
-				_renderedControls = true;
-			}
+			levelContext.FillStyle = "black";
+			levelContext.Font = resolution.MultiplyClamp(10) + "px Consolas";
 
 			if (_core.ActionEvents[DefaultActions.Menu].PressedDown())
 				levelContext.FillText("MENU", resolution.MultiplyClamp(70), resolution.MultiplyClamp(24));
