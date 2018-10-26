@@ -71,7 +71,7 @@ namespace Raspware.GameEngine.Input.Mouse
 			if (_applyFullscreen)
 			{
 				_applyFullscreen = false;
-				EventsHelper.ApplyFullscreen(_wrapper);
+				EventsExtensions.ApplyFullscreen(_wrapper);
 			}
 		}
 

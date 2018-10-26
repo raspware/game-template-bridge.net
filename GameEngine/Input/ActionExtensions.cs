@@ -3,7 +3,7 @@ using ProductiveRage.Immutable;
 
 namespace Raspware.GameEngine.Input
 {
-	public static class ActionHelper
+	public static class ActionExtensions
 	{
 		public static void RenderAction(this ICore core, int actionId)
 		{

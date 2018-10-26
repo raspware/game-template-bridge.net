@@ -2,7 +2,7 @@
 
 namespace Raspware.GameEngine.Shape
 {
-	public static class ShapeHelper
+	public static class ShapeExtensions
 	{
 		public static bool Collision(this Circle circle, Circle otherCircle)
 		{
@@ -23,15 +23,15 @@ namespace Raspware.GameEngine.Shape
 
 		public static bool Collision(this Box box, Circle circle)
 		{
-			return boxToCircleCollision(box, circle);
+			return _BoxToCircleCollision(box, circle);
 		}
 
 		public static bool Collision(this Circle circle, Box box)
 		{
-			return boxToCircleCollision(box, circle);
+			return _BoxToCircleCollision(box, circle);
 		}
 
-		private static bool boxToCircleCollision(Box box, Circle circle)
+		private static bool _BoxToCircleCollision(Box box, Circle circle)
 		{
 			var DeltaX = circle.X - Math.Max(box.X, Math.Min(circle.X, box.X + box.Width));
 			var DeltaY = circle.Y - Math.Max(box.Y, Math.Min(circle.Y, box.Y + box.Height));

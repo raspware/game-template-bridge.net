@@ -132,10 +132,10 @@ namespace Raspware.ExampleGame.Stage
 				button1.As<IEventsFullscreen>().ApplyFullscreenOnPressUp();
 
 			if (down.OnceOnPressDown())
-				Console.WriteLine(EventsHelper.CurrentlyFullscreen());
+				Console.WriteLine(EventsExtensions.CurrentlyFullscreen());
 
 			if (left.OnceOnPressDown())
-				EventsHelper.ExitFullscreen();
+				EventsExtensions.ExitFullscreen();
 
 			return Id;
 		}

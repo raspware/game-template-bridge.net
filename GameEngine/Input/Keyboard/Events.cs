@@ -44,7 +44,7 @@ namespace Raspware.GameEngine.Input.Keyboard
 			if (_applyFullscreen)
 			{
 				_applyFullscreen = false;
-				EventsHelper.ApplyFullscreen(_wrapper);
+				EventsExtensions.ApplyFullscreen(_wrapper);
 			}
 		}
 

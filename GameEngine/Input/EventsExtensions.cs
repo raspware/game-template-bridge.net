@@ -3,7 +3,7 @@ using Bridge.Html5;
 
 namespace Raspware.GameEngine.Input
 {
-	public static class EventsHelper
+	public static class EventsExtensions
 	{
 		public static bool CurrentlyFullscreen()
 		{

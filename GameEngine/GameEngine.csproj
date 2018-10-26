@@ -45,19 +45,18 @@
     <Compile Include="Game\Core.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Game\ICoreInterfaces.cs" />
-    <Compile Include="Input\EventsHelper.cs" />
+    <Compile Include="Input\EventsExtensions.cs" />
     <Compile Include="Input\IActionConfiguration.cs" />
     <Compile Include="Input\IActionConfigurationRenderer.cs" />
     <Compile Include="Input\IEventsFullscreen.cs" />
     <Compile Include="Input\Keyboard\IActionConfigurationKeyboard.cs" />
     <Compile Include="Input\Keyboard\Keys.cs" />
-    <Compile Include="Input\ActionHelper.cs" />
+    <Compile Include="Input\ActionExtensions.cs" />
     <Compile Include="Input\DefaultActions.cs" />
     <Compile Include="Input\ActionConfiguration.cs" />
     <Compile Include="Input\IActionRaisers.cs" />
     <Compile Include="Input\Mouse\IActionConfigurationMouse.cs" />
     <Compile Include="Input\Touch\IActionConfigurationTouch.cs" />
-    <Compile Include="Rendering\Position.cs" />
     <Compile Include="Input\Touch\ActionsRaisers.cs" />
     <Compile Include="Input\Touch\Events.cs" />
     <Compile Include="IStage.cs" />
@@ -78,7 +77,7 @@
     <Compile Include="Shape\Box.cs" />
     <Compile Include="Shape\Circle.cs" />
     <Compile Include="Shape\IShape.cs" />
-    <Compile Include="Shape\ShapeHelper.cs" />
+    <Compile Include="Shape\ShapeExtensions.cs" />
     <Compile Include="TextBox.cs" />
   </ItemGroup>
   <ItemGroup>
