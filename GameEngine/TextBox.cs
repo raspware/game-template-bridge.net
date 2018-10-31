@@ -9,14 +9,20 @@ namespace Raspware.GameEngine
 	public sealed class TextBox
 	{
 		private HTMLImageElement _image;
+		private NonBlankTrimmedString _fillStyle { get; }
 		private Resolution _resolution;
 		public double X { private set; get; }
 		public double Y { private set; get; }
 		public double Width { private set; get; }
 		public double Height { private set; get; }
-		public NonBlankTrimmedString FillStyle { private set; get; }
+		
 		public TextBox(string message, double size, Resolution resolution, NonBlankTrimmedString fillStyle = null)
 		{
+			if (fillStyle != null)
+				_fillStyle = fillStyle;
+			else
+				_fillStyle = new NonBlankTrimmedString("#000");
+
 			_image = new HTMLImageElement()
 			{
 				Src = CreateImage(message, size),
@@ -28,11 +34,6 @@ namespace Raspware.GameEngine
 			};
 
 			_resolution = resolution;
-
-			if (fillStyle != null)
-				FillStyle = fillStyle;
-			else
-				FillStyle = new NonBlankTrimmedString("#000");
 		}
 
 		private string CreateImage(string message, double size)
@@ -66,7 +67,7 @@ namespace Raspware.GameEngine
 
 		private void DrawLetter(char letter, double size, double x, double y, CanvasRenderingContext2D context)
 		{
-			context.FillStyle = FillStyle.Value;
+			context.FillStyle = _fillStyle.Value;
 			context.Font = (size * 1.05) + "px Consolas, monospace";
 			context.FillText(letter.ToString(), _resolution.Clamp(x + (size * 0.0045)), _resolution.Clamp(y + (size * 0.775)));
 		}
