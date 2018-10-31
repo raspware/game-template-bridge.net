@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Bridge.Html5;
+using ProductiveRage.Immutable;
 using Raspware.GameEngine.Rendering;
 using static Bridge.Html5.CanvasTypes;
 
@@ -13,7 +14,8 @@ namespace Raspware.GameEngine
 		public double Y { private set; get; }
 		public double Width { private set; get; }
 		public double Height { private set; get; }
-		public TextBox(string message, double size, Resolution resolution)
+		public NonBlankTrimmedString FillStyle { private set; get; }
+		public TextBox(string message, double size, Resolution resolution, NonBlankTrimmedString fillStyle = null)
 		{
 			_image = new HTMLImageElement()
 			{
@@ -26,6 +28,11 @@ namespace Raspware.GameEngine
 			};
 
 			_resolution = resolution;
+
+			if (fillStyle != null)
+				FillStyle = fillStyle;
+			else
+				FillStyle = new NonBlankTrimmedString("#000");
 		}
 
 		private string CreateImage(string message, double size)
@@ -59,15 +66,12 @@ namespace Raspware.GameEngine
 
 		private void DrawLetter(char letter, double size, double x, double y, CanvasRenderingContext2D context)
 		{
-			//context.FillStyle = "red";
-			//context.FillRect(x, y, (int)(size * 0.575), size);
-
-			context.FillStyle = "black";
+			context.FillStyle = FillStyle.Value;
 			context.Font = (size * 1.05) + "px Consolas, monospace";
 			context.FillText(letter.ToString(), _resolution.Clamp(x + (size * 0.0045)), _resolution.Clamp(y + (size * 0.775)));
 		}
 
-		public void Render(CanvasRenderingContext2D context)
+		public void Draw(CanvasRenderingContext2D context)
 		{
 			context.DrawImage(
 				_image,
@@ -78,7 +82,7 @@ namespace Raspware.GameEngine
 			);
 		}
 
-		public void RenderFull(CanvasRenderingContext2D context, HTMLCanvasElement canvas)
+		public void DrawFull(CanvasRenderingContext2D context, HTMLCanvasElement canvas)
 		{
 			context.DrawImage(
 				_image,

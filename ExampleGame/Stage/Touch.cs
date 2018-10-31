@@ -40,7 +40,7 @@ namespace Raspware.ExampleGame.Stage
 			levelContext.FillStyle = "orange";
 			levelContext.FillRect(0, 0, resolution.Width, resolution.Height);
 
-			_textBox.Render(levelContext);
+			_textBox.Draw(levelContext);
 
 			levelContext.FillStyle = "black";
 			levelContext.Font = resolution.MultiplyClamp(10) + "px Consolas";
