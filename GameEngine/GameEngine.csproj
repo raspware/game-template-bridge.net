@@ -46,6 +46,7 @@
     <Compile Include="Game\Core.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Game\ICoreInterfaces.cs" />
+    <Compile Include="Glide.cs" />
     <Compile Include="Input\EventsExtensions.cs" />
     <Compile Include="Input\IActionConfiguration.cs" />
     <Compile Include="Input\IActionConfigurationRenderer.cs" />
