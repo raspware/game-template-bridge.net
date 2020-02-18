@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Raspware.GameEngine</name>
+    </assembly>
+    <members>
+        <member name="F:Raspware.GameEngine.Rendering.Resolution.PixelSize._xxsmall">
+            <summary>(80x45 or 45x45)</summary>
+        </member>
+        <member name="F:Raspware.GameEngine.Rendering.Resolution.PixelSize._xsmall">
+            <summary>(160x90 or 90x90)</summary>
+        </member>
+        <member name="F:Raspware.GameEngine.Rendering.Resolution.PixelSize._small">
+            <summary>(320x180 or 180x180)</summary>
+        </member>
+        <member name="F:Raspware.GameEngine.Rendering.Resolution.PixelSize._nHD">
+            <summary>(640x360 or 360x360)</summary>
+        </member>
+        <member name="F:Raspware.GameEngine.Rendering.Resolution.PixelSize._HD">
+            <summary>(1280x720 or 720x720)</summary>
+        </member>
+        <member name="F:Raspware.GameEngine.Rendering.Resolution.PixelSize._FHD">
+            <summary>(1920x1080 or 1080x1080)</summary>
+        </member>
+        <member name="F:Raspware.GameEngine.Rendering.Resolution.PixelSize._QHD">
+            <summary>(2560x1440 or 1440x1440)</summary>
+        </member>
+        <member name="F:Raspware.GameEngine.Rendering.Resolution.PixelSize._QHDplus">
+            <summary>(3200x1800 or 1800x1800)</summary>
+        </member>
+        <member name="F:Raspware.GameEngine.Rendering.Resolution.PixelSize._4K_UHD">
+            <summary>(3820x2160 or 2160x2160)</summary>
+        </member>
+    </members>
+</doc>
