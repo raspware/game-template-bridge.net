@@ -1,6 +1,6 @@
 # Game Template (Bridge.NET)
 
-This project was my attempt of learning the [Bridge.NET](http://bridge.net/) open source C#-to-JavaScript Compiler. Rather than doing the usual `hello world` application I thought I'd do something more fun!
+This project is my attempt of learning the [Bridge.NET](http://bridge.net/) open source C#-to-JavaScript Compiler in a fun way rather than doing the usual `hello world` application!
 
 
 ## Prerequisites
@@ -10,15 +10,27 @@ This project was originally developed in Visual Studio 2017. Although this isn't
 
 ## The Basic Flow of Control
 
-The `Game` instance is in a constant loop. Per loop it will:
+The `Game` instance is in a constant loop.
 
-1. First, execute the `Update` method of the current `Stage`.
-
-2.1. If the `Update` returns the same `Id` as the current `Stage`, the 'Draw' method of that Stage will execute.
-
-2.2. However, if a different `Id` is returned from calling the current `Stage` `Update` method, the `StageFactory` will fetch the new `Stage` based on the returning `Id`.
-
-
+```
+                     +-----------------------------+
+                     | 1.Execute the Update method |
++------------------->+   of the current Stage.     + <----------------------+
+|                    +------------+----------------+                        |
+|                                 |                                         |
+|                                 v                                         |
+|                      +----------+-------------+                           |
+|                      | 2.Returns the same Id  |                           |
+|               +------+ as the current Stage?  +-------+                   |
+|               |      +------------------------+       |                   |
+|Loop           |True                              False|               Loop|
+|               v                                       v                   |
+|  +------------+-----------------+   +------------------+--------------+   |
+|  |  3.a) The Draw method of the |   | 3.b) The StageFactory will fetch |  |
++--+ current Stage  will execute. |   | a new Stage based on the         +--+
+   +------------------------------+   |        Id obtained.              |
+                                      +----------------------------------+
+```
 ## Getting Started
 
 When the binaries are added to a Bridge.NET project you can configure and run a `Game` instance like so.
@@ -145,4 +157,4 @@ namespace Example
 
 You should expect to see something like the below screen capture.
 
-![alt text](https://raw.githubusercontent.com/raspware/game-template-bridge.net/42a8abbd20772e38d8ae9526eb86b1acbc5c34cd/screencapture.png?token=ABTB73YQVCQ6ZEO75NDQHCS6JVBI2 "Screen Capture")
+![alt text](https://www.raspware.com/shared/images/example-screen-capture.png "Screen Capture")
