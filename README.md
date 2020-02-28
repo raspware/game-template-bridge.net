@@ -1,6 +1,7 @@
 # Game Template (Bridge.NET)
 
 This project is my attempt of learning the [Bridge.NET](http://bridge.net/) open source C#-to-JavaScript Compiler in a fun way rather than doing the usual `hello world` application!
+I felt this would be a great way to expand learning C# whilst exploring modern JavaScript (something which I didn't think would be possible until this compiler came about).
 
 
 ## Prerequisites
@@ -25,10 +26,10 @@ The `Game` instance is in a constant loop.
 |               |      +------------------------+       |                   |
 |Loop           |True                              False|               Loop|
 |               v                                       v                   |
-|  +------------+-----------------+   +------------------+--------------+   |
-|  |  3.a) The Draw method of the |   | 3.b) The StageFactory will fetch |  |
-+--+ current Stage  will execute. |   | a new Stage based on the         +--+
-   +------------------------------+   |        Id obtained.              |
+|  +------------+-----------------+   +-----------------+----------------+  |
+|  | 3.a) The Draw method of the  |   | 3.b) The StageFactory will fetch |  |
++--+ current Stage  will execute. |   | a new Stage based on the Id      +--+
+   +------------------------------+   |           obtained.    		 |
                                       +----------------------------------+
 ```
 ## Getting Started
