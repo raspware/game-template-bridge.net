@@ -158,4 +158,4 @@ namespace Example
 
 You should expect to see something like the below screen capture.
 
-![alt text](https://www.raspware.com/shared/images/example-screen-capture.png "Screen Capture")
+![alt text](https://github.com/raspware/game-template-bridge.net/blob/c6b64ccb8a923d66b169b4177e7e633fd7ad90d8/screencapture.png "Screen Capture")
